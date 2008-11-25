@@ -1,0 +1,39 @@
+<?php
+/**
+* FirePHP Addon
+*
+* @author rexdev[at]f-stop[dot]de Jan Camrda
+* @author <a href="http://rexdev.f-stop.de">rexdev.f-stop.de</a>
+*
+* FirePHP Lib Copyright (c) 2006-2008, Christoph Dorn
+* FirePHP Lib v 0.2.1
+*
+* @author rexdev[at]f-stop[dot]de Jan Camrda
+* @author <a href="http://rexdev.f-stop.de">rexdev.f-stop.de</a>
+*
+* @package redaxo4
+* @version 0.3 
+* $Id$: 
+*/
+
+// addon identifier
+$mypage = "firephp";
+// unique id
+$REX['ADDON']['rxid'][$mypage] = '374';
+// foldername
+$REX['ADDON']['page'][$mypage] = $mypage;    
+// name shown in the REDAXO main menu
+//$REX['ADDON']['name'][$mypage] = 'FirePHP';
+// permission needed for accessing the addon
+$REX['ADDON']['perm'][$mypage] = 'firephp[]';
+$REX['ADDON']['version'][$mypage] = "0.3";
+$REX['ADDON']['author'][$mypage] = "Jan Camrda | rexdev.f-stop.de";
+$REX['ADDON']['supportpage'][$mypage] = "forum.redaxo.de";
+
+// add default perm for accessing the addon to user-administration
+$REX['PERM'][] = 'firephp[]';
+
+require('FirePHPCore/FirePHP.class.php');
+require('FirePHPCore/fb.php');
+
+?>

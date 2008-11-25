@@ -1,0 +1,21 @@
+h1. Changelog
+
+h4. 25.11.2008 - v0.3
+
+* FirePHP core 0.2.1
+* PHP5 Abfrage im Addon
+* Hilfe Text erweitert
+* Sicherheitshinweis im Hilfe Text
+
+h4. 03.11.2008 - v0.2
+
+* FirePHP core 0.2.0
+
+h4. 10.08.2008 - v0.1
+
+* erstes release
+* FirePHP core 0.1
+
+<hr />
+
+"Addon Hilfe":?page=addon&amp;spage=help&amp;addonname=firephp | Addon Changelog | "FirePHP Lib Changelog":?page=addon&amp;spage=help&amp;addonname=firephp&amp;mode=libchangelog | "FirePHP Readme":?page=addon&amp;spage=help&amp;addonname=firephp&amp;mode=libreadme | "FirePHP License":?page=addon&amp;spage=help&amp;addonname=firephp&amp;mode=liblicense 
