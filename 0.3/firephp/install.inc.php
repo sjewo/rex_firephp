@@ -13,6 +13,9 @@
 * $Id$: 
 */
 
+// Addon Identifier
+$mypage = "firephp";
+
 if (intval(PHP_VERSION) < 5)
 {
 	$REX['ADDON']['installmsg']['firephp'] = 'Dieses Addon ben&ouml;tigt PHP 5!';
@@ -21,6 +24,7 @@ if (intval(PHP_VERSION) < 5)
 else
 { 
 	$REX['ADDON']['install']['firephp'] = 1;
+	header("Location: index.php?page=addon&spage=help&addonname=".$mypage."&mode=installcatch");
 }
 
 
