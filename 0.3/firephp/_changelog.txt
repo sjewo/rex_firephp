@@ -3,9 +3,11 @@ h1. Changelog
 h4. 25.11.2008 - v0.3
 
 * FirePHP core 0.2.1
-* PHP5 Abfrage im Addon
-* Hilfe Text erweitert
-* Sicherheitshinweis im Hilfe Text
+* PHP5 Abfrage im Installer
+* Hilfe Sektion komplett umgebaut und erweitert
+* Sicherheitshinweis mit Dummy Funktions-Code
+* Umleitung auf Sicherheitshinweis zwischen Installation und Aktivierung
+* FirePHP ??README??, ??CHANGELOG?? & ??LICENSE?? Texte in Hilfe eingebunden
 
 h4. 03.11.2008 - v0.2
 
@@ -15,7 +17,3 @@ h4. 10.08.2008 - v0.1
 
 * erstes release
 * FirePHP core 0.1
-
-<hr />
-
-"Addon Hilfe":?page=addon&amp;spage=help&amp;addonname=firephp | Addon Changelog | "FirePHP Lib Changelog":?page=addon&amp;spage=help&amp;addonname=firephp&amp;mode=libchangelog | "FirePHP Readme":?page=addon&amp;spage=help&amp;addonname=firephp&amp;mode=libreadme | "FirePHP License":?page=addon&amp;spage=help&amp;addonname=firephp&amp;mode=liblicense 
