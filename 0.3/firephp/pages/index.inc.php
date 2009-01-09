@@ -9,7 +9,7 @@
 * @author <a href="http://rexdev.f-stop.de">rexdev.f-stop.de</a>
 *
 * @package redaxo4
-* @version 0.3 
+* @version 0.3.1
 * $Id$: 
 */
 
@@ -21,7 +21,7 @@ $subpages = array (
   	array ('settings','Konfiguration'),
 	);
 
-rex_title('Image Resize', $subpages);
+rex_title('FirePHP', $subpages);
 
 // Include Current Page
 switch($subpage)
@@ -40,7 +40,7 @@ switch($subpage)
   }
 }
 
-require $REX['INCLUDE_PATH'] . '/addons/image_resize/pages/'.$subpage.'.inc.php';
+require $REX['INCLUDE_PATH'] . '/addons/firephp/pages/'.$subpage.'.inc.php';
 
 require $REX['INCLUDE_PATH'] . '/layout/bottom.php';
 

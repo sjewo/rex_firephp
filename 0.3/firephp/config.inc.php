@@ -9,7 +9,7 @@
 * @author <a href="http://rexdev.f-stop.de">rexdev.f-stop.de</a>
 *
 * @package redaxo4
-* @version 0.3 
+* @version 0.3.1
 * $Id$: 
 */
 
@@ -20,10 +20,10 @@ $REX['ADDON']['rxid'][$mypage] = '374';
 // foldername
 $REX['ADDON']['page'][$mypage] = $mypage;    
 // name shown in the REDAXO main menu
-//$REX['ADDON']['name'][$mypage] = 'FirePHP';
+$REX['ADDON']['name'][$mypage] = 'FirePHP';
 // permission needed for accessing the addon
 $REX['ADDON']['perm'][$mypage] = 'firephp[]';
-$REX['ADDON']['version'][$mypage] = "0.3";
+$REX['ADDON']['version'][$mypage] = "0.3.1";
 $REX['ADDON']['author'][$mypage] = "Jan Camrda | rexdev.f-stop.de";
 $REX['ADDON']['supportpage'][$mypage] = "forum.redaxo.de";
 
@@ -33,8 +33,8 @@ $REX['PERM'][] = 'firephp[]';
 // Addon Settings
 
 // --- DYN
+$REX['ADDON']['firephp']['enabled'] = 1;
 $REX['ADDON']['firephp']['dummymode'] = 0;
-$REX['ADDON']['firephp']['enabled'] = 0;
 // --- /DYN
 
 if ($REX['ADDON']['firephp']['dummymode']==1)

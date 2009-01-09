@@ -9,13 +9,13 @@
 * @author <a href="http://rexdev.f-stop.de">rexdev.f-stop.de</a>
 *
 * @package redaxo4
-* @version 0.3 
+* @version 0.3.1
 * $Id$: 
 */
 
 ?>
 <div class="rex-addon-output">
-  <h2>Image Resize Addon (Version <?php echo $REX['ADDON']['version']['image_resize'] ?>)</h2>
+  <h2>FirePHP Addon (Version <?php echo $REX['ADDON']['version']['firephp'] ?>)</h2>
   <div class="rex-addon-content">
     <?php require dirname(__FILE__). '/../help.inc.php'; ?>
   </div>

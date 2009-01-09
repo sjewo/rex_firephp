@@ -1,4 +1,4 @@
-h1. FirePHP Addon v0.3
+h1. FirePHP Addon v0.3.1
 
 FirePHP enables you to print to your "Firebug":http://getfirebug.com Console using a simple PHP function call.
 

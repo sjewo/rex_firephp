@@ -9,7 +9,7 @@
 * @author <a href="http://rexdev.f-stop.de">rexdev.f-stop.de</a>
 *
 * @package redaxo4
-* @version 0.3 
+* @version 0.3.1
 * $Id$: 
 */
 
@@ -36,6 +36,37 @@ $REX[\'ADDON\'][\'firephp\'][\'dummymode\'] = '.$dummymode.';
   echo rex_warning('Konfiguration wurde aktualisiert');
 }
 
+
+if ($REX['ADDON']['firephp']['enabled'] == 1)
+{
+	$enabled_option = '
+		<option value="1" selected="selected">aktiviert</option>
+		<option value="0">inaktiv</option>';
+	$enabled_msg = ' - fb() Aufrufe werden an die FirePHP Console geschickt: Sicherheitshinweise beachten!';
+}
+else
+{
+	$enabled_option = '
+		<option value="1">aktiviert</option>
+		<option value="0" selected="selected">inaktiv</option>';
+	$enabled_msg = '';
+
+}
+if ($REX['ADDON']['firephp']['dummymode'] == 1)
+{
+	$dummy_option = '
+		<option value="1" selected="selected">aktiviert</option>
+		<option value="0">inaktiv</option>';
+	$dummy_msg = 'Anstatt der Datenübergabe an die FirePHP Console wird im frontend links oben eine kleine Meldung <b>uncaught fb() call</b> ausgegeben.';
+}
+else
+{
+	$dummy_option = '
+		<option value="1">aktiviert</option>
+		<option value="0" selected="selected">inaktiv</option>';
+	$dummy_msg =  '';
+}
+
 echo '
 
 <div class="rex-addon-output">
@@ -49,13 +80,20 @@ echo '
 
         <fieldset>
           <p>
-            <label for="max_cachefiles">Aktiviert</label>
-            <input type="text" id="enabled" name="enabled" value="'. htmlspecialchars($REX['ADDON']['firephp']['enabled']).'" />
+            <label for="enabled">FirePHP:</label>
+						<select id="enabled" name="enabled">
+						'.$enabled_option.'
+						</select>
           </p>
-          <p>
-            <label for="max_filters">Dummymode</label>
-            <input type="text" id="dummymode" name="dummymode" value="'. htmlspecialchars($REX['ADDON']['firephp']['dummymode']).'" />
-          </p>
+					<p style="color:red;font-weight:bold;">
+						'.$enabled_msg.'
+					</p>
+          <!--<p>
+            <label for="dummymode">Dummymode:</label>
+						<select id="dummymode" name="dummymode">
+						'.$dummy_option.'
+						</select>
+          </p>-->
           <p>
             <input type="submit" class="rex-sbmt" name="sendit" value="'.$I18N->msg("update").'" />
           </p>

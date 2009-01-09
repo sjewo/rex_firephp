@@ -1,5 +1,9 @@
 h1. Changelog
 
+h4. 10.01.2009 - v0.3.1
+
+* Settings page im Backend eingebaut = FirePHP Ausgabe global steuerbar
+
 h4. 25.11.2008 - v0.3
 
 * FirePHP core 0.2.1

@@ -9,7 +9,7 @@
 * @author <a href="http://rexdev.f-stop.de">rexdev.f-stop.de</a>
 *
 * @package redaxo4
-* @version 0.3 
+* @version 0.3.1
 * $Id$: 
 */
 
