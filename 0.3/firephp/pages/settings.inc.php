@@ -16,10 +16,8 @@
 // rex_request();
 
 $func = rex_request('func', 'string');
-$max_cachefiles = rex_request('max_cachefiles', 'int');
-$max_filters = rex_request('max_filters', 'int');
-$max_resizekb = rex_request('max_resizekb', 'int');
-$max_resizepixel = rex_request('max_resizepixel', 'int');
+$enabled = rex_request('enabled', 'int');
+$dummymode = rex_request('dummymode', 'int');
 
 
 if ($func == "update")
