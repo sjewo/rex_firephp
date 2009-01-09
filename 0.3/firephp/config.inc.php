@@ -30,7 +30,33 @@ $REX['ADDON']['supportpage'][$mypage] = "forum.redaxo.de";
 // add default perm for accessing the addon to user-administration
 $REX['PERM'][] = 'firephp[]';
 
-require('FirePHPCore/FirePHP.class.php');
-require('FirePHPCore/fb.php');
+// Addon Settings
+
+// --- DYN
+$REX['ADDON']['firephp']['dummymode'] = 0;
+$REX['ADDON']['firephp']['enabled'] = 0;
+// --- /DYN
+
+if ($REX['ADDON']['firephp']['dummymode']==1)
+{
+	function fb() {
+		echo '<div style="position:fixed;top:0;left:0;margin:0;padding:2px;color:red;background:white;font-size:9px;z-index:99">uncaught fb() call</div>';
+	}
+}
+else
+{
+	require('FirePHPCore/FirePHP.class.php');
+	require('FirePHPCore/fb.php');
+	$firephp = FirePHP::getInstance(true);
+	
+	if ($REX['ADDON']['firephp']['enabled']==1)
+	{
+		$firephp->setEnabled(true);
+	}
+	else
+	{
+		$firephp->setEnabled(false);
+	}
+}
 
 ?>
