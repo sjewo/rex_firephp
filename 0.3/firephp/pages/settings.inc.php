@@ -42,7 +42,7 @@ if ($REX['ADDON']['firephp']['enabled'] == 1)
 	$enabled_option = '
 		<option value="1" selected="selected">aktiviert</option>
 		<option value="0">inaktiv</option>';
-	$enabled_msg = ' - fb() Aufrufe werden an die FirePHP Console geschickt: Sicherheitshinweise beachten!';
+	$enabled_msg = 'Daten werden an die FirePHP Console geschickt - <a href="index.php?page=firephp&subpage=help">Sicherheitshinweise</a> beachten!';
 }
 else
 {
@@ -70,7 +70,7 @@ else
 echo '
 
 <div class="rex-addon-output">
-  <h2>Konfiguration</h2>
+  <h2>Settings</h2>
   <div class="rex-addon-content">
 
   <form action="index.php" method="post">
@@ -80,14 +80,11 @@ echo '
 
         <fieldset>
           <p>
-            <label for="enabled">FirePHP:</label>
+            <label for="enabled">FirePHP Output:</label>
 						<select id="enabled" name="enabled">
 						'.$enabled_option.'
-						</select>
+						</select> '.$enabled_msg.'
           </p>
-					<p style="color:red;font-weight:bold;">
-						'.$enabled_msg.'
-					</p>
           <!--<p>
             <label for="dummymode">Dummymode:</label>
 						<select id="dummymode" name="dummymode">

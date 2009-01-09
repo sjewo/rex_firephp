@@ -17,26 +17,24 @@ require $REX['INCLUDE_PATH'] . '/layout/top.php';
 
 // Build Subnavigation
 $subpages = array (
-  	array ('','Hilfe'),
-  	array ('settings','Konfiguration'),
+  	array ('','Settings'),
+  	array ('help','Hilfe')
 	);
 
-rex_title('FirePHP', $subpages);
+rex_title('FirePHP '.$REX['ADDON']['version']['firephp'], $subpages);
 
 // Include Current Page
 switch($subpage)
 {
-  case 'settings' :
+  case 'help' :
   {
     break;
   }
 
   default:
   {
-  	if (isset ($msg) and $msg != '')
-		  echo rex_warning($msg);
-
-	  $subpage = 'overview';
+	  $subpage = 'settings';
+    break;
   }
 }
 

@@ -26,12 +26,12 @@ echo '
 .backendoverride li {list-style-type:square;margin:0;padding:0;}
 .backendoverride cite {color:blue;font-size:10px;font-family:monospace;font-style:normal;}
 .backendoverride pre {color:blue;border:1px dashed #C0C0C0;background:#FAF9F5;font-size:12px;margin:6px 4px 6px 0;padding:8px;font-family:monospace;}
+.backendoverride pre code {color:blue;border:0;background:transparent;font-size:12px;margin:0;padding:0;font-family:monospace;}
 .backendoverride pre.plain {color:black;border:0;background:transparent;margin:0;padding:0;font-family:monospace;}
 .backendoverride hr {height:1px;border:0;border-top:1px solid silver;margin:8px 0;padding:0;}
 .backendoverride p.helpnav {background:transparent;margin:0;padding:0;font-weight:bold;}
 -->
 </style>
-<div class="backendoverride">
 ';
 
 // Addon Identifier
@@ -52,14 +52,14 @@ foreach ($helppages as $helppage => $name)
 {
 	if ($mode != $helppage)
 	{
-	$helpnav .= ' | <a href="?page=addon&spage=help&addonname='.$mypage.'&mode='.$helppage.'">'.$name.'</a>';
+	$helpnav .= ' | <a href="?page=firephp&subpage=help&mode='.$helppage.'">'.$name.'</a>';
 	}
 	else
 	{
 	$helpnav .= ' | '.$name;
 	}
 }
-echo '<p class="helpnav">'.ltrim($helpnav, " | ").'</p><hr />';
+//echo '<p class="helpnav">'.ltrim($helpnav, " | ").'</p><hr />';
 
 // Assign Include Files
 switch ($mode)
@@ -90,7 +90,12 @@ switch ($mode)
 		$parse = true;
 }
 
-$file = dirname( __FILE__) .'/'. $file;
+echo '<div class="rex-addon-output">
+  <h2>'.ltrim($helpnav, " | ").'</h2>
+  <div class="rex-addon-content">
+	<div class= "backendoverride">';
+
+$file = $REX['INCLUDE_PATH']. '/addons/firephp/'.$file;
 $fh = fopen($file, 'r');
 $content = fread($fh, filesize($file));
 if ($parse == true)
@@ -105,6 +110,9 @@ else
 	echo '<pre class="plain">'.$content.'</pre>';
 }
 
-echo '</div>';
+echo '</div>
+</div>
+</div>';
+
 
 ?>

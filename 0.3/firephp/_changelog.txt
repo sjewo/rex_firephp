@@ -8,7 +8,7 @@ h4. 25.11.2008 - v0.3
 
 * FirePHP core 0.2.1
 * PHP5 Abfrage im Installer
-* Hilfe Sektion komplett umgebaut und erweitert
+* Hilfe Sektion umgebaut/erweitert
 * Sicherheitshinweis mit Dummy Funktions-Code
 * Umleitung auf Sicherheitshinweis zwischen Installation und Aktivierung
 * FirePHP ??README??, ??CHANGELOG?? & ??LICENSE?? Texte in Hilfe eingebunden

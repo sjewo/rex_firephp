@@ -1,26 +1,8 @@
-h1. FirePHP Addon v0.3.1
-
-FirePHP enables you to print to your "Firebug":http://getfirebug.com Console using a simple PHP function call.
-
-h4. What makes FirePHP different?
-
-All data is sent via a set of X-FirePHP-Data response headers. This means that the debugging data will not interfere with the content on your page. Thus FirePHP is ideally suited for AJAX development where clean JSON or XML responses are required.
-
-h4. Requirements
-
-PHP: 5 | Firefox: 2, 3 | Firebug: "1.05, 1.1, 1.2":http://getfirebug.com
-
-h4. QuickStart
-
-"http://www.firephp.org/Wiki/Main/QuickStart":http://www.firephp.org/Wiki/Main/QuickStart
-
-h4. Feedback & Help
-
-If you have any feedback or require assistance you can participate in our discussion group at "http://forum.firephp.org":http://forum.firephp.org
-
-<hr />
-
 h1. Sicherheitshinweise
+
+h3. Datensicherheit
+
+Ist das Addon aktiviert und aktive ??fb()?? Aufrufe im Code, sind die damit verschickten Daten prinzipiell auch für Dritte sichtbar. Zwar werden diese in den ??X-FirePHP-Data?? Headern verschickt, und sind somit für normale Besucher einer Site unsichtbar, aber jedes Tools/Plugin zum Anzeigen von header Daten *wird* dies Daten anzeigen. User mit installierten Firebug sehen sie sowieso.
 
 h3. Funktionsaufruf
 
@@ -34,6 +16,24 @@ bc. if (!function_exists('fb')) {
 
 Ohne diese Dummy Funktion kann es zu erheblichen Schwierigkeiten und evtl. totaler Nichterreichbarkeit von frontend *und* backend führen falls die FirePHP Library nicht eingebunden und somit die Funktion ??fb()?? undefiniert ist. Sollte dieser Fall einmal eingetreten sein, dann müßen die ??fb()?? Aufrufe manuell aus der DB gelöscht werden.
 
-h3. Datensicherheit
+<hr />
 
-Ist das Addon aktiviert und aktive ??fb()?? Aufrufe im Code, sind die damit verschickten Daten prinzipiell auch für Dritte sichtbar. Zwar werden diese in den ??X-FirePHP-Data?? Headern verschickt, und sind somit für normale Besucher einer Site unsichtbar, aber jedes Tools/Plugin zum Anzeigen von header Daten *wird* dies Daten anzeigen. User mit installierten Firebug sehen sie sowieso.
+h1. FirePHP
+
+FirePHP enables you to print to your "Firebug":http://getfirebug.com Console using a simple PHP function call.
+
+h3. What makes FirePHP different?
+
+All data is sent via a set of X-FirePHP-Data response headers. This means that the debugging data will not interfere with the content on your page. Thus FirePHP is ideally suited for AJAX development where clean JSON or XML responses are required.
+
+h3. Requirements
+
+PHP: 5 | Firefox: 2, 3 | Firebug: "1.05, 1.1, 1.2":http://getfirebug.com
+
+h3. QuickStart
+
+"http://www.firephp.org/Wiki/Main/QuickStart":http://www.firephp.org/Wiki/Main/QuickStart
+
+h3. Feedback & Help
+
+If you have any feedback or require assistance you can participate in our discussion group at "http://forum.firephp.org":http://forum.firephp.org
