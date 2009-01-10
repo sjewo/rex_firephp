@@ -73,6 +73,17 @@ echo '
   <h2>Settings</h2>
   <div class="rex-addon-content">
 
+<script type="text/javascript">
+onload = function(e)
+{
+	document.getElementById(\'sendit\').style.display = "none";
+	document.getElementById(\'enabled\').onchange = function (e)
+	{
+		document.getElementById(\'sendit\').style.display = "inline";
+	};
+}
+</script> 
+
   <form action="index.php" method="post">
     <input type="hidden" name="page" value="firephp" />
     <input type="hidden" name="subpage" value="settings" />
@@ -80,10 +91,11 @@ echo '
 
         <fieldset>
           <p>
-            <label for="enabled">FirePHP Output:</label>
+            <label for="enabled" style="font-weight:bold;">FirePHP Output:</label>
 						<select id="enabled" name="enabled">
 						'.$enabled_option.'
-						</select> '.$enabled_msg.'
+						</select>
+						<input type="submit" style="margin-left:10px;"class="rex-sbmt" id="sendit" name="sendit" value="speichern" />
           </p>
           <!--<p>
             <label for="dummymode">Dummymode:</label>
@@ -92,12 +104,12 @@ echo '
 						</select>
           </p>-->
           <p>
-            <input type="submit" class="rex-sbmt" name="sendit" value="'.$I18N->msg("update").'" />
+					 '.$enabled_msg.'
+            
           </p>
         </fieldset>
   </form>
   </div>
 </div>
-  ';
-
+';
 ?>
