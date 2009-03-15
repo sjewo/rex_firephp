@@ -33,7 +33,7 @@ $REX['PERM'][] = 'firephp[]';
 // Addon Settings
 
 // --- DYN
-$REX['ADDON']['firephp']['enabled'] = 0;
+$REX['ADDON']['firephp']['enabled'] = 1;
 $REX['ADDON']['firephp']['dummymode'] = 0;
 // --- /DYN
 
