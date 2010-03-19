@@ -1,5 +1,11 @@
 h1. Changelog
 
+h4. 19.03.2010 - v0.4
+
+* FirePHP core 0.3.1
+* PHP4 & PHP5
+* Backend Anpassungen für Redaxo 4.2.1
+
 h4. 10.01.2009 - v0.3.1
 
 * Settings page im Backend eingebaut = FirePHP Ausgabe global steuerbar
