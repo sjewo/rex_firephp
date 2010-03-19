@@ -102,7 +102,7 @@ switch ($chapter)
 }
 
 echo '<div class="rex-addon-output">
-  <h2>'.ltrim($chapternav, " | ").'</h2>
+  <h2 class="rex-hl2" style="font-size:1em">'.ltrim($chapternav, " | ").'</h2>
   <div class="rex-addon-content">
 	<div class= "backendoverride">';
 
