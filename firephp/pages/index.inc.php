@@ -12,6 +12,13 @@
 * $Id$: 
 */
 
+// GET PARAMS
+////////////////////////////////////////////////////////////////////////////////
+$page = rex_request('page', 'string');
+$subpage = rex_request('subpage', 'string');
+$func = rex_request('func', 'string');
+$chapter = rex_request('chapter', 'string');
+
 require $REX['INCLUDE_PATH'] . '/layout/top.php';
 
 // Build Subnavigation

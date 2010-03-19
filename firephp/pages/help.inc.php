@@ -12,6 +12,13 @@
 * $Id$: 
 */
 
+// GET PARAMS
+////////////////////////////////////////////////////////////////////////////////
+$page = rex_request('page', 'string');
+$subpage = rex_request('subpage', 'string');
+$chapter = rex_request('chapter', 'string');
+$func = rex_request('func', 'string');
+
 echo '
 <style type="text/css" media="screen">
 <!--
@@ -44,7 +51,7 @@ $chapterpages = array (''             => 'Addon Hilfe',
 										'liblicense'   => 'FirePHP License',
 										'libcredits'   => 'FirePHP Credits');
 
-if (!isset($chapter)) $chapter = '';
+//if (!isset($chapter)) $chapter = '';
 
 // Build Help Subnavigation
 $chapternav = '';
