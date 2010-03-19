@@ -23,7 +23,6 @@ if (intval(PHP_VERSION) < 4)
 else
 { 
 	$REX['ADDON']['install']['firephp'] = 1;
-	header("Location: index.php?page=addon&spage=help&addonname=".$mypage."&mode=installcatch");
 }
 
 
