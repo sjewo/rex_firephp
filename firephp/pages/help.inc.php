@@ -2,14 +2,13 @@
 /**
 * FirePHP Addon
 *
-* FirePHP Lib Copyright (c) 2006-2008, Christoph Dorn, http://firephp.org
-* FirePHP Lib v 0.2.1
+* FirePHP Lib Copyright (c) 2006-2010, Christoph Dorn, http://firephp.org
+* FirePHP Lib v 0.3.1
 *
-* @author rexdev[at]f-stop[dot]de Jan Camrda
-* @author <a href="http://rexdev.f-stop.de">rexdev.f-stop.de</a>
+* @author <a href="http://rexdev.de">rexdev.de</a>
 *
 * @package redaxo4
-* @version 0.3.1
+* @version 0.4
 * $Id$: 
 */
 
@@ -38,46 +37,51 @@ echo '
 $mypage = "firephp";
 
 // Subnavigation Items
-$helppages = array (''             => 'Addon Hilfe', 
+$chapterpages = array (''             => 'Addon Hilfe', 
 										'changelog'    => 'Addon Changelog', 
 										'libchangelog' => 'FirePHP Changelog',
 										'libreadme'    => 'FirePHP Readme',
-										'liblicense'   => 'FirePHP License');
+										'liblicense'   => 'FirePHP License',
+										'libcredits'   => 'FirePHP Credits');
 
-if (!isset($mode)) $mode = '';
+if (!isset($chapter)) $chapter = '';
 
 // Build Help Subnavigation
-$helpnav = '';
-foreach ($helppages as $helppage => $name)
+$chapternav = '';
+foreach ($chapterpages as $thischapter => $chaptertitle)
 {
-	if ($mode != $helppage)
+	if ($chapter != $thischapter)
 	{
-	$helpnav .= ' | <a href="?page=firephp&subpage=help&mode='.$helppage.'">'.$name.'</a>';
+	$chapternav .= ' | <a href="?page='.$mypage.'&subpage=help&chapter='.$thischapter.'">'.$chaptertitle.'</a>';
 	}
 	else
 	{
-	$helpnav .= ' | '.$name;
+	$chapternav .= ' | '.$chaptertitle;
 	}
 }
-//echo '<p class="helpnav">'.ltrim($helpnav, " | ").'</p><hr />';
+// echo '<p class="helpnav">'.ltrim($chapternav, " | ").'</p><hr />';
 
 // Assign Include Files
-switch ($mode)
+switch ($chapter)
 {
 	case 'changelog':
 		$file = '_changelog.txt';
 		$parse = true;
 		break;
 	case 'libchangelog':
-		$file = 'FirePHPCore/CHANGELOG';
+		$file = 'FirePHPCore-0.3.1/CHANGELOG';
 		$parse = false;
 		break;
 	case 'liblicense':
-		$file = 'FirePHPCore/LICENSE';
+		$file = 'FirePHPCore-0.3.1/lib/FirePHPCore/LICENSE';
 		$parse = false;
 		break;
 	case 'libreadme':
-		$file = 'FirePHPCore/README';
+		$file = 'FirePHPCore-0.3.1/README';
+		$parse = false;
+		break;
+	case 'libcredits':
+		$file = 'FirePHPCore-0.3.1/CREDITS';
 		$parse = false;
 		break;
 	case 'installcatch':
@@ -91,7 +95,7 @@ switch ($mode)
 }
 
 echo '<div class="rex-addon-output">
-  <h2>'.ltrim($helpnav, " | ").'</h2>
+  <h2>'.ltrim($chapternav, " | ").'</h2>
   <div class="rex-addon-content">
 	<div class= "backendoverride">';
 

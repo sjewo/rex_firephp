@@ -2,38 +2,37 @@
 /**
 * FirePHP Addon
 *
-* FirePHP Lib Copyright (c) 2006-2008, Christoph Dorn, http://firephp.org
-* FirePHP Lib v 0.2.1
+* FirePHP Lib Copyright (c) 2006-2010, Christoph Dorn, http://firephp.org
+* FirePHP Lib v 0.3.1
 *
-* @author rexdev[at]f-stop[dot]de Jan Camrda
-* @author <a href="http://rexdev.f-stop.de">rexdev.f-stop.de</a>
+* @author <a href="http://rexdev.de">rexdev.de</a>
 *
 * @package redaxo4
-* @version 0.3.1
+* @version 0.4
 * $Id$: 
 */
 
-// addon identifier
+// ADDON IDENTIFIER
 $mypage = "firephp";
-// unique id
+// UNIQUE ID
 $REX['ADDON']['rxid'][$mypage] = '374';
-// foldername
-$REX['ADDON']['page'][$mypage] = $mypage;    
-// name shown in the REDAXO main menu
+// FOLDERNAME
+$REX['ADDON']['page'][$mypage] = $mypage;
+// NAME SHOWN IN THE REDAXO MAIN MENU
 $REX['ADDON']['name'][$mypage] = 'FirePHP';
-// permission needed for accessing the addon
+// PERMISSION NEEDED FOR ACCESSING THE ADDON
 $REX['ADDON']['perm'][$mypage] = 'firephp[]';
-$REX['ADDON']['version'][$mypage] = "0.3.1";
-$REX['ADDON']['author'][$mypage] = "Jan Camrda | rexdev.f-stop.de";
+$REX['ADDON']['version'][$mypage] = "0.4";
+$REX['ADDON']['author'][$mypage] = "jeandeluxe | rexdev.de";
 $REX['ADDON']['supportpage'][$mypage] = "forum.redaxo.de";
 
-// add default perm for accessing the addon to user-administration
+// ADD DEFAULT PERM FOR ACCESSING THE ADDON TO USER-ADMINISTRATION
 $REX['PERM'][] = 'firephp[]';
 
-// Addon Settings
+// BACKEND ACCESSIBLE ADDON SETTINGS
 
 // --- DYN
-$REX['ADDON']['firephp']['enabled'] = 1;
+$REX['ADDON']['firephp']['enabled'] = 0;
 $REX['ADDON']['firephp']['dummymode'] = 0;
 // --- /DYN
 
@@ -45,9 +44,20 @@ if ($REX['ADDON']['firephp']['dummymode']==1)
 }
 else
 {
-	require('FirePHPCore/FirePHP.class.php');
-	require('FirePHPCore/fb.php');
-	$firephp = FirePHP::getInstance(true);
+  if (intval(PHP_VERSION) < 5)
+  {
+    // VERSION FÜR PHP 4
+    require('FirePHPCore-0.3.1/lib/FirePHPCore/FirePHP.class.php4');
+    require('FirePHPCore-0.3.1/lib/FirePHPCore/fb.php4');
+    $firephp = FirePHP::getInstance(true);
+  }
+  else
+  {
+    // VERSION FÜR PHP 5
+    require('FirePHPCore-0.3.1/lib/FirePHPCore/FirePHP.class.php');
+    require('FirePHPCore-0.3.1/lib/FirePHPCore/fb.php');
+    $firephp = FirePHP::getInstance(true);
+  }
 	
 	if ($REX['ADDON']['firephp']['enabled']==1)
 	{
