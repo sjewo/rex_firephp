@@ -17,12 +17,12 @@ $mypage = "firephp";
 
 if (intval(PHP_VERSION) < 4)
 {
-	$REX['ADDON']['installmsg']['firephp'] = 'Dieses Addon ben&ouml;tigt mind. PHP4, und für Volle Funktionalität PHP 5!';
-	$REX['ADDON']['install']['firephp'] = 0;	
+	$REX['ADDON']['installmsg'][$mypage] = 'Dieses Addon ben&ouml;tigt mind. PHP4, und für Volle Funktionalität PHP 5!';
+	$REX['ADDON']['install'][$mypage] = 0;	
 }
 else
 { 
-	$REX['ADDON']['install']['firephp'] = 1;
+	$REX['ADDON']['install'][$mypage] = 1;
 }
 
 
