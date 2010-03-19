@@ -91,10 +91,6 @@ switch ($chapter)
 		$file = 'FirePHPCore-0.3.1/CREDITS';
 		$parse = false;
 		break;
-	case 'installcatch':
-		$file = '_warning.txt';
-		$parse = true;
-		break;
 		
   default:
 		$file = '_readme.txt';
