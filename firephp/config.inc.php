@@ -22,7 +22,7 @@ $REX['ADDON']['page'][$mypage] = $mypage;
 $REX['ADDON']['name'][$mypage] = 'FirePHP';
 // PERMISSION NEEDED FOR ACCESSING THE ADDON
 $REX['ADDON']['perm'][$mypage] = 'firephp[]';
-$REX['ADDON']['version'][$mypage] = "0.4";
+$REX['ADDON']['version'][$mypage] = "0.4.1";
 $REX['ADDON']['author'][$mypage] = "jeandeluxe | rexdev.de";
 $REX['ADDON']['supportpage'][$mypage] = "forum.redaxo.de";
 
