@@ -109,7 +109,7 @@ onload = function(e)
         
         <div class="rex-form-row">
           <p class="rex-form-col-a rex-form-select">
-            <label for="uselib">FirePHP Version:</label>
+            <label for="uselib">Core Version:</label>
             <select id="uselib" name="uselib">
             '.$lib_option.'
             </select>
