@@ -3,12 +3,12 @@
 * FirePHP Addon
 *
 * FirePHP Lib Copyright (c) 2006-2010, Christoph Dorn, http://firephp.org
-* FirePHP Lib v 0.3.1
+* FirePHP Lib v 0.3.1 & 0.3.2rc1
 *
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
 * @package redaxo4
-* @version 0.4
+* @version 0.4.1
 * $Id$: 
 */
 
@@ -43,6 +43,9 @@ echo '
 // Addon Identifier
 $mypage = "firephp";
 
+// ACTIVE LIB
+$active_lib = 'libs/'.$REX['ADDON']['libs'][$REX['ADDON']['firephp']['uselib']];
+
 // Subnavigation Items
 $chapterpages = array (''             => 'Addon Hilfe', 
 										'changelog'    => 'Addon Changelog', 
@@ -76,19 +79,19 @@ switch ($chapter)
 		$parse = true;
 		break;
 	case 'libchangelog':
-		$file = 'FirePHPCore-0.3.1/CHANGELOG';
+		$file = $active_lib.'/CHANGELOG';
 		$parse = false;
 		break;
 	case 'liblicense':
-		$file = 'FirePHPCore-0.3.1/lib/FirePHPCore/LICENSE';
+		$file = $active_lib.'/lib/FirePHPCore/LICENSE';
 		$parse = false;
 		break;
 	case 'libreadme':
-		$file = 'FirePHPCore-0.3.1/README';
+		$file = $active_lib.'/README';
 		$parse = false;
 		break;
 	case 'libcredits':
-		$file = 'FirePHPCore-0.3.1/CREDITS';
+		$file = $active_lib.'/CREDITS';
 		$parse = false;
 		break;
 		
