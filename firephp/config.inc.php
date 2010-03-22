@@ -32,41 +32,39 @@ $REX['PERM'][] = 'firephp[]';
 // BACKEND ACCESSIBLE ADDON SETTINGS
 
 // --- DYN
-$REX['ADDON']['firephp']['enabled'] = 0;
-$REX['ADDON']['firephp']['dummymode'] = 0;
+$REX['ADDON']['firephp']['enabled'] = 1;
+$REX['ADDON']['firephp']['core'] = 0;
 // --- /DYN
 
-if ($REX['ADDON']['firephp']['dummymode']==1)
+$core_versions = array(
+'FirePHPCore-0.3.1',
+'FirePHPCore-0.3.2rc1'
+);
+
+
+if (intval(PHP_VERSION) < 5)
 {
-	function fb() {
-		echo '<div style="position:fixed;top:0;left:0;margin:0;padding:2px;color:red;background:white;font-size:9px;z-index:99">uncaught fb() call</div>';
-	}
+  // VERSION FÜR PHP 4
+  require($core_versions[$REX['ADDON']['firephp']['core']].'/lib/FirePHPCore/FirePHP.class.php4');
+  require($core_versions[$REX['ADDON']['firephp']['core']].'/lib/FirePHPCore/fb.php4');
+  $firephp = FirePHP::getInstance(true);
 }
 else
 {
-  if (intval(PHP_VERSION) < 5)
-  {
-    // VERSION FÜR PHP 4
-    require('FirePHPCore-0.3.1/lib/FirePHPCore/FirePHP.class.php4');
-    require('FirePHPCore-0.3.1/lib/FirePHPCore/fb.php4');
-    $firephp = FirePHP::getInstance(true);
-  }
-  else
-  {
-    // VERSION FÜR PHP 5
-    require('FirePHPCore-0.3.1/lib/FirePHPCore/FirePHP.class.php');
-    require('FirePHPCore-0.3.1/lib/FirePHPCore/fb.php');
-    $firephp = FirePHP::getInstance(true);
-  }
-	
-	if ($REX['ADDON']['firephp']['enabled']==1)
-	{
-		$firephp->setEnabled(true);
-	}
-	else
-	{
-		$firephp->setEnabled(false);
-	}
+  // VERSION FÜR PHP 5
+  require($core_versions[$REX['ADDON']['firephp']['core']].'/lib/FirePHPCore/FirePHP.class.php');
+  require($core_versions[$REX['ADDON']['firephp']['core']].'/lib/FirePHPCore/fb.php');
+  $firephp = FirePHP::getInstance(true);
 }
+
+if ($REX['ADDON']['firephp']['enabled']==1)
+{
+  $firephp->setEnabled(true);
+}
+else
+{
+  $firephp->setEnabled(false);
+}
+
 
 ?>
