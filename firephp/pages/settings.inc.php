@@ -13,20 +13,19 @@
 */
 
 // rex_request();
-
 $func = rex_request('func', 'string');
 $enabled = rex_request('enabled', 'int');
-$dummymode = rex_request('dummymode', 'int');
+$core = rex_request('core', 'int');
 
 
 if ($func == "update")
 {
 
 	$REX['ADDON']['firephp']['enabled'] = $enabled;
-	$REX['ADDON']['firephp']['dummymode'] = $dummymode;
+	$REX['ADDON']['firephp']['core'] = $core;
 
 	$content = '$REX[\'ADDON\'][\'firephp\'][\'enabled\'] = '.$enabled.';
-$REX[\'ADDON\'][\'firephp\'][\'dummymode\'] = '.$dummymode.';
+$REX[\'ADDON\'][\'firephp\'][\'core\'] = '.$core.';
 ';
 
 	$file = $REX['INCLUDE_PATH']."/addons/firephp/config.inc.php";
