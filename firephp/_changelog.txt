@@ -1,6 +1,6 @@
 h1. Changelog
 
-h4. 19.03.2010 - v0.4.1
+h4. 23.03.2010 - v0.4.1
 
 * Option zum Unschalten der libs eingefügt
 * FirePHP core 0.3.1 & 0.3.2rc1 verfügbar
