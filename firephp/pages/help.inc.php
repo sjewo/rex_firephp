@@ -113,7 +113,14 @@ if ($parse == true)
 $textile = htmlspecialchars_decode($content);
 $textile = str_replace("<br />","",$textile);
 $textile = str_replace("&#039;","'",$textile);
-echo rex_a79_textile($textile);
+if (strpos($REX['LANG'],'utf'))
+{
+  echo rex_a79_textile($textile);
+}
+else
+{
+  echo utf8_decode(rex_a79_textile($textile));
+}
 }
 else
 {
