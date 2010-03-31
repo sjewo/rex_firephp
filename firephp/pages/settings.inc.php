@@ -42,7 +42,7 @@ if ($REX['ADDON']['firephp']['enabled'] == 1)
     <option value="0">inaktiv</option>';
   $enabled_msg = 'Daten werden an die FirePHP Console geschickt - <a href="index.php?page=firephp&subpage=help">Sicherheitshinweise</a> beachten!';
     echo rex_warning($enabled_msg);
-    fb($REX);
+    fb('Daten werden an die FirePHP Console geschickt - Sicherheitshinweise  beachten!' ,FirePHP::INFO);
 }
 else
 {
