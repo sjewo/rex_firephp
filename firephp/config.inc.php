@@ -46,15 +46,15 @@ $active_lib = 'libs/'.$REX['ADDON']['libs'][$REX['ADDON']['firephp']['uselib']];
 if (intval(PHP_VERSION) < 5)
 {
   // VERSION FÜR PHP 4
-  require($active_lib.'/lib/FirePHPCore/FirePHP.class.php4');
-  require($active_lib.'/lib/FirePHPCore/fb.php4');
+  require_once($active_lib.'/lib/FirePHPCore/FirePHP.class.php4');
+  require_once($active_lib.'/lib/FirePHPCore/fb.php4');
   $firephp = FirePHP::getInstance(true);
 }
 else
 {
   // VERSION FÜR PHP 5
-  require($active_lib.'/lib/FirePHPCore/FirePHP.class.php');
-  require($active_lib.'/lib/FirePHPCore/fb.php');
+  require_once($active_lib.'/lib/FirePHPCore/FirePHP.class.php');
+  require_once($active_lib.'/lib/FirePHPCore/fb.php');
   $firephp = FirePHP::getInstance(true);
 }
 
