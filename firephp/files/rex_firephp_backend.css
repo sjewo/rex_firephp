@@ -1,0 +1,84 @@
+/**
+* FirePHP Addon
+*
+* FirePHP Lib Copyright (c) 2006-2010, Christoph Dorn, http://firephp.org
+* FirePHP Lib v 0.3.1 & 0.3.2rc1
+*
+* @author <a href="http://rexdev.de">rexdev.de</a>
+*
+* @package redaxo4
+* @version 0.4.1
+* $Id$: 
+*/
+
+/* ADDON HEADLINE */
+span.addonversion {
+  font-size:10px;
+  color:silver;
+  }
+  
+/* ADDON CONTENT */
+.firephp {
+  padding:2px 8px 8px 8px;
+  }
+  
+.firephp p {
+  font-size:12px;
+  }
+
+.firephp h1 {
+  font-size:16px;
+  border-bottom:1px solid #DFE9E9;
+  margin:2px 0 10px 0;
+  padding:0 0 2px 0;
+  }
+
+.firephp h2 {
+  font-size:14px;
+  margin:2px 0 10px 0;
+  padding:0;
+  }
+
+.firephp h3 {
+  font-size:13px;
+  margin:2px 0 10px 0;
+  padding:0;
+  }
+
+.firephp h4 {
+  font-size:12px;
+  margin:2px 0 10px 0;
+  padding:0;
+  }
+
+.firephp h5 {
+  font-size:11px;
+  margin:2px 0 10px 0;
+  padding:0;
+  }
+  
+.firephp cite,
+.firephp code,
+.firephp pre {
+  color:blue;
+  font-family:monospace;
+  font-style:normal;
+  font-size:12px;
+  }
+
+.firephp pre {
+  overflow:auto;
+  border:1px dashed #C0C0C0;
+  background:#FAF9F5;
+  margin:2px 4px 8px 0;
+  padding:8px;
+  line-height:12px;
+  }
+
+.firephp hr {
+  height:1px;
+  border:0;
+  border-top:1px solid silver;
+  margin:8px 0;
+  padding:0;
+  }
