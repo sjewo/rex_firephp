@@ -11,6 +11,21 @@
 * $Id$: 
 */
 
+/* BACKEND NAVI */
+
+#rex-navi-page-firephp a span {
+  color:#3EC94A;/*EA1144*/
+  background: white;
+  border: 1px solid #14568A;
+  border-right: 1px solid #EFF9F9;
+  border-bottom: 1px solid #EFF9F9;
+  padding:0 4px 0 4px;
+  margin-top:-1px;
+  -moz-border-radius:4px;
+  font-weight: normal;
+  float: right;
+  }
+
 /* ADDON HEADLINE */
 span.addonversion {
   font-size:10px;
