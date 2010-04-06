@@ -67,7 +67,7 @@ else
 
 if ($REX['ADDON']['firephp']['enabled']==1)
 {
-  $REX['ADDON']['name'][$mypage] = 'FirePHP <span>session</span>';
+  $REX['ADDON']['name'][$mypage] = 'FirePHP <em>permanent</em>';
   $firephp->setEnabled(true);
 }
 else
