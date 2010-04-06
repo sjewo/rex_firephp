@@ -57,7 +57,7 @@ $REX['ADDON'][$addon]['modestring'] = array (
 // DYNAMIC ADDON SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
-$REX['ADDON']['firephp']['mode'] = 3;
+$REX['ADDON']['firephp']['mode'] = 1;
 $REX['ADDON']['firephp']['uselib'] = 1;
 // --- /DYN
 
