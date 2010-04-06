@@ -1,8 +1,13 @@
 h1. Changelog
 
+h4. 6.04.2010 - v0.4.2
+
+* Option zum Umschalten des Ausgabe-Modus zwischen permanenter und session-gebundener Ausgabe
+* Anzeige des Modus im Backend Navigationspunkt von FirePHP
+
 h4. 23.03.2010 - v0.4.1
 
-* Option zum Unschalten der libs eingefügt
+* Option zum Umschalten der libs eingefügt
 * FirePHP core 0.3.1 & 0.3.2rc1 verfügbar
 * Aufruf Beispielcode ins readme/Backend Hilfe
 * Backend: kleine Anpassungen, iso/utf kompatibel
