@@ -112,6 +112,7 @@ switch ($mode):
     {
       $REX['ADDON']['name'][$addon] = $REX['ADDON'][$addon]['menustring'][$mode];
       $firephp->setEnabled(true);
+      fb('FirePHP Mode: SESSION.' ,FirePHP::INFO);
     }
     else
     {
@@ -123,6 +124,7 @@ switch ($mode):
   case 3:
     $REX['ADDON']['name'][$addon] = $REX['ADDON'][$addon]['menustring'][$mode];
     $firephp->setEnabled(true);
+    fb('FirePHP Mode: PERMANENT!' ,FirePHP::WARN);
     break;
     
   default:

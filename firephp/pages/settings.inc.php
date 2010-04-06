@@ -35,6 +35,7 @@ $REX[\'ADDON\'][\'firephp\'][\'uselib\'] = '.$uselib.';
 
   $file = $REX['INCLUDE_PATH'].'/addons/'.$addon.'/config.inc.php';
   rex_replace_dynamic_contents($file, $content);
+  echo rex_info('Einstellungen wurden gespeichert.');
 }
 
 // MODE SELECT BOX OPTION
