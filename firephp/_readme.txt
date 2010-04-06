@@ -1,10 +1,20 @@
 h1. 1. Sicherheitshinweise
 
-h3. Datensicherheit
+h3. 1.1 Allgemein
 
-Ist das Addon aktiviert und aktive ??fb()?? Aufrufe im Code, sind die damit verschickten Daten prinzipiell auch für Dritte sichtbar. Zwar werden diese in den ??X-FirePHP-Data?? Headern verschickt, und sind somit für normale Besucher einer Site unsichtbar, aber jedes Tools/Plugin zum Anzeigen von header Daten *wird* dies Daten anzeigen. User mit installierten Firebug sehen sie sowieso.
+Ist das Addon aktiv und FirePHP Funktions-Aufrufe im Code, sind die damit verschickten Daten prinzipiell auch für Dritte sichtbar. Zwar werden diese in den ??X-FirePHP-Data?? Headern verschickt, und sind somit für normale Besucher einer Site unsichtbar, aber jedes Tools/Plugin zum Anzeigen von header Daten *wird* dies Daten anzeigen. User mit installierten Firebug/FirePHP sehen sie sowieso.
 
-h3. Funktionsaufruf
+h3. 1.2 Funktions-Aufrufe aus Backend-Seiten
+
+FirePHP unterscheidet nicht ob die Aufrufe aus dem Frontend oder dem Backend kommen, d.h. auch Aufrufe aus dem Backend werden im Frontend ausgegeben.
+
+h3. 1.3 SESSION Mode vs. PERMANENT Mode
+
+* Im SESSION Mode ist Firephp nur aktiv, so lange der User im Backend eingeloggt ist. *Dieser Modus sollte aus Sicherheitsgründen bevorzugt verwendet werden*
+* Im PERMANENT Mode werden die Daten immer und unabhängig von einer user Sesssion ausgegeben.
+
+
+h3. 1.4 Funktionsaufruf absichern
 
 Der FirePHP Aufruf ??fb()?? sollte möglichst nie ohne eine Absicherung gegen das Fehlen der Lib oder ein unbedachtes Deinstallieren des Addons verwendet werde. In den Kopfbereich jedes Templates, Moduls, Addons, oder wo auch immer ??fb()?? aufgerufen wird folgende Dummy Funktion einfügen:
 
