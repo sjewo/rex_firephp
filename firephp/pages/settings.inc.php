@@ -31,7 +31,7 @@ $REX[\'ADDON\'][\'firephp\'][\'uselib\'] = '.$uselib.';
   $file = $REX['INCLUDE_PATH']."/addons/firephp/config.inc.php";
   rex_replace_dynamic_contents($file, $content);
 
-  echo rex_warning('Konfiguration wurde aktualisiert');
+  echo rex_info('Konfiguration wurde aktualisiert');
 }
 
 
@@ -41,7 +41,7 @@ if ($REX['ADDON']['firephp']['enabled'] == 1)
     <option value="1" selected="selected">aktiviert</option>
     <option value="0">inaktiv</option>';
   $enabled_msg = 'Daten werden an die FirePHP Console geschickt - <a href="index.php?page=firephp&subpage=help">Sicherheitshinweise</a> beachten!';
-    echo rex_warning($enabled_msg);
+    echo rex_info($enabled_msg);
     fb('Daten werden an die FirePHP Console geschickt - Sicherheitshinweise  beachten!' ,FirePHP::INFO);
 }
 else
