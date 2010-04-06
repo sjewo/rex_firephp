@@ -8,100 +8,71 @@
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
 * @package redaxo4
-* @version 0.4.1
+* @version 0.4.2
 * $Id$: 
 */
 
-// rex_request();
+// PARAMS
+////////////////////////////////////////////////////////////////////////////////
+$page = rex_request('page', 'string');
+$subpage = rex_request('subpage', 'string');
+$chapter = rex_request('chapter', 'string');
 $func = rex_request('func', 'string');
-$enabled = rex_request('enabled', 'int');
+$mode = rex_request('mode', 'int');
 $uselib = rex_request('uselib', 'int');
+$addon = $page; /* alias */
 
-
+// UPDATE/WRITE SETTINGS
+////////////////////////////////////////////////////////////////////////////////
 if ($func == "update")
 {
+  $REX['ADDON'][$addon]['mode'] = $mode;
+  $REX['ADDON'][$addon]['uselib'] = $uselib;
 
-  $REX['ADDON']['firephp']['enabled'] = $enabled;
-  $REX['ADDON']['firephp']['uselib'] = $uselib;
-
-  $content = '$REX[\'ADDON\'][\'firephp\'][\'enabled\'] = '.$enabled.';
+  $content = '$REX[\'ADDON\'][\'firephp\'][\'mode\'] = '.$mode.';
 $REX[\'ADDON\'][\'firephp\'][\'uselib\'] = '.$uselib.';
 ';
 
-  $file = $REX['INCLUDE_PATH']."/addons/firephp/config.inc.php";
+  $file = $REX['INCLUDE_PATH'].'/addons/'.$addon.'/config.inc.php';
   rex_replace_dynamic_contents($file, $content);
-
-  echo rex_info('Konfiguration wurde aktualisiert');
 }
 
-
-if ($REX['ADDON']['firephp']['enabled'] == 1)
+// MODE SELECT BOX OPTION
+////////////////////////////////////////////////////////////////////////////////
+$mode_option = '';
+foreach($REX['ADDON'][$addon]['modestring'] as $key => $string)
 {
-  $enabled_option = '
-    <option value="2">SESSION Mode - während Admin Session aktiviert</option>
-    <option value="1" selected="selected">PERMANENT Mode - grundsätzlich aktiviert</option>
-    <option value="0">inaktiv</option>';
-    echo rex_warning('Daten werden <b>permanent<b/> an die FirePHP Console geschickt!');
-    echo rex_info('Generelle <a href="index.php?page=firephp&subpage=help">Sicherheitshinweise</a> beachten!');
-    fb('Daten werden permanent an die FirePHP Console geschickt.' ,FirePHP::WARN);
-    fb('Sicherheitshinweise beachten!' ,FirePHP::INFO);
-}
-elseif ($REX['ADDON']['firephp']['enabled'] == 2)
-{
-  $enabled_option = '
-    <option value="2" selected="selected">SESSION Mode - während Admin Session aktiviert</option>
-    <option value="1">PERMANENT Mode - grundsätzlich aktiviert</option>
-    <option value="0">inaktiv</option>';
-    echo rex_info('Daten werden w&auml;hrend Admin Session an die FirePHP Console geschickt.');
-    echo rex_info('Generelle <a href="index.php?page=firephp&subpage=help">Sicherheitshinweise</a> beachten!');
-    fb('Daten werden während Admin Session an die FirePHP Console geschickt.' ,FirePHP::INFO);
-    fb('Sicherheitshinweise beachten!' ,FirePHP::INFO);
-}
-else
-{
-  $enabled_option = '
-    <option value="2">SESSION Mode - während Admin Session aktiviert</option>
-    <option value="1">PERMANENT Mode - grundsätzlich aktiviert</option>
-    <option value="0" selected="selected">inaktiv</option>';
+  if($REX['ADDON'][$addon]['mode']!=$key)
+  {
+    $mode_option .= '<option value="'.$key.'">'.$string.'</option>';
+  }
+  else
+  {
+    $mode_option .= '<option value="'.$key.'" selected="selected">'.$string.'</option>';
+  }
 }
 
-if ($REX['ADDON']['firephp']['uselib'] == 0)
+// LIB SELECT BOX OPTION
+////////////////////////////////////////////////////////////////////////////////
+$lib_option = '';
+foreach($REX['ADDON'][$addon]['libs'] as $key => $string)
 {
-  $lib_option = '
-    <option value="0" selected="selected">'.$REX['ADDON']['firephp']['libs'][0].'</option>
-    <option value="1">'.$REX['ADDON']['firephp']['libs'][1].'</option>';
-}
-else
-{
-  $lib_option = '
-    <option value="0">'.$REX['ADDON']['firephp']['libs'][0].'</option>
-    <option value="1" selected="selected">'.$REX['ADDON']['firephp']['libs'][1].'</option>';
+  if($REX['ADDON'][$addon]['uselib']!=$key)
+  {
+    $lib_option .= '<option value="'.$key.'">'.$string.'</option>';
+  }
+  else
+  {
+    $lib_option .= '<option value="'.$key.'" selected="selected">'.$string.'</option>';
+  }
 }
 
 echo '
-
 <div class="rex-addon-output">
   <div class="rex-form">
 
-<!--<script type="text/javascript">
-onload = function(e)
-{
-  document.getElementById(\'sendit\').style.display = "none";
-  
-  document.getElementById(\'enabled\').onchange = function (e)
-  {
-    document.getElementById(\'sendit\').style.display = "inline";
-  };
-  
-  document.getElementById(\'uselib\').onchange = function (e)
-  {
-    document.getElementById(\'sendit\').style.display = "inline";
-  };
-}
-</script>-->
-
-  <form action="index.php" method="post">
-    <input type="hidden" name="page" value="firephp" />
+  <form action="index.php" method="get">
+    <input type="hidden" name="page" value="'.$addon.'" />
     <input type="hidden" name="subpage" value="settings" />
     <input type="hidden" name="func" value="update" />
 
@@ -111,9 +82,9 @@ onload = function(e)
         
         <div class="rex-form-row">
           <p class="rex-form-col-a rex-form-select">
-            <label for="enabled">FirePHP Output:</label>
-            <select id="enabled" name="enabled">
-            '.$enabled_option.'
+            <label for="mode">FirePHP Output:</label>
+            <select id="mode" name="mode">
+            '.$mode_option.'
             </select>
           </p>
         </div>

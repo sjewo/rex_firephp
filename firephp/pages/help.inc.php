@@ -8,7 +8,7 @@
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
 * @package redaxo4
-* @version 0.4.1
+* @version 0.4.2
 * $Id$: 
 */
 
@@ -20,10 +20,11 @@ $chapter = rex_request('chapter', 'string');
 $func = rex_request('func', 'string');
 
 // Addon Identifier
-$mypage = "firephp";
+$addon = "firephp";
 
 // ACTIVE LIB
-$active_lib = 'libs/'.$REX['ADDON']['libs'][$REX['ADDON']['firephp']['uselib']];
+$active_lib = 'libs/'.$REX['ADDON'][$addon]['libs'][$REX['ADDON'][$addon]['uselib']];
+fb($active_lib,'$active_lib');
 
 // Subnavigation Items
 $chapterpages = array (''             => 'Addon Hilfe', 
@@ -41,7 +42,7 @@ foreach ($chapterpages as $thischapter => $chaptertitle)
 {
 	if ($chapter != $thischapter)
 	{
-	$chapternav .= ' | <a href="?page='.$mypage.'&subpage=help&chapter='.$thischapter.'">'.$chaptertitle.'</a>';
+	$chapternav .= ' | <a href="?page='.$addon.'&subpage=help&chapter='.$thischapter.'">'.$chaptertitle.'</a>';
 	}
 	else
 	{
@@ -84,7 +85,7 @@ echo '<div class="rex-addon-output">
   <div class="rex-addon-content">
 	<div class= "firephp">';
 
-$file = $REX['INCLUDE_PATH']. '/addons/firephp/'.$file;
+$file = $REX['INCLUDE_PATH']. '/addons/'.$addon.'/'.$file;
 $fh = fopen($file, 'r');
 $content = fread($fh, filesize($file));
 if ($parse == true)
