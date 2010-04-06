@@ -22,6 +22,7 @@
   padding:0 4px 0 4px;
   margin-top:-1px;
   -moz-border-radius:4px;
+  -webkit-border-radius:4px;
   font-weight: normal;
   float: right;
   }
