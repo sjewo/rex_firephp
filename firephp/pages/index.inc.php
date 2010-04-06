@@ -19,13 +19,6 @@ $subpage = rex_request('subpage', 'string');
 $chapter = rex_request('chapter', 'string');
 $func = rex_request('func', 'string');
 
-// BACKEND CSS
-////////////////////////////////////////////////////////////////////////////////
-if ($REX['REDAXO']) {
-  require_once $REX['INCLUDE_PATH'].'/addons/'.$page.'/functions/function.rex_firephp_css_add.inc.php';
-  rex_register_extension('PAGE_HEADER', 'rex_firephp_css_add');
-}
-
 require $REX['INCLUDE_PATH'] . '/layout/top.php';
 
 // Build Subnavigation
