@@ -12,6 +12,10 @@
 * $Id$: 
 */
 
+// SESSION STARTEN
+////////////////////////////////////////////////////////////////////////////////
+session_start();
+
 // ADDON IDENTIFIER
 $mypage = "firephp";
 // UNIQUE ID
@@ -30,14 +34,16 @@ $REX['ADDON']['supportpage'][$mypage] = "forum.redaxo.de";
 $REX['PERM'][] = 'firephp[]';
 
 // LIB VERSIONS
-$REX['ADDON']['libs']= array (
+////////////////////////////////////////////////////////////////////////////////
+$REX['ADDON']['firephp']['libs'] = array (
 0=>'FirePHPCore-0.3.1',
 1=>'FirePHPCore-0.3.2rc1'
 );
 
 // BACKEND ACCESSIBLE ADDON SETTINGS
+////////////////////////////////////////////////////////////////////////////////
 // --- DYN
-$REX['ADDON']['firephp']['enabled'] = 1;
+$REX['ADDON']['firephp']['enabled'] = 2;
 $REX['ADDON']['firephp']['uselib'] = 0;
 // --- /DYN
 
@@ -48,7 +54,7 @@ if ($REX['REDAXO']) {
   rex_register_extension('PAGE_HEADER', 'rex_firephp_css_add');
 }
 
-$active_lib = 'libs/'.$REX['ADDON']['libs'][$REX['ADDON']['firephp']['uselib']];
+$active_lib = 'libs/'.$REX['ADDON']['firephp']['libs'][$REX['ADDON']['firephp']['uselib']];
 
 if (intval(PHP_VERSION) < 5)
 {
@@ -56,6 +62,7 @@ if (intval(PHP_VERSION) < 5)
   require_once($active_lib.'/lib/FirePHPCore/FirePHP.class.php4');
   require_once($active_lib.'/lib/FirePHPCore/fb.php4');
   $firephp = FirePHP::getInstance(true);
+  $firephp->setEnabled(false);
 }
 else
 {
@@ -63,6 +70,7 @@ else
   require_once($active_lib.'/lib/FirePHPCore/FirePHP.class.php');
   require_once($active_lib.'/lib/FirePHPCore/fb.php');
   $firephp = FirePHP::getInstance(true);
+  $firephp->setEnabled(false);
 }
 
 if ($REX['ADDON']['firephp']['enabled']==1)
@@ -70,10 +78,26 @@ if ($REX['ADDON']['firephp']['enabled']==1)
   $REX['ADDON']['name'][$mypage] = 'FirePHP <em>permanent</em>';
   $firephp->setEnabled(true);
 }
+elseif ($REX['ADDON']['firephp']['enabled']==2)
+{
+  if ($_SESSION[$REX['INSTNAME']]['UID']==1)
+  {
+    $REX['ADDON']['name'][$mypage] = 'FirePHP <span>session</span>';
+    $firephp->setEnabled(true);
+  }
+  else
+  {
+    $firephp->setEnabled(false);
+  }
+}
 else
 {
   $firephp->setEnabled(false);
 }
+fb($REX,'backend $REX');
+fb($REX['USER'],'backend $REX[USER]');
+fb($REX['ADDON']['firephp'],'backend $REX[ADDON][firephp]');
+fb($_SESSION[$REX['INSTNAME']]['UID'],'backend $_SESSION[$REX[INSTNAME]][UID]');
 
 
 ?>

@@ -38,33 +38,44 @@ $REX[\'ADDON\'][\'firephp\'][\'uselib\'] = '.$uselib.';
 if ($REX['ADDON']['firephp']['enabled'] == 1)
 {
   $enabled_option = '
-    <option value="1" selected="selected">aktiviert</option>
+    <option value="2">SESSION Mode - während Admin Session aktiviert</option>
+    <option value="1" selected="selected">PERMANENT Mode - grundsätzlich aktiviert</option>
     <option value="0">inaktiv</option>';
-  $enabled_msg = 'Daten werden an die FirePHP Console geschickt - <a href="index.php?page=firephp&subpage=help">Sicherheitshinweise</a> beachten!';
-    echo rex_info($enabled_msg);
-    fb('Daten werden an die FirePHP Console geschickt - Sicherheitshinweise  beachten!' ,FirePHP::INFO);
+    echo rex_warning('Daten werden <b>permanent<b/> an die FirePHP Console geschickt!');
+    echo rex_info('Generelle <a href="index.php?page=firephp&subpage=help">Sicherheitshinweise</a> beachten!');
+    fb('Daten werden permanent an die FirePHP Console geschickt.' ,FirePHP::WARN);
+    fb('Sicherheitshinweise beachten!' ,FirePHP::INFO);
+}
+elseif ($REX['ADDON']['firephp']['enabled'] == 2)
+{
+  $enabled_option = '
+    <option value="2" selected="selected">SESSION Mode - während Admin Session aktiviert</option>
+    <option value="1">PERMANENT Mode - grundsätzlich aktiviert</option>
+    <option value="0">inaktiv</option>';
+    echo rex_info('Daten werden w&auml;hrend Admin Session an die FirePHP Console geschickt.');
+    echo rex_info('Generelle <a href="index.php?page=firephp&subpage=help">Sicherheitshinweise</a> beachten!');
+    fb('Daten werden während Admin Session an die FirePHP Console geschickt.' ,FirePHP::INFO);
+    fb('Sicherheitshinweise beachten!' ,FirePHP::INFO);
 }
 else
 {
   $enabled_option = '
-    <option value="1">aktiviert</option>
+    <option value="2">SESSION Mode - während Admin Session aktiviert</option>
+    <option value="1">PERMANENT Mode - grundsätzlich aktiviert</option>
     <option value="0" selected="selected">inaktiv</option>';
-  $enabled_msg = '';
-
 }
+
 if ($REX['ADDON']['firephp']['uselib'] == 0)
 {
   $lib_option = '
-    <option value="0" selected="selected">'.$REX['ADDON']['libs'][0].'</option>
-    <option value="1">'.$REX['ADDON']['libs'][1].'</option>';
-  $dummy_msg = '';
+    <option value="0" selected="selected">'.$REX['ADDON']['firephp']['libs'][0].'</option>
+    <option value="1">'.$REX['ADDON']['firephp']['libs'][1].'</option>';
 }
 else
 {
   $lib_option = '
-    <option value="0">'.$REX['ADDON']['libs'][0].'</option>
-    <option value="1" selected="selected">'.$REX['ADDON']['libs'][1].'</option>';
-  $lib_msg =  '';
+    <option value="0">'.$REX['ADDON']['firephp']['libs'][0].'</option>
+    <option value="1" selected="selected">'.$REX['ADDON']['firephp']['libs'][1].'</option>';
 }
 
 echo '
