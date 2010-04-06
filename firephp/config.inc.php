@@ -34,12 +34,19 @@ $REX['ADDON']['libs']= array (
 0=>'FirePHPCore-0.3.1',
 1=>'FirePHPCore-0.3.2rc1'
 );
-// BACKEND ACCESSIBLE ADDON SETTINGS
 
+// BACKEND ACCESSIBLE ADDON SETTINGS
 // --- DYN
 $REX['ADDON']['firephp']['enabled'] = 1;
 $REX['ADDON']['firephp']['uselib'] = 0;
 // --- /DYN
+
+// BACKEND CSS
+////////////////////////////////////////////////////////////////////////////////
+if ($REX['REDAXO']) {
+  require_once $REX['INCLUDE_PATH'].'/addons/'.$mypage.'/functions/function.rex_firephp_css_add.inc.php';
+  rex_register_extension('PAGE_HEADER', 'rex_firephp_css_add');
+}
 
 $active_lib = 'libs/'.$REX['ADDON']['libs'][$REX['ADDON']['firephp']['uselib']];
 
@@ -60,6 +67,7 @@ else
 
 if ($REX['ADDON']['firephp']['enabled']==1)
 {
+  $REX['ADDON']['name'][$mypage] = 'FirePHP <span>session</span>';
   $firephp->setEnabled(true);
 }
 else
