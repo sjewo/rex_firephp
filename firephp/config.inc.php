@@ -50,8 +50,8 @@ $REX['ADDON'][$addon]['menustring'] = array (
 );
 $REX['ADDON'][$addon]['modestring'] = array (
 1=>'inaktiv',
-2=>'SESSION Mode - während Admin Session aktiviert',
-3=>'PERMANENT Mode - grundsätzlich aktiviert'
+2=>'SESSION Mode - w&auml;hrend Admin Session aktiviert',
+3=>'PERMANENT Mode - grunds&auml;tzlich aktiviert'
 );
 
 // DYNAMIC ADDON SETTINGS
@@ -74,7 +74,7 @@ $active_lib = 'libs/'.$REX['ADDON'][$addon]['libs'][$REX['ADDON'][$addon]['useli
 
 switch(intval(PHP_VERSION)):
   case 4:
-    /* VERSION FÜR PHP 4 */
+    /* VERSION F&Uuml;R PHP 4 */
     require_once($active_lib.'/lib/FirePHPCore/FirePHP.class.php4');
     require_once($active_lib.'/lib/FirePHPCore/fb.php4');
     $firephp = FirePHP::getInstance(true);
@@ -82,7 +82,7 @@ switch(intval(PHP_VERSION)):
     break;
   
   case 5:
-    /* VERSION FÜR PHP 5 */
+    /* VERSION F&Uuml;R PHP 5 */
     require_once($active_lib.'/lib/FirePHPCore/FirePHP.class.php');
     require_once($active_lib.'/lib/FirePHPCore/fb.php');
     $firephp = FirePHP::getInstance(true);
