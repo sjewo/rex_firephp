@@ -27,7 +27,7 @@ $subpages = array (
   	array ('help','Hilfe')
 	);
 
-rex_title('FirePHP '.$REX['ADDON']['version']['firephp'], $subpages);
+rex_title('FirePHP <span class="addonversion">'.$REX['ADDON']['version']['firephp'].'</span>', $subpages);
 
 // Include Current Page
 switch($subpage)
