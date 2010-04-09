@@ -14,7 +14,7 @@
 
 // GET PARAMS
 ////////////////////////////////////////////////////////////////////////////////
-$page = rex_request('page', 'string');
+$myself = rex_request('page', 'string');
 $subpage = rex_request('subpage', 'string');
 $chapter = rex_request('chapter', 'string');
 $func = rex_request('func', 'string');
@@ -22,14 +22,22 @@ $func = rex_request('func', 'string');
 require $REX['INCLUDE_PATH'] . '/layout/top.php';
 
 // Build Subnavigation
+////////////////////////////////////////////////////////////////////////////////
 $subpages = array (
-  	array ('','Settings'),
-  	array ('help','Hilfe')
-	);
+  array ('','Settings'),
+  array ('help','Hilfe')
+);
 
-rex_title('FirePHP <span class="addonversion">'.$REX['ADDON']['version']['firephp'].'</span>', $subpages);
+// SUBPAGE NAVI
+////////////////////////////////////////////////////////////////////////////////
+$versionstring = $REX['ADDON'][$myself]['VERSION'];
+array_pop($versionstring);
+$versionstring = implode('.', $versionstring);
+rex_title('FirePHP <span class="addonversion">'.$versionstring.'</span>', $subpages);
+
 
 // Include Current Page
+////////////////////////////////////////////////////////////////////////////////
 switch($subpage)
 {
   case 'help' :
