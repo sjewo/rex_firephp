@@ -9,7 +9,7 @@
 *
 * @package redaxo4
 * @version 0.4.2
-* @revision $rev$
+* $Revision$
 * $Id$: 
 */
 
