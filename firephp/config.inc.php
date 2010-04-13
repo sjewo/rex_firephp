@@ -9,68 +9,74 @@
 *
 * @package redaxo4
 * @version 0.4.2
-* $Revision$
 * $Id$: 
 */
 
-// SESSION STARTEN
+// START SESSION
 ////////////////////////////////////////////////////////////////////////////////
 session_start();
 
-// ADDON COMMONS
+// ADDON IDENTIFIER
 ////////////////////////////////////////////////////////////////////////////////
-$me = "firephp";
-$REX['ADDON']['rxid'][$me] = '374';
-$REX['ADDON']['page'][$me] = $me;
-$REX['ADDON']['name'][$me] = 'FirePHP';
-$REX['ADDON']['perm'][$me] = 'firephp[]';
-$REX['ADDON']['version'][$me] = "0.4.2";
-$REX['ADDON']['author'][$me] = "jeandeluxe | rexdev.de";
-$REX['ADDON']['supportpage'][$me] = "forum.redaxo.de";
-$REX['PERM'][] = 'firephp[]';
-
-// PARAMS
-////////////////////////////////////////////////////////////////////////////////
-$page = rex_request('page', 'string');
-$subpage = rex_request('subpage', 'string');
-$chapter = rex_request('chapter', 'string');
-$func = rex_request('func', 'string');
-$mode = rex_request('mode', 'int');
-$uselib = rex_request('uselib', 'int');
+$myself = "firephp";
 
 // ADDON VERSION, LIB VERSIONS, MENU STRINGS, MODE STRINGS -> $REX
 ////////////////////////////////////////////////////////////////////////////////
-$REX['ADDON'][$me]['VERSION'] = array(
+$REX['ADDON'][$myself]['VERSION'] = array(
 'VERSION' => 0,
 'MINORVERSION' => 4,
 'SUBVERSION' => 2,
-'REVISION' => 73
+'REVISION' => intval(ereg_replace('[^0-9]',"","$Revision$"))
 );
 
-$REX['ADDON'][$me]['libs'] = array (
+$REX['ADDON'][$myself]['libs'] = array (
 1=>'FirePHPCore-0.3.1',
 2=>'FirePHPCore-0.3.2rc1'
 );
-$REX['ADDON'][$me]['menustring'] = array (
+$REX['ADDON'][$myself]['menustring'] = array (
 1=>'FirePHP',
 2=>'FirePHP <span>session</span>',
 3=>'FirePHP <em>permanent</em>'
 );
-$REX['ADDON'][$me]['modestring'] = array (
+$REX['ADDON'][$myself]['modestring'] = array (
 1=>'inaktiv',
 2=>'SESSION Mode - w&auml;hrend Admin Session aktiviert',
 3=>'PERMANENT Mode - grunds&auml;tzlich aktiviert'
 );
-$REX['ADDON'][$me]['versioncheckstring'] = array (
+$REX['ADDON'][$myself]['versioncheckstring'] = array (
 1=>'Nein',
 2=>'Standard Versionen',
 3=>'Standard Versionen und Revisionen'
 );
 
+// ADDON REX COMMONS
+////////////////////////////////////////////////////////////////////////////////
+$REX['ADDON']['rxid'][$myself] = '374';
+$REX['ADDON']['page'][$myself] = $myself;
+$REX['ADDON']['name'][$myself] = 'FirePHP';
+$REX['ADDON']['perm'][$myself] = 'firephp[]';
+
+$commonversion = $REX['ADDON'][$myself]['VERSION'];
+array_pop($commonversion);
+$REX['ADDON']['version'][$myself] = implode('.', $commonversion);
+
+$REX['ADDON']['author'][$myself] = "jeandeluxe | rexdev.de";
+$REX['ADDON']['supportpage'][$myself] = "forum.redaxo.de";
+$REX['PERM'][] = 'firephp[]';
+
+// PARAMS
+////////////////////////////////////////////////////////////////////////////////
+/*$page = rex_request('page', 'string');
+$subpage = rex_request('subpage', 'string');
+$chapter = rex_request('chapter', 'string');
+$func = rex_request('func', 'string');
+$mode = rex_request('mode', 'int');
+$uselib = rex_request('uselib', 'int');*/
+
 // DYNAMIC ADDON SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
-$REX['ADDON']['firephp']['mode'] = 2;
+$REX['ADDON']['firephp']['mode'] = 2; 
 $REX['ADDON']['firephp']['uselib'] = 1;
 $REX['ADDON']['firephp']['versioncheck'] = 3;
 // --- /DYN
@@ -78,13 +84,13 @@ $REX['ADDON']['firephp']['versioncheck'] = 3;
 // BACKEND CSS
 ////////////////////////////////////////////////////////////////////////////////
 if ($REX['REDAXO']) {
-  require_once $REX['INCLUDE_PATH'].'/addons/'.$me.'/functions/function.rex_'.$me.'_css_add.inc.php';
-  rex_register_extension('PAGE_HEADER', 'rex_'.$me.'_css_add');
+  require_once $REX['INCLUDE_PATH'].'/addons/'.$myself.'/functions/function.rex_'.$myself.'_css_add.inc.php';
+  rex_register_extension('PAGE_HEADER', 'rex_'.$myself.'_css_add');
 }
 
 // LIB SWITCH
 ////////////////////////////////////////////////////////////////////////////////
-$active_lib = 'libs/'.$REX['ADDON'][$me]['libs'][$REX['ADDON'][$me]['uselib']];
+$active_lib = 'libs/'.$REX['ADDON'][$myself]['libs'][$REX['ADDON'][$myself]['uselib']];
 
 switch(intval(PHP_VERSION)):
   case 4:
@@ -112,37 +118,37 @@ endswitch;
 ////////////////////////////////////////////////////////////////////////////////
 if(!intval($mode))
   {
-    $mode = $REX['ADDON'][$me]['mode'];
+    $mode = $REX['ADDON'][$myself]['mode'];
   }
   
 switch ($mode):
   case 1:
-    $REX['ADDON']['name'][$me] = $REX['ADDON'][$me]['menustring'][$mode];
+    $REX['ADDON']['name'][$myself] = $REX['ADDON'][$myself]['menustring'][$mode];
     $firephp->setEnabled(false);
     break;
     
   case 2:
     if ($_SESSION[$REX['INSTNAME']]['UID']==1)
     {
-      $REX['ADDON']['name'][$me] = $REX['ADDON'][$me]['menustring'][$mode];
+      $REX['ADDON']['name'][$myself] = $REX['ADDON'][$myself]['menustring'][$mode];
       $firephp->setEnabled(true);
       fb('FirePHP Mode: SESSION.' ,FirePHP::INFO);
     }
     else
     {
-      $REX['ADDON']['name'][$me] = $REX['ADDON'][$me]['menustring'][$mode];
+      $REX['ADDON']['name'][$myself] = $REX['ADDON'][$myself]['menustring'][$mode];
       $firephp->setEnabled(false);
     }
     break;
   
   case 3:
-    $REX['ADDON']['name'][$me] = $REX['ADDON'][$me]['menustring'][$mode];
+    $REX['ADDON']['name'][$myself] = $REX['ADDON'][$myself]['menustring'][$mode];
     $firephp->setEnabled(true);
     fb('FirePHP Mode: PERMANENT!' ,FirePHP::WARN);
     break;
     
   default:
-    $REX['ADDON']['name'][$me] = $REX['ADDON'][$me]['menustring'][1];
+    $REX['ADDON']['name'][$myself] = $REX['ADDON'][$myself]['menustring'][1];
     $firephp->setEnabled(false);
     break;
 endswitch;
