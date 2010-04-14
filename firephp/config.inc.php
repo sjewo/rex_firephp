@@ -16,9 +16,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 session_start();
 
-// ADDON IDENTIFIER
+// ADDON IDENTIFIER & ROOT DIR
 ////////////////////////////////////////////////////////////////////////////////
 $myself = "firephp";
+$myroot = $REX['INCLUDE_PATH'].'/addons/'.$myself;
 
 // ADDON VERSION, LIB VERSIONS, MENU STRINGS, MODE STRINGS -> $REX
 ////////////////////////////////////////////////////////////////////////////////
@@ -64,28 +65,22 @@ $REX['ADDON']['author'][$myself] = "jeandeluxe | rexdev.de";
 $REX['ADDON']['supportpage'][$myself] = "forum.redaxo.de";
 $REX['PERM'][] = 'firephp[]';
 
-// PARAMS
-////////////////////////////////////////////////////////////////////////////////
-/*$page = rex_request('page', 'string');
-$subpage = rex_request('subpage', 'string');
-$chapter = rex_request('chapter', 'string');
-$func = rex_request('func', 'string');
-$mode = rex_request('mode', 'int');
-$uselib = rex_request('uselib', 'int');*/
-
 // DYNAMIC ADDON SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
-$REX['ADDON']['firephp']['mode'] = 2; 
+$REX['ADDON']['firephp']['mode'] = 3; 
 $REX['ADDON']['firephp']['uselib'] = 1;
-$REX['ADDON']['firephp']['versioncheck'] = 3;
+$REX['ADDON']['firephp']['versioncheck'] = 1;
 // --- /DYN
 
 // BACKEND CSS
 ////////////////////////////////////////////////////////////////////////////////
+$backendcss = '<link rel="stylesheet" type="text/css" href="../files/addons/'.$myself.'/backend.css" />';
+
+include_once $myroot.'/functions/function.rexdev_css_add.inc.php';
+
 if ($REX['REDAXO']) {
-  require_once $REX['INCLUDE_PATH'].'/addons/'.$myself.'/functions/function.rex_'.$myself.'_css_add.inc.php';
-  rex_register_extension('PAGE_HEADER', 'rex_'.$myself.'_css_add');
+  rex_register_extension('PAGE_HEADER', 'rexdev_css_add',array('css'=>$backendcss));
 }
 
 // LIB SWITCH
