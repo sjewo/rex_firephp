@@ -16,19 +16,39 @@
 ////////////////////////////////////////////////////////////////////////////////
 session_start();
 
+// PARAMS
+////////////////////////////////////////////////////////////////////////////////
+$mode = rex_request('mode', 'int');
+
 // ADDON IDENTIFIER & ROOT DIR
 ////////////////////////////////////////////////////////////////////////////////
 $myself = "firephp";
 $myroot = $REX['INCLUDE_PATH'].'/addons/'.$myself;
 
+// ADDON REX COMMONS
+////////////////////////////////////////////////////////////////////////////////
+$REX['ADDON']['rxid'][$myself] = '374';
+$REX['ADDON']['page'][$myself] = $myself;
+$REX['ADDON']['name'][$myself] = 'FirePHP';
+$REX['ADDON']['perm'][$myself] = 'firephp[]';
+$REX['ADDON'][$myself]['VERSION'] = array
+(
+  'VERSION'      => 0,
+  'MINORVERSION' => 4,
+  'SUBVERSION'   => 2,
+  'REVISION'     => intval(ereg_replace('[^0-9]',"","$Revision$"))
+);
+
+$addonversion = $REX['ADDON'][$myself]['VERSION'];
+array_pop($addonversion);
+$REX['ADDON']['version'][$myself] = implode('.', $addonversion);
+
+$REX['ADDON']['author'][$myself] = "jeandeluxe | rexdev.de";
+$REX['ADDON']['supportpage'][$myself] = "forum.redaxo.de";
+$REX['PERM'][] = 'firephp[]';
+
 // ADDON VERSION, LIB VERSIONS, MENU STRINGS, MODE STRINGS -> $REX
 ////////////////////////////////////////////////////////////////////////////////
-$REX['ADDON'][$myself]['VERSION'] = array(
-'VERSION' => 0,
-'MINORVERSION' => 4,
-'SUBVERSION' => 2,
-'REVISION' => intval(ereg_replace('[^0-9]',"","$Revision$"))
-);
 
 $REX['ADDON'][$myself]['libs'] = array (
 1=>'FirePHPCore-0.3.1',
@@ -50,27 +70,13 @@ $REX['ADDON'][$myself]['versioncheckstring'] = array (
 3=>'Standard Versionen und Revisionen'
 );
 
-// ADDON REX COMMONS
-////////////////////////////////////////////////////////////////////////////////
-$REX['ADDON']['rxid'][$myself] = '374';
-$REX['ADDON']['page'][$myself] = $myself;
-$REX['ADDON']['name'][$myself] = 'FirePHP';
-$REX['ADDON']['perm'][$myself] = 'firephp[]';
-
-$commonversion = $REX['ADDON'][$myself]['VERSION'];
-array_pop($commonversion);
-$REX['ADDON']['version'][$myself] = implode('.', $commonversion);
-
-$REX['ADDON']['author'][$myself] = "jeandeluxe | rexdev.de";
-$REX['ADDON']['supportpage'][$myself] = "forum.redaxo.de";
-$REX['PERM'][] = 'firephp[]';
 
 // DYNAMIC ADDON SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
-$REX['ADDON']['firephp']['mode'] = 3; 
+$REX['ADDON']['firephp']['mode'] = 1; 
 $REX['ADDON']['firephp']['uselib'] = 1;
-$REX['ADDON']['firephp']['versioncheck'] = 1;
+$REX['ADDON']['firephp']['versioncheck'] = 3;
 // --- /DYN
 
 // BACKEND CSS
