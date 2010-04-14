@@ -74,9 +74,9 @@ $REX['ADDON'][$myself]['versioncheckstring'] = array (
 // DYNAMIC ADDON SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
-$REX['ADDON']['firephp']['mode'] = 1; 
+$REX['ADDON']['firephp']['mode'] = 2; 
 $REX['ADDON']['firephp']['uselib'] = 1;
-$REX['ADDON']['firephp']['versioncheck'] = 3;
+$REX['ADDON']['firephp']['versioncheck'] = 1;
 // --- /DYN
 
 // BACKEND CSS
