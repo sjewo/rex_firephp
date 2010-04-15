@@ -76,16 +76,18 @@ $REX['ADDON'][$myself]['versioncheckstring'] = array (
 // --- DYN
 $REX['ADDON']['firephp']['mode'] = 2; 
 $REX['ADDON']['firephp']['uselib'] = 1;
-$REX['ADDON']['firephp']['versioncheck'] = 1;
+$REX['ADDON']['firephp']['versioncheck'] = 3;
 // --- /DYN
 
 // BACKEND CSS
 ////////////////////////////////////////////////////////////////////////////////
-$backendcss = '<link rel="stylesheet" type="text/css" href="../files/addons/'.$myself.'/backend.css" />';
+$header = array(
+'  <link rel="stylesheet" type="text/css" href="../files/addons/'.$myself.'/backend.css" media="screen, projection, print" />'
+);
 
 if ($REX['REDAXO']) {
-  include_once $myroot.'/functions/function.rexdev_css_add.inc.php';
-  rex_register_extension('PAGE_HEADER', 'rexdev_css_add',array('css'=>$backendcss));
+  include_once $myroot.'/functions/function.rexdev_header_add.inc.php';
+  rex_register_extension('PAGE_HEADER', 'rexdev_header_add',$header);
 }
 
 // LIB SWITCH
