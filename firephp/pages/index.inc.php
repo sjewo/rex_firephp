@@ -14,46 +14,42 @@
 
 // GET PARAMS
 ////////////////////////////////////////////////////////////////////////////////
-$myself = rex_request('page', 'string');
+$myself  = rex_request('page', 'string');
 $subpage = rex_request('subpage', 'string');
 $chapter = rex_request('chapter', 'string');
-$func = rex_request('func', 'string');
+$func    = rex_request('func', 'string');
+$myroot  = $REX['INCLUDE_PATH'].'/addons/'.$myself;
 
+// INCLUDE FUNCTIONS
+////////////////////////////////////////////////////////////////////////////////
+require_once $myroot.'/functions/function.rexdev_incparse.inc.php';
+
+// REX TOP
+////////////////////////////////////////////////////////////////////////////////
 require $REX['INCLUDE_PATH'] . '/layout/top.php';
 
-// Build Subnavigation
+// BUILD SUBNAVIGATION
 ////////////////////////////////////////////////////////////////////////////////
 $subpages = array (
   array ('','Settings'),
   array ('help','Hilfe')
 );
 
-// SUBPAGE NAVI
-////////////////////////////////////////////////////////////////////////////////
 $versionstring = $REX['ADDON'][$myself]['VERSION'];
 array_pop($versionstring);
 $versionstring = implode('.', $versionstring);
 rex_title('FirePHP <span class="addonversion">'.$versionstring.'</span>', $subpages);
 
 
-// Include Current Page
+// SET DEFAULT PAGE / INCLUDE PAGE
 ////////////////////////////////////////////////////////////////////////////////
-switch($subpage)
-{
-  case 'help' :
-  {
-    break;
-  }
-
-  default:
-  {
-	  $subpage = 'settings';
-    break;
-  }
+if(!$subpage) {
+  $subpage = 'settings';
 }
+require $REX['INCLUDE_PATH'] . '/addons/'.$myself.'/pages/'.$subpage.'.inc.php';
 
-require $REX['INCLUDE_PATH'] . '/addons/firephp/pages/'.$subpage.'.inc.php';
-
+// REX BOTTOM
+////////////////////////////////////////////////////////////////////////////////
 require $REX['INCLUDE_PATH'] . '/layout/bottom.php';
 
 ?>

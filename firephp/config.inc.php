@@ -154,7 +154,7 @@ switch ($mode):
     $firephp->setEnabled(false);
     break;
 endswitch;
-
+fb($REX['EXTENSIONS']['PAGE_HEADER'],'REX');
 /*
 fb($REX,'backend $REX');
 fb($REX['USER'],'backend $REX[USER]');

@@ -14,102 +14,55 @@
 
 // GET PARAMS
 ////////////////////////////////////////////////////////////////////////////////
-$page = rex_request('page', 'string');
+$myself = rex_request('page', 'string');
 $subpage = rex_request('subpage', 'string');
 $chapter = rex_request('chapter', 'string');
 $func = rex_request('func', 'string');
 
-// Addon Identifier
-$addon = "firephp";
-
 // ACTIVE LIB
-$active_lib = 'libs/'.$REX['ADDON'][$addon]['libs'][$REX['ADDON'][$addon]['uselib']];
-fb($active_lib,'$active_lib');
+$active_lib = 'libs/'.$REX['ADDON'][$myself]['libs'][$REX['ADDON'][$myself]['uselib']];
 
 // Subnavigation Items
-$chapterpages = array (''             => 'Addon Hilfe', 
-										'changelog'    => 'Addon Changelog', 
-										'libchangelog' => 'FirePHP Changelog',
-										'libreadme'    => 'FirePHP Readme',
-										'liblicense'   => 'FirePHP License',
-										'libcredits'   => 'FirePHP Credits');
+$chapterpages = array (
+''             => array('Addon Hilfe',       '_readme.txt',                           'textile'),
+'changelog'    => array('Addon Changelog',   '_changelog.txt',                      'textile'),
+'libchangelog' => array('FirePHP Changelog', $active_lib.'/CHANGELOG',              'txt'),
+'libreadme'    => array('FirePHP Readme',    $active_lib.'/README',                 'txt'),
+'liblicense'   => array('FirePHP License',   $active_lib.'/lib/FirePHPCore/LICENSE','txt'),
+'libcredits'   => array('FirePHP Credits',   $active_lib.'/CREDITS',                'txt')
+);
 
-//if (!isset($chapter)) $chapter = '';
-
-// Build Help Subnavigation
+// BUILD CHAPTER NAVIGATION
+////////////////////////////////////////////////////////////////////////////////
 $chapternav = '';
-foreach ($chapterpages as $thischapter => $chaptertitle)
+foreach ($chapterpages as $chapterparam => $chapterprops)
 {
-	if ($chapter != $thischapter)
-	{
-	$chapternav .= ' | <a href="?page='.$addon.'&subpage=help&chapter='.$thischapter.'">'.$chaptertitle.'</a>';
-	}
-	else
-	{
-	$chapternav .= ' | '.$chaptertitle;
-	}
+  if ($chapter != $chapterparam) {
+    $chapternav .= ' | <a href="?page='.$myself.'&subpage=help&chapter='.$chapterparam.'">'.$chapterprops[0].'</a>';
+  } else {
+    $chapternav .= ' | '.$chapterprops[0];
+  }
 }
-// echo '<p class="helpnav">'.ltrim($chapternav, " | ").'</p><hr />';
+$chapternav = ltrim($chapternav, " | ");
 
-// Assign Include Files
-switch ($chapter)
-{
-	case 'changelog':
-		$file = '_changelog.txt';
-		$parse = true;
-		break;
-	case 'libchangelog':
-		$file = $active_lib.'/CHANGELOG';
-		$parse = false;
-		break;
-	case 'liblicense':
-		$file = $active_lib.'/lib/FirePHPCore/LICENSE';
-		$parse = false;
-		break;
-	case 'libreadme':
-		$file = $active_lib.'/README';
-		$parse = false;
-		break;
-	case 'libcredits':
-		$file = $active_lib.'/CREDITS';
-		$parse = false;
-		break;
-		
-  default:
-		$file = '_readme.txt';
-		$parse = true;
-}
+// BUILD CHAPTER OUTPUT
+////////////////////////////////////////////////////////////////////////////////
+$myroot = $REX['INCLUDE_PATH']. '/addons/'.$myself.'/';
+$source    = $chapterpages[$chapter][1];
+$parse     = $chapterpages[$chapter][2];
 
-echo '<div class="rex-addon-output">
-  <h2 class="rex-hl2" style="font-size:1em">'.ltrim($chapternav, " | ").'</h2>
+$html = rexdev_incparse($myroot,$source,$parse,true);
+
+// ADDON OUTPUT
+////////////////////////////////////////////////////////////////////////////////
+echo '
+<div class="rex-addon-output">
+  <h2 class="rex-hl2" style="font-size:1em">'.$chapternav.'</h2>
   <div class="rex-addon-content">
-	<div class= "firephp">';
-
-$file = $REX['INCLUDE_PATH']. '/addons/'.$addon.'/'.$file;
-$fh = fopen($file, 'r');
-$content = fread($fh, filesize($file));
-if ($parse == true)
-{
-$textile = htmlspecialchars_decode($content);
-$textile = str_replace("<br />","",$textile);
-$textile = str_replace("&#039;","'",$textile);
-if (strpos($REX['LANG'],'utf'))
-{
-  echo rex_a79_textile($textile);
-}
-else
-{
-  echo utf8_decode(rex_a79_textile($textile));
-}
-}
-else
-{
-	echo '<pre class="plain">'.$content.'</pre>';
-}
-
-echo '</div>
-</div>
+    <div class= "firephp">
+    '.$html.'
+    </div>
+  </div>
 </div>';
-
 
 ?>
