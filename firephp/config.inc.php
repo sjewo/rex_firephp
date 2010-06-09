@@ -9,7 +9,7 @@
 *
 * @package redaxo4
 * @version 0.4.2
-* $Id$: 
+* $Id$:
 */
 
 // START SESSION
@@ -74,7 +74,7 @@ $REX['ADDON'][$myself]['versioncheckstring'] = array (
 // DYNAMIC ADDON SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
-$REX['ADDON']['firephp']['mode'] = 2; 
+$REX['ADDON']['firephp']['mode'] = 2;
 $REX['ADDON']['firephp']['uselib'] = 1;
 $REX['ADDON']['firephp']['versioncheck'] = 3;
 // --- /DYN
@@ -102,7 +102,7 @@ switch(intval(PHP_VERSION)):
     $firephp = FirePHP::getInstance(true);
     $firephp->setEnabled(false);
     break;
-  
+
   case 5:
     /* VERSION F&Uuml;R PHP 5 */
     require_once($active_lib.'/lib/FirePHPCore/FirePHP.class.php');
@@ -110,7 +110,7 @@ switch(intval(PHP_VERSION)):
     $firephp = FirePHP::getInstance(true);
     $firephp->setEnabled(false);
     break;
-    
+
   default:
     break;
 endswitch;
@@ -122,19 +122,19 @@ if(!intval($mode))
   {
     $mode = $REX['ADDON'][$myself]['mode'];
   }
-  
+
 switch ($mode):
   case 1:
     $REX['ADDON']['name'][$myself] = $REX['ADDON'][$myself]['menustring'][$mode];
     $firephp->setEnabled(false);
     break;
-    
+
   case 2:
     if ($_SESSION[$REX['INSTNAME']]['UID']==1)
     {
       $REX['ADDON']['name'][$myself] = $REX['ADDON'][$myself]['menustring'][$mode];
       $firephp->setEnabled(true);
-      fb('FirePHP Mode: SESSION.' ,FirePHP::INFO);
+      //fb('FirePHP Mode: SESSION.' ,FirePHP::INFO);
     }
     else
     {
@@ -142,13 +142,13 @@ switch ($mode):
       $firephp->setEnabled(false);
     }
     break;
-  
+
   case 3:
     $REX['ADDON']['name'][$myself] = $REX['ADDON'][$myself]['menustring'][$mode];
     $firephp->setEnabled(true);
     fb('FirePHP Mode: PERMANENT!' ,FirePHP::WARN);
     break;
-    
+
   default:
     $REX['ADDON']['name'][$myself] = $REX['ADDON'][$myself]['menustring'][1];
     $firephp->setEnabled(false);
