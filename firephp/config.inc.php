@@ -36,7 +36,7 @@ $REX['ADDON'][$myself]['VERSION'] = array
   'VERSION'      => 0,
   'MINORVERSION' => 4,
   'SUBVERSION'   => 2,
-  'REVISION'     => intval(ereg_replace('[^0-9]','','Revision: 88 $'))
+  'REVISION'     => intval(ereg_replace('[^0-9]','',"/*Revision: 88 $*/"))
 );
 
 $addonversion = $REX['ADDON'][$myself]['VERSION'];
