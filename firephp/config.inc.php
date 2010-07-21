@@ -52,8 +52,9 @@ $REX['PERM'][] = $myself.'[]';
 ////////////////////////////////////////////////////////////////////////////////
 
 $REX['ADDON'][$myself]['libs'] = array (
-1=>'FirePHPCore-0.3.1',
-2=>'FirePHPCore-0.3.2rc1'
+'FirePHPCore-0.3.1'=>'FirePHPCore-0.3.1',
+'FirePHPCore-0.3.2rc1'=>'FirePHPCore-0.3.2rc1',
+'FirePHPCore-0.3.2rc3'=>'FirePHPCore-0.3.2rc3'
 );
 $REX['ADDON'][$myself]['menustring'] = array (
 1=>'FirePHP',
@@ -62,22 +63,22 @@ $REX['ADDON'][$myself]['menustring'] = array (
 );
 $REX['ADDON'][$myself]['modestring'] = array (
 1=>'inaktiv',
-2=>'SESSION Mode - w&auml;hrend Admin Session aktiviert',
-3=>'PERMANENT Mode - grunds&auml;tzlich aktiviert'
+2=>'SESSION Mode - während Admin Session aktiviert',
+3=>'PERMANENT Mode - grundsätzlich aktiviert'
 );
-$REX['ADDON'][$myself]['versioncheckstring'] = array (
-1=>'Nein',
-2=>'Standard Versionen',
-3=>'Standard Versionen und Revisionen'
+$REX['ADDON'][$myself]['status2console'] = array (
+1=>'keine Statusmeldungen',
+2=>'FirePHP Konsole: Meldung nur für PERMANENT Mode',
+3=>'FirePHP Konsole: Meldung für SESSION & PERMANENT Mode'
 );
 
 
 // DYNAMIC ADDON SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
-$REX['ADDON']['firephp']['mode'] = 3;
-$REX['ADDON']['firephp']['uselib'] = 1;
-$REX['ADDON']['firephp']['versioncheck'] = 0;
+$REX["ADDON"]["firephp"]["settings"]["mode"] = 2;
+$REX["ADDON"]["firephp"]["settings"]["uselib"] = 'FirePHPCore-0.3.1';
+$REX["ADDON"]["firephp"]["settings"]["status2console"] = 2;
 // --- /DYN
 
 // BACKEND CSS
@@ -93,7 +94,7 @@ if ($REX['REDAXO']) {
 
 // LIB SWITCH
 ////////////////////////////////////////////////////////////////////////////////
-$active_lib = 'libs/'.$REX['ADDON'][$myself]['libs'][$REX['ADDON'][$myself]['uselib']];
+$active_lib = 'libs/'.$REX['ADDON'][$myself]['libs'][$REX['ADDON'][$myself]['settings']['uselib']];
 
 switch(intval(PHP_VERSION)):
   case 4:
@@ -121,7 +122,7 @@ endswitch;
 ////////////////////////////////////////////////////////////////////////////////
 if(!intval($mode))
   {
-    $mode = $REX['ADDON'][$myself]['mode'];
+    $mode = $REX['ADDON'][$myself]['settings']['mode'];
   }
 
 switch ($mode):
@@ -135,7 +136,10 @@ switch ($mode):
     {
       $REX['ADDON']['name'][$myself] = $REX['ADDON'][$myself]['menustring'][$mode];
       $firephp->setEnabled(true);
-      //fb('FirePHP Mode: SESSION.' ,FirePHP::INFO);
+      if($REX['ADDON']['firephp']['settings']['status2console'] > 2)
+      {
+        fb('FirePHP Mode: SESSION.' ,FirePHP::INFO);
+      }
     }
     else
     {
@@ -147,7 +151,10 @@ switch ($mode):
   case 3:
     $REX['ADDON']['name'][$myself] = $REX['ADDON'][$myself]['menustring'][$mode];
     $firephp->setEnabled(true);
-    fb('FirePHP Mode: PERMANENT!' ,FirePHP::WARN);
+      if($REX['ADDON']['firephp']['settings']['status2console'] > 1)
+      {
+        fb('FirePHP Mode: PERMANENT!' ,FirePHP::WARN);
+      }
     break;
 
   default:

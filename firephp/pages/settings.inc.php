@@ -12,72 +12,97 @@
 * $Id$:
 */
 
-// PARAMS
 ////////////////////////////////////////////////////////////////////////////////
-$myself       = rex_request('page', 'string');
-$subpage      = rex_request('subpage', 'string');
-$chapter      = rex_request('chapter', 'string');
-$func         = rex_request('func', 'string');
-$mode         = rex_request('mode', 'int');
-$uselib       = rex_request('uselib', 'int');
-$versioncheck = rex_request('versioncheck', 'int');
+$myself    = rex_request('page'   , 'string');
+$subpage   = rex_request('subpage', 'string');
+$func      = rex_request('func'   , 'string');
 
-// UPDATE/WRITE SETTINGS
+// ADDON RELEVANTES AUS $REX HOLEN
 ////////////////////////////////////////////////////////////////////////////////
-if ($func == "update")
+$myREX = $REX['ADDON'][$myself];
+
+// FORMULAR PARAMETER SPEICHERN
+////////////////////////////////////////////////////////////////////////////////
+if ($func == 'savesettings')
 {
-  $REX['ADDON'][$myself]['mode'] = $mode;
-  $REX['ADDON'][$myself]['uselib'] = $uselib;
-  $REX['ADDON'][$myself]['versioncheck'] = $versioncheck;
-
-  $content = '$REX[\'ADDON\'][\'firephp\'][\'mode\'] = '.$mode.';
-$REX[\'ADDON\'][\'firephp\'][\'uselib\'] = '.$uselib.';
-$REX[\'ADDON\'][\'firephp\'][\'versioncheck\'] = '.$versioncheck.';
-';
+  $content = '';
+  foreach($_GET as $key => $val)
+  {
+    if(!in_array($key,array('page','subpage','func','submit','PHPSESSID')))
+    {
+      $myREX['settings'][$key] = $val;
+      if(is_array($val))
+      {
+        $content .= '$REX["ADDON"]["'.$myself.'"]["settings"]["'.$key.'"] = '.var_export($val,true).';'."\n";
+      }
+      else
+      {
+        if(is_numeric($val))
+        {
+          $content .= '$REX["ADDON"]["'.$myself.'"]["settings"]["'.$key.'"] = '.$val.';'."\n";
+        }
+        else
+        {
+          $content .= '$REX["ADDON"]["'.$myself.'"]["settings"]["'.$key.'"] = \''.$val.'\';'."\n";
+        }
+      }
+    }
+  }
 
   $file = $REX['INCLUDE_PATH'].'/addons/'.$myself.'/config.inc.php';
   rex_replace_dynamic_contents($file, $content);
   echo rex_info('Einstellungen wurden gespeichert.');
 }
 
-// MODE SELECT BOX OPTION
+// MODE SELECT
 ////////////////////////////////////////////////////////////////////////////////
-$mode_option = '';
+$id = 'mode';
+$tmp = new rex_select();
+$tmp->setSize(1);
+$tmp->setName($id);
 foreach($REX['ADDON'][$myself]['modestring'] as $key => $string)
 {
-  if($REX['ADDON'][$myself]['mode']!=$key)
-  {
-    $mode_option .= '<option value="'.$key.'">'.$string.'</option>';
-  }
-  else
-  {
-    $mode_option .= '<option value="'.$key.'" selected="selected">'.$string.'</option>';
-  }
+  $tmp->addOption($string,$key);
 }
+$tmp->setSelected($myREX['settings'][$id]);
+$mode_select = $tmp->get();
 
-// LIB SELECT BOX OPTION
+// LIB SELECT
 ////////////////////////////////////////////////////////////////////////////////
-$lib_option = '';
+$id = 'uselib';
+$tmp = new rex_select();
+$tmp->setSize(1);
+$tmp->setName($id);
 foreach($REX['ADDON'][$myself]['libs'] as $key => $string)
 {
-  if($REX['ADDON'][$myself]['uselib']!=$key)
-  {
-    $lib_option .= '<option value="'.$key.'">'.$string.'</option>';
-  }
-  else
-  {
-    $lib_option .= '<option value="'.$key.'" selected="selected">'.$string.'</option>';
-  }
+  $tmp->addOption($string,$key);
 }
+$tmp->setSelected($myREX['settings'][$id]);
+$lib_select = $tmp->get();
 
+// STATUS MSG SELECT
+////////////////////////////////////////////////////////////////////////////////
+$id = 'status2console';
+$tmp = new rex_select();
+$tmp->setSize(1);
+$tmp->setName($id);
+foreach($REX['ADDON'][$myself]['status2console'] as $key => $string)
+{
+  $tmp->addOption($string,$key);
+}
+$tmp->setSelected($myREX['settings'][$id]);
+$status_select = $tmp->get();
+
+// MAIN
+////////////////////////////////////////////////////////////////////////////////
 echo '
 <div class="rex-addon-output">
   <div class="rex-form">
 
   <form action="index.php" method="get">
     <input type="hidden" name="page" value="'.$myself.'" />
-    <input type="hidden" name="subpage" value="settings" />
-    <input type="hidden" name="func" value="update" />
+    <input type="hidden" name="subpage" value="'.$subpage.'" />
+    <input type="hidden" name="func" value="savesettings" />
 
         <fieldset class="rex-form-col-1">
           <legend>Settings</legend>
@@ -86,24 +111,27 @@ echo '
           <div class="rex-form-row">
             <p class="rex-form-col-a rex-form-select">
               <label for="mode">FirePHP Output:</label>
-              <select id="mode" name="mode">
-              '.$mode_option.'
-              </select>
+              '.$mode_select.'
             </p>
-          </div>
+          </div><!-- .rex-form-row -->
 
           <div class="rex-form-row">
             <p class="rex-form-col-a rex-form-select">
               <label for="uselib">Core Version:</label>
-              <select id="uselib" name="uselib">
-              '.$lib_option.'
-              </select>
+              '.$lib_select.'
             </p>
-          </div>
+          </div><!-- .rex-form-row -->
+
+          <div class="rex-form-row">
+            <p class="rex-form-col-a rex-form-select">
+              <label for="status2console">Status-Meldung:</label>
+              '.$status_select.'
+            </p>
+          </div><!-- .rex-form-row -->
 
           <div class="rex-form-row rex-form-element-v2">
             <p class="rex-form-submit">
-              <input class="rex-form-submit" type="submit" id="sendit" name="sendit" value="Einstellungen speichern" />
+              <input class="rex-form-submit" type="submit" id="submit" name="submit" value="Einstellungen speichern" />
             </p>
           </div>
 

@@ -3,13 +3,13 @@
 * FirePHP Addon
 *
 * FirePHP Lib Copyright (c) 2006-2010, Christoph Dorn, http://firephp.org
-* FirePHP Lib v 0.3.1 & 0.3.2rc1
+* FirePHP Lib v 0.3.1, 0.3.2rc1 &  0.3.2rc3
 *
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
 * @package redaxo4
 * @version 0.4.2
-* $Id$: 
+* $Id$:
 */
 
 // GET PARAMS
@@ -35,10 +35,7 @@ $subpages = array (
   array ('help','Hilfe')
 );
 
-$versionstring = $REX['ADDON'][$myself]['VERSION'];
-array_pop($versionstring);
-$versionstring = implode('.', $versionstring);
-rex_title('FirePHP <span class="addonversion">'.$versionstring.'</span>', $subpages);
+rex_title('FirePHP <span class="addonversion">'.implode('.',$REX['ADDON'][$myself]['VERSION']).'</span>', $subpages);
 
 
 // SET DEFAULT PAGE / INCLUDE PAGE
