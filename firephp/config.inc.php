@@ -22,31 +22,30 @@ $mode = rex_request('mode', 'int');
 
 // ADDON IDENTIFIER & ROOT DIR
 ////////////////////////////////////////////////////////////////////////////////
-$myself = "firephp";
+$myself = 'firephp';
 $myroot = $REX['INCLUDE_PATH'].'/addons/'.$myself;
 $Revision = '';
+
+// ADDON VERSION
+////////////////////////////////////////////////////////////////////////////////
+$Revision = '';
+$REX['ADDON'][$myself]['VERSION'] = array
+(
+  'VERSION'      => 0,
+  'MINORVERSION' => 4,
+  'SUBVERSION'   => preg_replace('/[^0-9]/','',"$Revision$")
+);
 
 // ADDON REX COMMONS
 ////////////////////////////////////////////////////////////////////////////////
 $REX['ADDON']['rxid'][$myself] = '374';
 $REX['ADDON']['page'][$myself] = $myself;
 $REX['ADDON']['name'][$myself] = 'FirePHP';
-$REX['ADDON']['perm'][$myself] = 'firephp[]';
-$REX['ADDON'][$myself]['VERSION'] = array
-(
-  'VERSION'      => 0,
-  'MINORVERSION' => 4,
-  'SUBVERSION'   => 2,
-  'REVISION'     => intval(ereg_replace('[^0-9]','',"$Revision$"))
-);
-
-$addonversion = $REX['ADDON'][$myself]['VERSION'];
-array_pop($addonversion);
-$REX['ADDON']['version'][$myself] = implode('.', $addonversion);
-
-$REX['ADDON']['author'][$myself] = "jeandeluxe | rexdev.de";
-$REX['ADDON']['supportpage'][$myself] = "forum.redaxo.de";
-$REX['PERM'][] = 'firephp[]';
+$REX['ADDON']['version'][$myself] = implode('.', $REX['ADDON'][$myself]['VERSION']);
+$REX['ADDON']['author'][$myself] = 'rexdev.de';
+$REX['ADDON']['supportpage'][$myself] = 'forum.redaxo.de';
+$REX['ADDON']['perm'][$myself] = $myself.'[]';
+$REX['PERM'][] = $myself.'[]';
 
 // ADDON VERSION, LIB VERSIONS, MENU STRINGS, MODE STRINGS -> $REX
 ////////////////////////////////////////////////////////////////////////////////
@@ -57,8 +56,8 @@ $REX['ADDON'][$myself]['libs'] = array (
 );
 $REX['ADDON'][$myself]['menustring'] = array (
 1=>'FirePHP',
-2=>'FirePHP <span>session</span>',
-3=>'FirePHP <em>permanent</em>'
+2=>'<span>FirePHP</span>',
+3=>'<em>FirePHP</em>'
 );
 $REX['ADDON'][$myself]['modestring'] = array (
 1=>'inaktiv',
