@@ -15,7 +15,7 @@
 // ERROR_REPORTING
 ////////////////////////////////////////////////////////////////////////////////
 @ ini_set('error_reporting', E_ALL);
-@ ini_set('display_errors', On);
+@ ini_set('display_errors', Off);
 
 // PARAMS
 ////////////////////////////////////////////////////////////////////////////////
@@ -131,7 +131,7 @@ switch ($mode):
     break;
 
   case 2:
-    if ($_SESSION[$REX['INSTNAME']]['UID']==1)
+    if (isset($_SESSION[$REX['INSTNAME']]['UID']) && $_SESSION[$REX['INSTNAME']]['UID']==1)
     {
       $REX['ADDON']['name'][$myself] = $REX['ADDON'][$myself]['menustring'][$mode];
       $firephp->setEnabled(true);
