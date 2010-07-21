@@ -8,37 +8,17 @@
 *
 * @package redaxo4
 * @version 0.4.2
-* $Id$: 
+* $Id$:
 */
 
 /* BACKEND NAVI */
 
 #rex-navi-page-firephp a span {
-  color:#3EC94A;
-  background: white;
-  border: 1px solid #14568A;
-  border-right: 1px solid #EFF9F9;
-  border-bottom: 1px solid #EFF9F9;
-  padding:0 4px 0 4px;
-  margin-top:-1px;
-  -moz-border-radius:4px;
-  -webkit-border-radius:4px;
-  font-weight: normal;
-  float: right;
+  color:#7CE321 !important;
   }
 
 #rex-navi-page-firephp a em {
-  color:#EA1144;
-  background: white;
-  border: 1px solid #14568A;
-  border-right: 1px solid #EFF9F9;
-  border-bottom: 1px solid #EFF9F9;
-  padding:0 4px 0 4px;
-  margin-top:-1px;
-  -moz-border-radius:4px;
-  font-weight: normal;
-  font-style:normal;
-  float: right;
+  color:#EA1144 !important;
   }
 
 /* ADDON HEADLINE */
@@ -46,12 +26,12 @@ span.addonversion {
   font-size:10px;
   color:silver;
   }
-  
+
 /* ADDON CONTENT */
 .firephp {
   padding:2px 8px 8px 8px;
   }
-  
+
 .firephp p {
   font-size:12px;
   }
@@ -86,7 +66,7 @@ span.addonversion {
   margin:2px 0 10px 0;
   padding:0;
   }
-  
+
 .firephp cite,
 .firephp code,
 .firephp pre {

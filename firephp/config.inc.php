@@ -12,9 +12,10 @@
 * $Id$:
 */
 
-// START SESSION
+// ERROR_REPORTING
 ////////////////////////////////////////////////////////////////////////////////
-//session_start();
+@ ini_set('error_reporting', E_ALL);
+@ ini_set('display_errors', On);
 
 // PARAMS
 ////////////////////////////////////////////////////////////////////////////////
@@ -74,9 +75,9 @@ $REX['ADDON'][$myself]['versioncheckstring'] = array (
 // DYNAMIC ADDON SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
-$REX['ADDON']['firephp']['mode'] = 2;
+$REX['ADDON']['firephp']['mode'] = 3;
 $REX['ADDON']['firephp']['uselib'] = 1;
-$REX['ADDON']['firephp']['versioncheck'] = 3;
+$REX['ADDON']['firephp']['versioncheck'] = 0;
 // --- /DYN
 
 // BACKEND CSS
