@@ -76,9 +76,9 @@ $REX['ADDON'][$myself]['status2console'] = array (
 // DYNAMIC ADDON SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
-$REX["ADDON"]["firephp"]["settings"]["mode"] = 2;
+$REX["ADDON"]["firephp"]["settings"]["mode"] = 3;
 $REX["ADDON"]["firephp"]["settings"]["uselib"] = 'FirePHPCore-0.3.1';
-$REX["ADDON"]["firephp"]["settings"]["status2console"] = 2;
+$REX["ADDON"]["firephp"]["settings"]["status2console"] = 1;
 // --- /DYN
 
 // BACKEND CSS
