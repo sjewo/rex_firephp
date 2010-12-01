@@ -54,7 +54,9 @@ $REX['PERM'][] = $myself.'[]';
 $REX['ADDON'][$myself]['libs'] = array (
 'FirePHPCore-0.3.1'=>'FirePHPCore-0.3.1',
 'FirePHPCore-0.3.2rc1'=>'FirePHPCore-0.3.2rc1',
-'FirePHPCore-0.3.2rc3'=>'FirePHPCore-0.3.2rc3'
+'FirePHPCore-0.3.2rc3'=>'FirePHPCore-0.3.2rc3',
+'0.0.0master1011120949-firephp'=>'0.0.0master1011120949-firephp',
+'0.0.0master1008291629-firephp'=>'0.0.0master1008291629-firephp'
 );
 $REX['ADDON'][$myself]['menustring'] = array (
 1=>'FirePHP',
@@ -77,8 +79,8 @@ $REX['ADDON'][$myself]['status2console'] = array (
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
 $REX["ADDON"]["firephp"]["settings"]["mode"] = 3;
-$REX["ADDON"]["firephp"]["settings"]["uselib"] = 'FirePHPCore-0.3.1';
-$REX["ADDON"]["firephp"]["settings"]["status2console"] = 1;
+$REX["ADDON"]["firephp"]["settings"]["uselib"] = '0.0.0master1011120949-firephp';
+$REX["ADDON"]["firephp"]["settings"]["status2console"] = 3;
 // --- /DYN
 
 // BACKEND CSS
@@ -120,6 +122,15 @@ endswitch;
 
 // FIREPHP ON/OFF
 ////////////////////////////////////////////////////////////////////////////////
+
+// Configure FirePHP
+define('INSIGHT_DEBUG', true);
+define('INSIGHT_IPS', '*');
+define('INSIGHT_AUTHKEYS', '');
+define('INSIGHT_PATHS', __DIR__);
+define('INSIGHT_SERVER_PATH', '/index.php'); // assumes /index.php exists on your hostname
+// NOTE: Based on this configuration /index.php MUST include FirePHP
+
 if(!intval($mode))
   {
     $mode = $REX['ADDON'][$myself]['settings']['mode'];
