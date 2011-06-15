@@ -52,11 +52,8 @@ $REX['PERM'][] = $myself.'[]';
 ////////////////////////////////////////////////////////////////////////////////
 
 $REX['ADDON'][$myself]['libs'] = array (
-'FirePHPCore-0.3.1'=>'FirePHPCore-0.3.1',
-'FirePHPCore-0.3.2rc1'=>'FirePHPCore-0.3.2rc1',
-'FirePHPCore-0.3.2rc3'=>'FirePHPCore-0.3.2rc3',
-'0.0.0master1011120949-firephp'=>'0.0.0master1011120949-firephp',
-'0.0.0master1008291629-firephp'=>'0.0.0master1008291629-firephp'
+'FirePHPCore-0.3.2'=>'FirePHPCore-0.3.2',
+'0.0.0master1106021548-firephp'=>'0.0.0master1106021548-firephp',
 );
 $REX['ADDON'][$myself]['menustring'] = array (
 1=>'FirePHP',
@@ -79,8 +76,8 @@ $REX['ADDON'][$myself]['status2console'] = array (
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
 $REX["ADDON"]["firephp"]["settings"]["mode"] = 3;
-$REX["ADDON"]["firephp"]["settings"]["uselib"] = '0.0.0master1011120949-firephp';
-$REX["ADDON"]["firephp"]["settings"]["status2console"] = 3;
+$REX["ADDON"]["firephp"]["settings"]["uselib"] = 'FirePHPCore-0.3.2';
+$REX["ADDON"]["firephp"]["settings"]["status2console"] = 1;
 // --- /DYN
 
 // BACKEND CSS
@@ -113,6 +110,7 @@ switch(intval(PHP_VERSION)):
     require_once($active_lib.'/lib/FirePHPCore/fb.php');
     $firephp = FirePHP::getInstance(true);
     $firephp->setEnabled(false);
+    $firephp->setOption('maxDepth', 4);
     break;
 
   default:
@@ -124,11 +122,11 @@ endswitch;
 ////////////////////////////////////////////////////////////////////////////////
 
 // Configure FirePHP
-define('INSIGHT_DEBUG', true);
-define('INSIGHT_IPS', '*');
-define('INSIGHT_AUTHKEYS', '');
-define('INSIGHT_PATHS', __DIR__);
-define('INSIGHT_SERVER_PATH', '/index.php'); // assumes /index.php exists on your hostname
+//define('INSIGHT_DEBUG', true);
+//define('INSIGHT_SERVER_PATH', '/index.php'); // assumes /index.php exists on your hostname
+//define('INSIGHT_IPS', '*');
+//define('INSIGHT_AUTHKEYS', '');
+//define('INSIGHT_PATHS', '__DIR__');
 // NOTE: Based on this configuration /index.php MUST include FirePHP
 
 if(!intval($mode))
@@ -174,11 +172,11 @@ switch ($mode):
     break;
 endswitch;
 
-/*
-fb($REX['EXTENSIONS']['PAGE_HEADER'],'REX');
+
+/*fb($REX['EXTENSIONS']['PAGE_HEADER'],'REX');
 fb($REX,'backend $REX');
 fb($REX['USER'],'backend $REX[USER]');
 fb($REX['ADDON']['firephp'],'backend $REX[ADDON][firephp]');
-fb($_SESSION[$REX['INSTNAME']]['UID'],'backend $_SESSION[$REX[INSTNAME]][UID]');
-*/
+fb($_SESSION[$REX['INSTNAME']]['UID'],'backend $_SESSION[$REX[INSTNAME]][UID]');*/
+
 ?>
