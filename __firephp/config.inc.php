@@ -66,8 +66,8 @@ $REX['ADDON'][$mypage]['menustring'] = array (
 );
 $REX['ADDON'][$mypage]['modestring'] = array (
   1=>'inaktiv',
-  2=>'SESSION Mode - während Admin Session aktiviert',
-  3=>'PERMANENT Mode - grundsätzlich aktiviert'
+  2=>'während Admin Session aktiviert - SESSION Mode - ',
+  3=>'grundsätzlich aktiviert - PERMANENT Mode - '
 );
 $REX['ADDON'][$mypage]['status2console'] = array (
   1=>'keine Statusmeldungen',
@@ -125,7 +125,8 @@ if(!intval($mode))
     $mode = $REX['ADDON'][$mypage]['settings']['mode'];
   }
 
-switch ($mode):
+switch ($mode)
+{
   case 1:
     $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
     $firephp->setEnabled(false);
@@ -160,14 +161,6 @@ switch ($mode):
   default:
     $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][1];
     $firephp->setEnabled(false);
-    break;
-endswitch;
-
-
-/*fb($REX['EXTENSIONS']['PAGE_HEADER'],'REX');
-fb($REX,'backend $REX');
-fb($REX['USER'],'backend $REX[USER]');
-fb($REX['ADDON']['__firephp'],'backend $REX[ADDON][firephp]');
-fb($_SESSION[$REX['INSTNAME']]['UID'],'backend $_SESSION[$REX[INSTNAME]][UID]');*/
+}
 
 ?>
