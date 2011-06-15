@@ -118,7 +118,10 @@ switch(intval(PHP_VERSION))
     require_once($active_lib.'/lib/FirePHPCore/fb.php');
     $firephp = FirePHP::getInstance(true);
     $firephp->setEnabled(false);
-    $firephp->setOption('maxDepth', $REX['ADDON'][$mypage]['settings']['maxdepth']);
+    if($REX['ADDON'][$mypage]['settings']['maxdepth']>0)
+    {
+      $firephp->setOption('maxDepth',$REX['ADDON'][$mypage]['settings']['maxdepth']);
+    }
 }
 
 
