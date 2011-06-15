@@ -193,7 +193,7 @@ class FirePHP {
      * @var boolean
      */
     protected $throwAssertionExceptions = false;
-    
+
     /**
      * Wildfire protocol message index
      *
@@ -228,13 +228,20 @@ class FirePHP {
      * @var object
      */
     protected $objectStack = array();
-    
+
     /**
      * Flag to enable/disable logging
      * 
      * @var boolean
      */
     protected $enabled = true;
+
+    /**
+     * The insight console to log to if applicable
+     * 
+     * @var object
+     */
+    protected $logToInsightConsole = null;
 
     /**
      * When the object gets serialized only include specific object members.
@@ -269,7 +276,7 @@ class FirePHP {
     {
         return self::setInstance(new self());
     }
-    
+
     /**
      * Set the instance of the FirePHP singleton
      * 
@@ -280,7 +287,25 @@ class FirePHP {
     {
         return self::$instance = $instance;
     }
-    
+
+    /**
+     * Set an Insight console to direct all logging calls to
+     * 
+     * @param object $console The console object to log to
+     * @return void
+     */
+    public function setLogToInsightConsole($console)
+    {
+        if(is_string($console)) {
+            if(get_class($this)!='FirePHP_Insight' && !is_subclass_of($this, 'FirePHP_Insight')) {
+                throw new Exception('FirePHP instance not an instance or subclass of FirePHP_Insight!');
+            }
+            $this->logToInsightConsole = $this->to('request')->console($console);
+        } else {
+            $this->logToInsightConsole = $console;
+        }
+    }
+
     /**
      * Enable and disable logging to Firebug
      * 
@@ -711,11 +736,18 @@ class FirePHP {
      */
     public function fb($Object)
     {
-  
-        if (!$this->enabled) {
+        if($this instanceof FirePHP_Insight && method_exists($this, '_logUpgradeClientMessage')) {
+            if(!FirePHP_Insight::$upgradeClientMessageLogged) {    // avoid infinite recursion as _logUpgradeClientMessage() logs a message
+                $this->_logUpgradeClientMessage();
+            }
+        }
+
+        static $insightGroupStack = array();
+
+        if (!$this->getEnabled()) {
             return false;
         }
-      
+
         if ($this->headersSent($filename, $linenum)) {
             // If we are logging from within the exception handler we cannot throw another exception
             if ($this->inExceptionHandler) {
@@ -762,7 +794,48 @@ class FirePHP {
         } else {
             throw $this->newException('Wrong number of arguments to fb() function!');
         }
-      
+
+        if($this->logToInsightConsole!==null && (get_class($this)=='FirePHP_Insight' || is_subclass_of($this, 'FirePHP_Insight'))) {
+            $msg = $this->logToInsightConsole;
+            if ($Object instanceof Exception) {
+                $Type = self::EXCEPTION;
+            }
+            if($Label && $Type!=self::TABLE && $Type!=self::GROUP_START) {
+                $msg = $msg->label($Label);
+            }
+            switch($Type) {
+                case self::DUMP:
+                case self::LOG:
+                    return $msg->log($Object);
+                case self::INFO:
+                    return $msg->info($Object);
+                case self::WARN:
+                    return $msg->warn($Object);
+                case self::ERROR:
+                    return $msg->error($Object);
+                case self::TRACE:
+                    return $msg->trace($Object);
+                case self::EXCEPTION:
+                	return $this->plugin('engine')->handleException($Object, $msg);
+                case self::TABLE:
+                    if (isset($Object[0]) && !is_string($Object[0]) && $Label) {
+                        $Object = array($Label, $Object);
+                    }
+                    return $msg->table($Object[0], array_slice($Object[1],1), $Object[1][0]);
+                case self::GROUP_START:
+                	$insightGroupStack[] = $msg->group(md5($Label))->open();
+                    return $msg->log($Label);
+                case self::GROUP_END:
+                	if(count($insightGroupStack)==0) {
+                	    throw new Error('Too many groupEnd() as opposed to group() calls!');
+                	}
+                	$group = array_pop($insightGroupStack);
+                    return $group->close();
+	            default:
+                    return $msg->log($Object);
+            }
+        }
+
         if (!$this->detectClientExtension()) {
             return false;
         }
@@ -912,7 +985,7 @@ class FirePHP {
             unset($meta['file']);
             unset($meta['line']);
         }
-    
+
         $this->setHeader('X-Wf-Protocol-1','http://meta.wildfirehq.org/Protocol/JsonStream/0.2');
         $this->setHeader('X-Wf-1-Plugin-1','http://meta.firephp.org/Wildfire/Plugin/FirePHP/Library-FirePHPCore/'.self::VERSION);
      
@@ -1056,17 +1129,38 @@ class FirePHP {
     }
 
     /**
+     * Get all request headers
+     * 
+     * @return array
+     */
+    public static function getAllRequestHeaders() {
+        static $_cached_headers = false;
+        if($_cached_headers!==false) {
+            return $_cached_headers;
+        }
+        $headers = array();
+        if(function_exists('getallheaders')) {
+            foreach( getallheaders() as $name => $value ) {
+                $headers[strtolower($name)] = $value;
+            }
+        } else {
+            foreach($_SERVER as $name => $value) {
+                if(substr($name, 0, 5) == 'HTTP_') {
+                    $headers[strtolower(str_replace(' ', '-', str_replace('_', ' ', substr($name, 5))))] = $value;
+                }
+            }
+        }
+        return $_cached_headers = $headers;
+    }
+
+    /**
      * Get a request header
      *
      * @return string|false
      */
     protected function getRequestHeader($Name)
     {
-        $headers = getallheaders();
-        if (isset($headers[$Name])) {
-            return $headers[$Name];
-        } else
-        // just in case headers got lower-cased in transport
+        $headers = self::getAllRequestHeaders();
         if (isset($headers[strtolower($Name)])) {
             return $headers[strtolower($Name)];
         }
@@ -1290,6 +1384,9 @@ class FirePHP {
      */
     protected static function is_utf8($str)
     {
+        if(function_exists('mb_detect_encoding')) {
+            return (mb_detect_encoding($str) == 'UTF-8');
+        }
         $c=0; $b=0;
         $bits=0;
         $len=strlen($str);
