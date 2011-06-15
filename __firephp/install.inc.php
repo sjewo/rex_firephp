@@ -12,17 +12,14 @@
 * $Id$: 
 */
 
-// Addon Identifier
-$mypage = "firephp";
-
 if (intval(PHP_VERSION) < 4)
 {
-	$REX['ADDON']['installmsg'][$mypage] = 'Dieses Addon ben&ouml;tigt mind. PHP4, und f&uuml;r volle Funktionalit&auml;t PHP 5!';
-	$REX['ADDON']['install'][$mypage] = 0;	
+	$REX['ADDON']['installmsg']['__firephp'] = 'Dieses Addon ben&ouml;tigt mind. PHP4, und f&uuml;r volle Funktionalit&auml;t PHP 5!';
+	$REX['ADDON']['install']['__firephp'] = 0;	
 }
 else
 { 
-	$REX['ADDON']['install'][$mypage] = 1;
+	$REX['ADDON']['install']['__firephp'] = 1;
 }
 
 

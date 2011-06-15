@@ -13,13 +13,13 @@
 */
 
 ////////////////////////////////////////////////////////////////////////////////
-$myself    = rex_request('page'   , 'string');
+$mypage    = rex_request('page'   , 'string');
 $subpage   = rex_request('subpage', 'string');
 $func      = rex_request('func'   , 'string');
 
 // ADDON RELEVANTES AUS $REX HOLEN
 ////////////////////////////////////////////////////////////////////////////////
-$myREX = $REX['ADDON'][$myself];
+$myREX = $REX['ADDON'][$mypage];
 
 // FORMULAR PARAMETER SPEICHERN
 ////////////////////////////////////////////////////////////////////////////////
@@ -33,23 +33,23 @@ if ($func == 'savesettings')
       $myREX['settings'][$key] = $val;
       if(is_array($val))
       {
-        $content .= '$REX["ADDON"]["'.$myself.'"]["settings"]["'.$key.'"] = '.var_export($val,true).';'."\n";
+        $content .= '$REX["ADDON"]["'.$mypage.'"]["settings"]["'.$key.'"] = '.var_export($val,true).';'."\n";
       }
       else
       {
         if(is_numeric($val))
         {
-          $content .= '$REX["ADDON"]["'.$myself.'"]["settings"]["'.$key.'"] = '.$val.';'."\n";
+          $content .= '$REX["ADDON"]["'.$mypage.'"]["settings"]["'.$key.'"] = '.$val.';'."\n";
         }
         else
         {
-          $content .= '$REX["ADDON"]["'.$myself.'"]["settings"]["'.$key.'"] = \''.$val.'\';'."\n";
+          $content .= '$REX["ADDON"]["'.$mypage.'"]["settings"]["'.$key.'"] = \''.$val.'\';'."\n";
         }
       }
     }
   }
 
-  $file = $REX['INCLUDE_PATH'].'/addons/'.$myself.'/config.inc.php';
+  $file = $REX['INCLUDE_PATH'].'/addons/'.$mypage.'/config.inc.php';
   rex_replace_dynamic_contents($file, $content);
   echo rex_info('Einstellungen wurden gespeichert.');
 }
@@ -60,7 +60,7 @@ $id = 'mode';
 $tmp = new rex_select();
 $tmp->setSize(1);
 $tmp->setName($id);
-foreach($REX['ADDON'][$myself]['modestring'] as $key => $string)
+foreach($REX['ADDON'][$mypage]['modestring'] as $key => $string)
 {
   $tmp->addOption($string,$key);
 }
@@ -73,7 +73,7 @@ $id = 'uselib';
 $tmp = new rex_select();
 $tmp->setSize(1);
 $tmp->setName($id);
-foreach($REX['ADDON'][$myself]['libs'] as $key => $string)
+foreach($REX['ADDON'][$mypage]['libs'] as $key => $string)
 {
   $tmp->addOption($string,$key);
 }
@@ -86,7 +86,7 @@ $id = 'status2console';
 $tmp = new rex_select();
 $tmp->setSize(1);
 $tmp->setName($id);
-foreach($REX['ADDON'][$myself]['status2console'] as $key => $string)
+foreach($REX['ADDON'][$mypage]['status2console'] as $key => $string)
 {
   $tmp->addOption($string,$key);
 }
@@ -100,7 +100,7 @@ echo '
   <div class="rex-form">
 
   <form action="index.php" method="get">
-    <input type="hidden" name="page" value="'.$myself.'" />
+    <input type="hidden" name="page" value="'.$mypage.'" />
     <input type="hidden" name="subpage" value="'.$subpage.'" />
     <input type="hidden" name="func" value="savesettings" />
 

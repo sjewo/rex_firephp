@@ -12,6 +12,6 @@
 * $Id$: 
 */
 
-header("Location: index.php?page=firephp&subpage=help");
+header("Location: index.php?page=__firephp&subpage=help");
 
 ?>

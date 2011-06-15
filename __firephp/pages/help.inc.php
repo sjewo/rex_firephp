@@ -14,17 +14,17 @@
 
 // GET PARAMS
 ////////////////////////////////////////////////////////////////////////////////
-$myself = rex_request('page', 'string');
+$mypage  = rex_request('page', 'string');
 $subpage = rex_request('subpage', 'string');
 $chapter = rex_request('chapter', 'string');
-$func = rex_request('func', 'string');
+$func    = rex_request('func', 'string');
 
 // ACTIVE LIB
-$active_lib = 'libs/'.$REX['ADDON'][$myself]['libs'][$REX['ADDON'][$myself]['uselib']];
+$active_lib = 'libs/'.$REX['ADDON'][$mypage]['libs'][$REX['ADDON'][$mypage]['settings']['uselib']];
 
 // Subnavigation Items
 $chapterpages = array (
-''             => array('Addon Hilfe',       '_readme.txt',                           'textile'),
+''             => array('Addon Hilfe',       '_readme.txt',                         'textile'),
 'changelog'    => array('Addon Changelog',   '_changelog.txt',                      'textile'),
 'libchangelog' => array('FirePHP Changelog', $active_lib.'/CHANGELOG',              'txt'),
 'libreadme'    => array('FirePHP Readme',    $active_lib.'/README',                 'txt'),
@@ -38,7 +38,7 @@ $chapternav = '';
 foreach ($chapterpages as $chapterparam => $chapterprops)
 {
   if ($chapter != $chapterparam) {
-    $chapternav .= ' | <a href="?page='.$myself.'&subpage=help&chapter='.$chapterparam.'">'.$chapterprops[0].'</a>';
+    $chapternav .= ' | <a href="?page='.$mypage.'&subpage=help&chapter='.$chapterparam.'">'.$chapterprops[0].'</a>';
   } else {
     $chapternav .= ' | '.$chapterprops[0];
   }
@@ -47,7 +47,7 @@ $chapternav = ltrim($chapternav, " | ");
 
 // BUILD CHAPTER OUTPUT
 ////////////////////////////////////////////////////////////////////////////////
-$myroot = $REX['INCLUDE_PATH']. '/addons/'.$myself.'/';
+$myroot = $REX['INCLUDE_PATH']. '/addons/'.$mypage.'/';
 $source    = $chapterpages[$chapter][1];
 $parse     = $chapterpages[$chapter][2];
 

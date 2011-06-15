@@ -12,6 +12,6 @@
 * $Id$: 
 */
 
-$REX['ADDON']['install']['firephp'] = 0;
+$REX['ADDON']['install']['__firephp'] = 0;
 
 ?>
