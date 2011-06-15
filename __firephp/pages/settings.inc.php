@@ -102,6 +102,19 @@ foreach($REX['ADDON'][$mypage]['status2console'] as $key => $string)
 $tmp->setSelected($myREX['settings'][$id]);
 $status_select = $tmp->get();
 
+// MAXDEPTH SELECT
+////////////////////////////////////////////////////////////////////////////////
+$id = 'maxdepth';
+$tmp = new rex_select();
+$tmp->setSize(1);
+$tmp->setName($id);
+foreach($REX['ADDON'][$mypage]['maxdepth'] as $key => $string)
+{
+  $tmp->addOption($string,$key);
+}
+$tmp->setSelected($myREX['settings'][$id]);
+$maxdepth_select = $tmp->get();
+
 // MAIN
 ////////////////////////////////////////////////////////////////////////////////
 echo '
@@ -135,6 +148,13 @@ echo '
           <p class="rex-form-col-a rex-form-select">
             <label for="status2console">Status-Meldung:</label>
             '.$status_select.'
+          </p>
+        </div><!-- .rex-form-row -->
+
+        <div class="rex-form-row">
+          <p class="rex-form-col-a rex-form-select">
+            <label for="status2console">MaxDepth:</label>
+            '.$maxdepth_select.'
           </p>
         </div><!-- .rex-form-row -->
 

@@ -74,6 +74,18 @@ $REX['ADDON'][$mypage]['status2console'] = array (
   2=>'FirePHP Konsole: Meldung nur für PERMANENT Mode',
   3=>'FirePHP Konsole: Meldung für SESSION & PERMANENT Mode'
 );
+$REX['ADDON'][$mypage]['maxdepth'] = array (
+  0=>'infinte',
+  1=>'1 level',
+  2=>'2 levels',
+  3=>'3 levels',
+  4=>'4 levels',
+  5=>'5 levels',
+  6=>'6 levels',
+  7=>'7 levels',
+  8=>'8 levels',
+  9=>'9 levels',
+);
 
 
 // DYNAMIC ADDON SETTINGS
@@ -82,6 +94,7 @@ $REX['ADDON'][$mypage]['status2console'] = array (
 $REX["ADDON"]["__firephp"]["settings"]["mode"] = 2;
 $REX["ADDON"]["__firephp"]["settings"]["uselib"] = 'FirePHPCore-0.3.2';
 $REX["ADDON"]["__firephp"]["settings"]["status2console"] = 1;
+$REX["ADDON"]["__firephp"]["settings"]["maxdepth"] = 0;
 // --- /DYN
 
 
@@ -105,7 +118,7 @@ switch(intval(PHP_VERSION))
     require_once($active_lib.'/lib/FirePHPCore/fb.php');
     $firephp = FirePHP::getInstance(true);
     $firephp->setEnabled(false);
-    $firephp->setOption('maxDepth', 4);
+    $firephp->setOption('maxDepth', $REX['ADDON'][$mypage]['settings']['maxdepth']);
 }
 
 
