@@ -86,15 +86,22 @@ $REX['ADDON'][$mypage]['maxdepth'] = array (
   8=>'8 levels',
   9=>'9 levels',
 );
+$REX['ADDON'][$mypage]['sqllog'] = array (
+  0=>'off',
+  1=>'backend',
+  2=>'frontend',
+  3=>'backend & frontend',
+);
 
 
 // DYNAMIC ADDON SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
-$REX["ADDON"]["__firephp"]["settings"]["mode"] = 2;
+$REX["ADDON"]["__firephp"]["settings"]["mode"] = 3;
 $REX["ADDON"]["__firephp"]["settings"]["uselib"] = 'FirePHPCore-0.3.2';
 $REX["ADDON"]["__firephp"]["settings"]["status2console"] = 1;
-$REX["ADDON"]["__firephp"]["settings"]["maxdepth"] = 0;
+$REX["ADDON"]["__firephp"]["settings"]["maxdepth"] = 3;
+$REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 0;
 // --- /DYN
 
 
