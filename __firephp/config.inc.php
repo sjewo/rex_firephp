@@ -10,7 +10,7 @@
 * @package redaxo4
 * @version 0.4.2
 * $Id$:
-*/ 
+*/
 
 // ERROR_REPORTING
 ////////////////////////////////////////////////////////////////////////////////
@@ -66,8 +66,8 @@ $REX['ADDON'][$mypage]['menustring'] = array (
 );
 $REX['ADDON'][$mypage]['modestring'] = array (
   1=>'inaktiv',
-  2=>'während Admin Session aktiviert - SESSION Mode - ',
-  3=>'grundsätzlich aktiviert - PERMANENT Mode - '
+  //2=>'während Admin Session aktiviert - SESSION Mode - ',
+  3=>'aktiv'
 );
 $REX['ADDON'][$mypage]['status2console'] = array (
   1=>'keine Statusmeldungen',
@@ -100,7 +100,7 @@ $REX['ADDON'][$mypage]['sqllog'] = array (
 $REX["ADDON"]["__firephp"]["settings"]["mode"] = 3;
 $REX["ADDON"]["__firephp"]["settings"]["uselib"] = 'FirePHPCore-0.3.2';
 $REX["ADDON"]["__firephp"]["settings"]["status2console"] = 1;
-$REX["ADDON"]["__firephp"]["settings"]["maxdepth"] = 3;
+$REX["ADDON"]["__firephp"]["settings"]["maxdepth"] = 5;
 $REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 0;
 // --- /DYN
 
