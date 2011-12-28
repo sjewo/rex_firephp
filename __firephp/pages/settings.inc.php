@@ -61,6 +61,12 @@ elseif($func == 'firephp-demo')
   FB::warn('Warn message');
   FB::error('Error message');
   FB::groupEnd();
+  $table   = array();
+  $table[] = array('#','Rows','Query');
+  $table[] = array('Row 1 Col 1','Row 1 Col 2','Query');
+  $table[] = array('Row 2 Col 1','Row 2 Col 2','Query');
+  $table[] = array('Row 3 Col 1','Row 3 Col 2','Query');
+  FB::table('SQL log',$table);
 }
 elseif($func == 'sql-error')
 {
