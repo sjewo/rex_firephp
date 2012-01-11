@@ -56,8 +56,10 @@ $REX['PERM'][]                        = $mypage.'[]';
 ////////////////////////////////////////////////////////////////////////////////
 
 $REX['ADDON'][$mypage]['libs'] = array (
+  'FirePHPCore-0.4.0rc3'=>'FirePHPCore-0.4.0rc3',
   'FirePHPCore-0.3.2'=>'FirePHPCore-0.3.2',
   '0.0.0master1106021548-firephp'=>'0.0.0master1106021548-firephp',
+  'firephp-1.0b1rc1'=>'firephp-1.0b1rc1'
 );
 $REX['ADDON'][$mypage]['menustring'] = array (
   1=>'FirePHP',
@@ -92,16 +94,21 @@ $REX['ADDON'][$mypage]['sqllog'] = array (
   2=>'frontend',
   3=>'backend & frontend',
 );
+$REX['ADDON'][$mypage]['ep_log'] = array (
+  0=>'off',
+  1=>'on',
+);
 
 
 // DYNAMIC ADDON SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
 $REX["ADDON"]["__firephp"]["settings"]["mode"] = 3;
-$REX["ADDON"]["__firephp"]["settings"]["uselib"] = 'FirePHPCore-0.3.2';
+$REX["ADDON"]["__firephp"]["settings"]["uselib"] = 'FirePHPCore-0.4.0rc3';
 $REX["ADDON"]["__firephp"]["settings"]["status2console"] = 1;
-$REX["ADDON"]["__firephp"]["settings"]["maxdepth"] = 5;
-$REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 0;
+$REX["ADDON"]["__firephp"]["settings"]["maxdepth"] = 7;
+$REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 3;
+$REX["ADDON"]["__firephp"]["settings"]["ep_log"] = 0;
 // --- /DYN
 
 
@@ -109,81 +116,84 @@ $REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 0;
 ////////////////////////////////////////////////////////////////////////////////
 $active_lib = 'libs/'.$REX['ADDON'][$mypage]['libs'][$REX['ADDON'][$mypage]['settings']['uselib']];
 
-switch(intval(PHP_VERSION))
+if(!class_exists('FirePHP'))
 {
-  case 4:
-    /* VERSION F&Uuml;R PHP 4 */
-    require_once($active_lib.'/lib/FirePHPCore/FirePHP.class.php4');
-    require_once($active_lib.'/lib/FirePHPCore/fb.php4');
-    $firephp = FirePHP::getInstance(true);
-    $firephp->setEnabled(false);
-    break;
-
-  default:
-    /* VERSION F&Uuml;R PHP 5 */
-    require_once($active_lib.'/lib/FirePHPCore/FirePHP.class.php');
-    require_once($active_lib.'/lib/FirePHPCore/fb.php');
-    $firephp = FirePHP::getInstance(true);
-    $firephp->setEnabled(false);
-    if($REX['ADDON'][$mypage]['settings']['maxdepth']>0)
-    {
-      $firephp->setOption('maxDepth',$REX['ADDON'][$mypage]['settings']['maxdepth']);
-    }
-}
-
-
-// FIREPHP ON/OFF
-////////////////////////////////////////////////////////////////////////////////
-
-// Configure FirePHP
-//define('INSIGHT_DEBUG', true);
-//define('INSIGHT_SERVER_PATH', '/index.php'); // assumes /index.php exists on your hostname
-//define('INSIGHT_IPS', '*');
-//define('INSIGHT_AUTHKEYS', '');
-//define('INSIGHT_PATHS', '__DIR__');
-// NOTE: Based on this configuration /index.php MUST include FirePHP
-
-if(!intval($mode))
+  switch(intval(PHP_VERSION))
   {
-    $mode = $REX['ADDON'][$mypage]['settings']['mode'];
+    case 4:
+      /* VERSION F&Uuml;R PHP 4 */
+      require_once($active_lib.'/lib/FirePHPCore/FirePHP.class.php4');
+      require_once($active_lib.'/lib/FirePHPCore/fb.php4');
+      $firephp = FirePHP::getInstance(true);
+      $firephp->setEnabled(false);
+      break;
+  
+    default:
+      /* VERSION F&Uuml;R PHP 5 */
+      require_once($active_lib.'/lib/FirePHPCore/FirePHP.class.php');
+      require_once($active_lib.'/lib/FirePHPCore/fb.php');
+      $firephp = FirePHP::getInstance(true);
+      $firephp->setEnabled(false);
+      if($REX['ADDON'][$mypage]['settings']['maxdepth']>0)
+      {
+        $firephp->setOption('maxDepth',$REX['ADDON'][$mypage]['settings']['maxdepth']);
+      }
   }
 
-switch ($mode)
-{
-  case 1:
-    $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
-    $firephp->setEnabled(false);
-    break;
 
-  case 2:
-    if (isset($_SESSION[$REX['INSTNAME']]['UID']) && $_SESSION[$REX['INSTNAME']]['UID']==1)
+  // FIREPHP ON/OFF
+  ////////////////////////////////////////////////////////////////////////////////
+  
+  // Configure FirePHP
+  //define('INSIGHT_DEBUG', true);
+  //define('INSIGHT_SERVER_PATH', '/index.php'); // assumes /index.php exists on your hostname
+  //define('INSIGHT_IPS', '*');
+  //define('INSIGHT_AUTHKEYS', '');
+  //define('INSIGHT_PATHS', '__DIR__');
+  // NOTE: Based on this configuration /index.php MUST include FirePHP
+  
+  if(!intval($mode))
     {
-      $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
-      $firephp->setEnabled(true);
-      if($REX['ADDON'][$mypage]['settings']['status2console'] > 2)
-      {
-        fb('FirePHP Mode: SESSION.' ,FirePHP::INFO);
-      }
+      $mode = $REX['ADDON'][$mypage]['settings']['mode'];
     }
-    else
-    {
+  
+  switch ($mode)
+  {
+    case 1:
       $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
       $firephp->setEnabled(false);
-    }
-    break;
-
-  case 3:
-    $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
-    $firephp->setEnabled(true);
-      if($REX['ADDON'][$mypage]['settings']['status2console'] > 1)
+      break;
+  
+    case 2:
+      if (isset($_SESSION[$REX['INSTNAME']]['UID']) && $_SESSION[$REX['INSTNAME']]['UID']==1)
       {
-        fb('FirePHP Mode: PERMANENT!' ,FirePHP::WARN);
+        $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
+        $firephp->setEnabled(true);
+        if($REX['ADDON'][$mypage]['settings']['status2console'] > 2)
+        {
+          fb('FirePHP Mode: SESSION.' ,FirePHP::INFO);
+        }
       }
-    break;
+      else
+      {
+        $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
+        $firephp->setEnabled(false);
+      }
+      break;
+  
+    case 3:
+      $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
+      $firephp->setEnabled(true);
+        if($REX['ADDON'][$mypage]['settings']['status2console'] > 1)
+        {
+          fb('FirePHP Mode: PERMANENT!' ,FirePHP::WARN);
+        }
+      break;
+  
+    default:
+      $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][1];
+      $firephp->setEnabled(false);
+  }
 
-  default:
-    $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][1];
-    $firephp->setEnabled(false);
 }
-
 ?>

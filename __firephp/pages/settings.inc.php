@@ -139,6 +139,19 @@ foreach($REX['ADDON'][$mypage]['sqllog'] as $key => $string)
 $tmp->setSelected($myREX['settings'][$id]);
 $sqllog_select = $tmp->get();
 
+// SQL_LOG SELECT
+////////////////////////////////////////////////////////////////////////////////
+$id = 'ep_log';
+$tmp = new rex_select();
+$tmp->setSize(1);
+$tmp->setName($id);
+foreach($REX['ADDON'][$mypage]['ep_log'] as $key => $string)
+{
+  $tmp->addOption($string,$key);
+}
+$tmp->setSelected($myREX['settings'][$id]);
+$ep_log_select = $tmp->get();
+
 // MAIN
 ////////////////////////////////////////////////////////////////////////////////
 echo '
@@ -191,8 +204,15 @@ echo '
 
           <div class="rex-form-row">
             <p class="rex-form-col-a rex-form-select">
-              <label for="status2console">rex_sql Log:</label>
+              <label for="status2console">REX_SQL Log:</label>
               '.$sqllog_select.'
+            </p>
+          </div><!-- .rex-form-row -->
+
+          <div class="rex-form-row">
+            <p class="rex-form-col-a rex-form-select">
+              <label for="status2console">EP Log:</label>
+              '.$ep_log_select.'
             </p>
           </div><!-- .rex-form-row -->
   
