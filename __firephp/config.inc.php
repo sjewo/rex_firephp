@@ -107,7 +107,7 @@ $REX["ADDON"]["__firephp"]["settings"]["mode"] = 3;
 $REX["ADDON"]["__firephp"]["settings"]["uselib"] = 'FirePHPCore-0.4.0rc3';
 $REX["ADDON"]["__firephp"]["settings"]["status2console"] = 1;
 $REX["ADDON"]["__firephp"]["settings"]["maxdepth"] = 7;
-$REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 0;
+$REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 3;
 $REX["ADDON"]["__firephp"]["settings"]["ep_log"] = 0;
 // --- /DYN
 
@@ -370,30 +370,30 @@ switch($REX['REDAXO'])
 
 // JS LOG TO FIREPHP AJAX VOODOO
 ////////////////////////////////////////////////////////////////////////////////
-$firephp    = rex_request('firephp','string',false);
-$data       = rex_request('data', 'string',false);
-if($data!=false && $firephp=='jsbridge')
-{
-  $data = get_object_vars(json_decode(stripslashes($data)));
-  if(isset($data['variable']) && isset($data['label']) && isset($data['logtype']))
-  {
-    switch ($data['logtype'])
-    {
-      case 'log':
-        FB::log($data['variable'],$data['label']);
-        break;
-      case 'info':
-        FB::info($data['variable'],$data['label']);
-        break;
-      case 'warn':
-        FB::warn($data['variable'],$data['label']);
-        break;
-      case 'error':
-        FB::error($data['variable'],$data['label']);
-        break;
-    }
-  }
-}
+//$firephp    = rex_request('firephp','string',false);
+//$data       = rex_request('data', 'string',false);
+//if($data!=false && $firephp=='jsbridge')
+//{
+//  $data = get_object_vars(json_decode(stripslashes($data)));
+//  if(isset($data['variable']) && isset($data['label']) && isset($data['logtype']))
+//  {
+//    switch ($data['logtype'])
+//    {
+//      case 'log':
+//        FB::log($data['variable'],$data['label']);
+//        break;
+//      case 'info':
+//        FB::info($data['variable'],$data['label']);
+//        break;
+//      case 'warn':
+//        FB::warn($data['variable'],$data['label']);
+//        break;
+//      case 'error':
+//        FB::error($data['variable'],$data['label']);
+//        break;
+//    }
+//  }
+//}
 
 
 } # /!class_exists('FirePHP')
