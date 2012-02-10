@@ -357,16 +357,16 @@ function firephp_header($params)
   }
 }
 
-switch($REX['REDAXO'])
-{
-  case false: // frontend
-    rex_register_extension('OUTPUT_FILTER', 'firephp_header');
-    break;
-
-  case true: // backend
-    rex_register_extension('PAGE_HEADER', 'firephp_header');
-    break;
-}
+//switch($REX['REDAXO'])
+//{
+//  case false: // frontend
+//    rex_register_extension('OUTPUT_FILTER', 'firephp_header');
+//    break;
+//
+//  case true: // backend
+//    rex_register_extension('PAGE_HEADER', 'firephp_header');
+//    break;
+//}
 
 // JS LOG TO FIREPHP AJAX VOODOO
 ////////////////////////////////////////////////////////////////////////////////
