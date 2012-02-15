@@ -76,6 +76,10 @@ elseif($func == 'sql-error')
 
 // MODE SELECT
 ////////////////////////////////////////////////////////////////////////////////
+FB::info('FirePHP ist installiert und aktiv für die Dauer der Admin Session.. diese Mittelung ist für sie kostenlos! ;)');
+
+// MODE SELECT
+////////////////////////////////////////////////////////////////////////////////
 $id = 'mode';
 $tmp = new rex_select();
 $tmp->setSize(1);
@@ -274,4 +278,3 @@ echo '
 
   </div><!-- rex-addon-output -->
 ';
-?>
