@@ -81,7 +81,12 @@ if(count($error)==0)
   if($autoinstall)
   {
     require_once $myroot.'/functions/function.firephp_helpers.inc.php';
+    // SQL LOG PATCH
     $source = $REX['INCLUDE_PATH'].'/addons/'.$myself.'/install/sql_log_patch/'.$this_REX.'/';
+    $target = $REX['HTDOCS_PATH'];
+    $result = firephp_recursive_copy($source, $target);
+    // EP LOG PATCH
+    $source = $REX['INCLUDE_PATH'].'/addons/'.$myself.'/install/ep_log_patch/'.$this_REX.'/';
     $target = $REX['HTDOCS_PATH'];
     $result = firephp_recursive_copy($source, $target);
   }
