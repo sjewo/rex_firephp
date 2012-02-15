@@ -62,14 +62,12 @@ $REX['ADDON'][$mypage]['libs'] = array (
   'firephp-1.0b1rc1'=>'firephp-1.0b1rc1'
 );
 $REX['ADDON'][$mypage]['menustring'] = array (
-  1=>'FirePHP',
-  2=>'<span style="color:#7CE321;">FirePHP</span>',
-  3=>'<em style="color:#EA1144;">FirePHP</em>'
+  0=>'FirePHP',
+  1=>'<em style="color:#EA1144;">FirePHP</em>'
 );
 $REX['ADDON'][$mypage]['modestring'] = array (
-  1=>'inaktiv',
-  //2=>'während Admin Session aktiviert - SESSION Mode - ',
-  3=>'aktiv'
+  0=>'inaktiv',
+  1=>'aktiv'
 );
 $REX['ADDON'][$mypage]['status2console'] = array (
   1=>'keine Statusmeldungen',
@@ -90,9 +88,7 @@ $REX['ADDON'][$mypage]['maxdepth'] = array (
 );
 $REX['ADDON'][$mypage]['sqllog'] = array (
   0=>'off',
-  1=>'backend',
-  2=>'frontend',
-  3=>'backend & frontend',
+  1=>'on',
 );
 $REX['ADDON'][$mypage]['ep_log'] = array (
   0=>'off',
@@ -107,10 +103,10 @@ $REX['ADDON'][$mypage]['js_bridge'] = array (
 // DYNAMIC ADDON SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
-$REX["ADDON"]["__firephp"]["settings"]["mode"] = 3;
+$REX["ADDON"]["__firephp"]["settings"]["mode"] = 1;
 $REX["ADDON"]["__firephp"]["settings"]["uselib"] = 'FirePHPCore-0.4.0rc3';
 $REX["ADDON"]["__firephp"]["settings"]["maxdepth"] = 7;
-$REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 3;
+$REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 0;
 $REX["ADDON"]["__firephp"]["settings"]["ep_log"] = 0;
 $REX["ADDON"]["__firephp"]["settings"]["js_bridge"] = 0;
 // --- /DYN
@@ -122,26 +118,14 @@ $active_lib = 'libs/'.$REX['ADDON'][$mypage]['libs'][$REX['ADDON'][$mypage]['set
 
 if(!class_exists('FirePHP'))
 {
-  switch(intval(PHP_VERSION))
-  {
-    case 4:
-      /* VERSION F&Uuml;R PHP 4 */
-      require_once($active_lib.'/lib/FirePHPCore/FirePHP.class.php4');
-      require_once($active_lib.'/lib/FirePHPCore/fb.php4');
-      $firephp = FirePHP::getInstance(true);
-      $firephp->setEnabled(false);
-      break;
 
-    default:
-      /* VERSION F&Uuml;R PHP 5 */
-      require_once($active_lib.'/lib/FirePHPCore/FirePHP.class.php');
-      require_once($active_lib.'/lib/FirePHPCore/fb.php');
-      $firephp = FirePHP::getInstance(true);
-      $firephp->setEnabled(false);
-      if($REX['ADDON'][$mypage]['settings']['maxdepth']>0)
-      {
-        $firephp->setOption('maxDepth',$REX['ADDON'][$mypage]['settings']['maxdepth']);
-      }
+  require_once($active_lib.'/lib/FirePHPCore/FirePHP.class.php');
+  require_once($active_lib.'/lib/FirePHPCore/fb.php');
+  $firephp = FirePHP::getInstance(true);
+  $firephp->setEnabled(false);
+  if($REX['ADDON'][$mypage]['settings']['maxdepth']>0)
+  {
+    $firephp->setOption('maxDepth',$REX['ADDON'][$mypage]['settings']['maxdepth']);
   }
 
   // FIREPHP ON/OFF
@@ -156,18 +140,18 @@ if(!class_exists('FirePHP'))
   // NOTE: Based on this configuration /index.php MUST include FirePHP
 
   if(!intval($mode))
-    {
-      $mode = $REX['ADDON'][$mypage]['settings']['mode'];
-    }
+  {
+    $mode = $REX['ADDON'][$mypage]['settings']['mode'];
+  }
 
   switch ($mode)
   {
-    case 1:
+    case 0:
       $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
       $firephp->setEnabled(false);
       break;
 
-    case 2:
+    case 1:
       if (isset($_SESSION[$REX['INSTNAME']]['UID']) && $_SESSION[$REX['INSTNAME']]['UID']==1)
       {
         $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
@@ -180,13 +164,8 @@ if(!class_exists('FirePHP'))
       }
       break;
 
-    case 3:
-      $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
-      $firephp->setEnabled(true);
-      break;
-
     default:
-      $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][1];
+      $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][0];
       $firephp->setEnabled(false);
   }
 
@@ -197,25 +176,41 @@ rex_register_extension('OUTPUT_FILTER_CACHE', 'send_to_firephp');
 function send_to_firephp()
 {
   global $REX, $firephp;
+  
+  if($REX['ADDON']['__firephp']['settings']['mode']==0)
+  {
+    return false;
+  }
+
   ob_start();
+  
+  if(!$firephp)
+  {
+    $firephp = FirePHP::getInstance(true);
+    $firephp->setEnabled(false);
+    if($REX['ADDON']['__firephp']['settings']['maxdepth']>0)
+    {
+      $firephp->setOption('maxDepth',$REX['ADDON']['__firephp']['settings']['maxdepth']);
+    }
+    if (isset($_SESSION[$REX['INSTNAME']]['UID']) && $_SESSION[$REX['INSTNAME']]['UID']==1)
+    {
+      $firephp->setEnabled(true);
+    }
+  }
 
   // SQL LOG
   ////////////////////////////////////////////////////////////////////////////
-  $ctrl = $REX['ADDON']['__firephp']['settings']['sqllog'];
-  if(($ctrl==2 || $ctrl==3) && isset(rex_sql::$log))
+  if($REX['ADDON']['__firephp']['settings']['sqllog']==1 && isset(rex_sql::$log) && is_object($firephp))
   {
     $sql_log = rex_sql::$log;
     if(count($sql_log)>0)
     {
-      #$firephp = FirePHP::getInstance(true);
-      #$firephp->setEnabled(true);
-      #$firephp->info($REX,'REX');
       $table = array();
       $table[] = array('#','Rows','Query','Errno','Error','File','Line');
       $group_opts = rex_sql::$err_count>0
         ? array('Expanded' => true,'Color' => 'red')
         : array('Collapsed' => true,'Color' => 'green');
-      $firephp->group('REX_SQL LOG ('.rex_sql::$count.' queries, '.rex_sql::$err_count.' errors)',$group_opts);
+      #$firephp->group('REX_SQL LOG ('.rex_sql::$count.' queries, '.rex_sql::$err_count.' errors)',$group_opts);
       #$firephp->group('  #,ROWS, QUERY',array('Collapsed' => true,'Color'=>'gray'));$firephp->groupEnd();
       foreach($sql_log as $k => $v)
       {
@@ -232,8 +227,8 @@ function send_to_firephp()
 
         if(isset($v['error']) && $v['error']!=null)
         {
-          $firephp->group($n.'| ERROR @ QUERY: '.$query);
-          $firephp->error('error #'.$v['errno'].': '.$v['error']);
+          #$firephp->group($n.'| ERROR @ QUERY: '.$query);
+          #$firephp->error('error #'.$v['errno'].': '.$v['error']);
           foreach($v['backtrace'] as $t)
           {
             if(isset($t['object']) &&
@@ -246,16 +241,16 @@ function send_to_firephp()
               $line = $t['line'];
             }
           }
-          $firephp->info($backtrace,'backtrace');
+          #$firephp->info($backtrace,'backtrace');
           #$table[] = array('SQL ERROR >>>','–','–','–','–');
           $table[] = array($k,'ERROR',$v['query'],$v['errno'],$v['error'],$file,$line,);
           #$table[] = array('<<< SQL ERROR','–','–','–','–');
-          $firephp->groupEnd();
+          #$firephp->groupEnd();
         }
         else
         {
           #$firephp->log('#'.$k.': '.$rows.' ROWS @ QUERY: '.$v['query']);
-          $firephp->group($n.$rows.$query,array('Collapsed' => true,'Color'=>'#44578A'));
+          #$firephp->group($n.$rows.$query,array('Collapsed' => true,'Color'=>'#44578A'));
           foreach($v['backtrace'] as $t)
           {
             if(isset($t['object']) &&
@@ -269,14 +264,14 @@ function send_to_firephp()
             }
           }
 
-          $firephp->log($backtrace,'backtrace');
-          $firephp->groupEnd();
+          #$firephp->log($backtrace,'backtrace');
+          #$firephp->groupEnd();
 
           #$firephp->log('#'.$k.': '.$rows.' ROWS @ QUERY: '.$v['query']);
           $table[] = array($k,$v['rows'],$v['query'],$errno,$error,$file,$line,);
         }
       }
-      $firephp->groupEnd();
+      #$firephp->groupEnd();
       $firephp->table('REX_SQL LOG ('.rex_sql::$count.' queries, '.rex_sql::$err_count.' errors)',$table,array('Expanded'=>true));
       #$firephp->table('REX_SQL LOG ('.rex_sql::$count.' queries, '.rex_sql::$err_count.' errors)',$table,$group_opts);
     }
@@ -284,31 +279,38 @@ function send_to_firephp()
 
   // EP LOG
   ////////////////////////////////////////////////////////////////////////////
-  if($REX['ADDON']['__firephp']['settings']['ep_log']==1)
+  if($REX['ADDON']['__firephp']['settings']['ep_log']==1 && is_object($firephp))
   {
-    $i = 1;
-    $firephp->group('EP LOG',array('Collapsed' => true,'Color' => 'green'));
-    foreach($REX['EXTENSION_POINT_LOG'] as $e)
+    if(isset($REX['EXTENSION_POINT_LOG']))
     {
-      $opts = array('Collapsed' => true);
-      $opts['Color'] = $e['type']=='point' ? 'black' : 'blue';
-      $firephp->group($e['group'],$opts);
-      unset($e['group'],$e['type']);
-      foreach($e as $k=>$v)
+      $i = 1;
+      $firephp->group('EP LOG',array('Collapsed' => true,'Color' => 'green'));
+      foreach($REX['EXTENSION_POINT_LOG'] as $e)
       {
-        $firephp->log($v,$k);
+        $opts = array('Collapsed' => true);
+        $opts['Color'] = $e['type']=='point' ? 'black' : 'blue';
+        $firephp->group($e['group'],$opts);
+        unset($e['group'],$e['type']);
+        foreach($e as $k=>$v)
+        {
+          $firephp->log($v,$k);
+        }
+        $firephp->groupEnd();
       }
+      //$firephp->log($REX['EXTENSION_POINT_LOG'],'LOG');
       $firephp->groupEnd();
     }
-    //$firephp->log($REX['EXTENSION_POINT_LOG'],'LOG');
-    $firephp->groupEnd();
+    else
+    {
+      $firephp->warn('EP Log nicht verfügbar.. vermutl. ist die gepatchte Datei "function_rex_extension.inc.php" nicht installiert worden.');
+    }
   }
 
 }
 
   // JS LOG TO FIREPHP BRIDGE
   ////////////////////////////////////////////////////////////////////////////////
-  if($REX['ADDON']['__firephp']['settings']['js_bridge']==1)
+  if($REX['ADDON']['__firephp']['settings']['js_bridge']==1 && is_object($firephp))
   {
     function firephp_header($params)
     {
