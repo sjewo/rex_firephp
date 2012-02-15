@@ -58,8 +58,8 @@ $REX['PERM'][]                        = $mypage.'[]';
 $REX['ADDON'][$mypage]['libs'] = array (
   'FirePHPCore-0.4.0rc3'=>'FirePHPCore-0.4.0rc3',
   'FirePHPCore-0.3.2'=>'FirePHPCore-0.3.2',
-  '0.0.0master1106021548-firephp'=>'0.0.0master1106021548-firephp',
-  'firephp-1.0b1rc1'=>'firephp-1.0b1rc1'
+//  '0.0.0master1106021548-firephp'=>'0.0.0master1106021548-firephp',
+//  'firephp-1.0b1rc1'=>'firephp-1.0b1rc1'
 );
 $REX['ADDON'][$mypage]['menustring'] = array (
   0=>'FirePHP',
