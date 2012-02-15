@@ -152,7 +152,7 @@ if(!class_exists('FirePHP'))
       break;
 
     case 1:
-      if (isset($_SESSION[$REX['INSTNAME']]['UID']) && $_SESSION[$REX['INSTNAME']]['UID']==1)
+      if (isset($_SESSION[$REX['INSTNAME']]['UID']) && $_SESSION[$REX['INSTNAME']]['UID']>0)
       {
         $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
         $firephp->setEnabled(true);
@@ -192,7 +192,7 @@ function send_to_firephp()
     {
       $firephp->setOption('maxDepth',$REX['ADDON']['__firephp']['settings']['maxdepth']);
     }
-    if (isset($_SESSION[$REX['INSTNAME']]['UID']) && $_SESSION[$REX['INSTNAME']]['UID']==1)
+    if (isset($_SESSION[$REX['INSTNAME']]['UID']) && $_SESSION[$REX['INSTNAME']]['UID']>0)
     {
       $firephp->setEnabled(true);
     }
