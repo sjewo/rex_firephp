@@ -25,11 +25,11 @@ $active_lib = 'libs/'.$REX['ADDON'][$mypage]['libs'][$REX['ADDON'][$mypage]['set
 // Subnavigation Items
 $chapterpages = array (
 ''             => array('Addon Hilfe',       '_readme.txt',                         'textile'),
-'changelog'    => array('Addon Changelog',   '_changelog.txt',                      'textile'),
-'libchangelog' => array('FirePHP Changelog', $active_lib.'/CHANGELOG',              'txt'),
-'libreadme'    => array('FirePHP Readme',    $active_lib.'/README',                 'txt'),
-'liblicense'   => array('FirePHP License',   $active_lib.'/lib/FirePHPCore/LICENSE','txt'),
-'libcredits'   => array('FirePHP Credits',   $active_lib.'/CREDITS',                'txt')
+//'changelog'    => array('Addon Changelog',   '_changelog.txt',                      'textile'),
+//'libchangelog' => array('FirePHP Changelog', $active_lib.'/CHANGELOG',              'txt'),
+//'libreadme'    => array('FirePHP Readme',    $active_lib.'/README',                 'txt'),
+//'liblicense'   => array('FirePHP License',   $active_lib.'/lib/FirePHPCore/LICENSE','txt'),
+//'libcredits'   => array('FirePHP Credits',   $active_lib.'/CREDITS',                'txt')
 );
 
 // BUILD CHAPTER NAVIGATION
@@ -51,7 +51,7 @@ $myroot = $REX['INCLUDE_PATH']. '/addons/'.$mypage.'/';
 $source    = $chapterpages[$chapter][1];
 $parse     = $chapterpages[$chapter][2];
 
-$html = rexdev_incparse($myroot,$source,$parse,true);
+$html = firephp_incparse($myroot,$source,$parse,true);
 
 // ADDON OUTPUT
 ////////////////////////////////////////////////////////////////////////////////

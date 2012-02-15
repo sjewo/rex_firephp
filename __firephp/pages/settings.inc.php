@@ -66,7 +66,7 @@ elseif($func == 'firephp-demo')
   $table[] = array('Row 1 Col 1','Row 1 Col 2','Query');
   $table[] = array('Row 2 Col 1','Row 2 Col 2','Query');
   $table[] = array('Row 3 Col 1','Row 3 Col 2','Query');
-  FB::table('SQL log',$table);
+  FB::table('Table (click to expand)',$table);
 }
 elseif($func == 'sql-error')
 {
@@ -99,19 +99,6 @@ foreach($REX['ADDON'][$mypage]['libs'] as $key => $string)
 }
 $tmp->setSelected($myREX['settings'][$id]);
 $lib_select = $tmp->get();
-
-// STATUS MSG SELECT
-////////////////////////////////////////////////////////////////////////////////
-$id = 'status2console';
-$tmp = new rex_select();
-$tmp->setSize(1);
-$tmp->setName($id);
-foreach($REX['ADDON'][$mypage]['status2console'] as $key => $string)
-{
-  $tmp->addOption($string,$key);
-}
-$tmp->setSelected($myREX['settings'][$id]);
-$status_select = $tmp->get();
 
 // MAXDEPTH SELECT
 ////////////////////////////////////////////////////////////////////////////////
@@ -152,6 +139,19 @@ foreach($REX['ADDON'][$mypage]['ep_log'] as $key => $string)
 $tmp->setSelected($myREX['settings'][$id]);
 $ep_log_select = $tmp->get();
 
+// JS_BRIDGE SELECT
+////////////////////////////////////////////////////////////////////////////////
+$id = 'js_bridge';
+$tmp = new rex_select();
+$tmp->setSize(1);
+$tmp->setName($id);
+foreach($REX['ADDON'][$mypage]['js_bridge'] as $key => $string)
+{
+  $tmp->addOption($string,$key);
+}
+$tmp->setSelected($myREX['settings'][$id]);
+$js_bridge = $tmp->get();
+
 // MAIN
 ////////////////////////////////////////////////////////////////////////////////
 echo '
@@ -183,13 +183,6 @@ echo '
   
           <div class="rex-form-row">
             <p class="rex-form-col-a rex-form-select">
-              <label for="status2console">Status-Meldung:</label>
-              '.$status_select.'
-            </p>
-          </div><!-- .rex-form-row -->
-  
-          <div class="rex-form-row">
-            <p class="rex-form-col-a rex-form-select">
               <label for="status2console">MaxDepth:</label>
               '.$maxdepth_select.'
             </p>
@@ -215,6 +208,13 @@ echo '
               '.$ep_log_select.'
             </p>
           </div><!-- .rex-form-row -->
+
+          <div class="rex-form-row">
+            <p class="rex-form-col-a rex-form-select">
+              <label for="js_bridge">JS Bridge:</label>
+              '.$js_bridge.'
+            </p>
+          </div><!-- .rex-form-row -->
   
           <div class="rex-form-row rex-form-element-v2">
             <p class="rex-form-submit">
@@ -236,7 +236,7 @@ echo '
       <input type="hidden" name="func" value="firephp-demo" />
 
       <fieldset class="rex-form-col-1">
-        <legend>FirePHP</legend>
+        <legend>Test: FirePHP Konsole</legend>
         <div class="rex-form-wrapper">
 
         <div class="rex-form-row rex-form-element-v2">
@@ -257,7 +257,7 @@ echo '
       <input type="hidden" name="func" value="sql-error" />
 
       <fieldset class="rex-form-col-1">
-        <legend>REX_SQL LOG</legend>
+        <legend>Test: rex_ql log</legend>
         <div class="rex-form-wrapper">
 
 

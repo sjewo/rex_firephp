@@ -98,6 +98,10 @@ $REX['ADDON'][$mypage]['ep_log'] = array (
   0=>'off',
   1=>'on',
 );
+$REX['ADDON'][$mypage]['js_bridge'] = array (
+  0=>'off',
+  1=>'on',
+);
 
 
 // DYNAMIC ADDON SETTINGS
@@ -105,10 +109,10 @@ $REX['ADDON'][$mypage]['ep_log'] = array (
 // --- DYN
 $REX["ADDON"]["__firephp"]["settings"]["mode"] = 3;
 $REX["ADDON"]["__firephp"]["settings"]["uselib"] = 'FirePHPCore-0.4.0rc3';
-$REX["ADDON"]["__firephp"]["settings"]["status2console"] = 1;
 $REX["ADDON"]["__firephp"]["settings"]["maxdepth"] = 7;
 $REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 3;
 $REX["ADDON"]["__firephp"]["settings"]["ep_log"] = 0;
+$REX["ADDON"]["__firephp"]["settings"]["js_bridge"] = 0;
 // --- /DYN
 
 
@@ -168,10 +172,6 @@ if(!class_exists('FirePHP'))
       {
         $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
         $firephp->setEnabled(true);
-        if($REX['ADDON'][$mypage]['settings']['status2console'] > 2)
-        {
-          fb('FirePHP Mode: SESSION.' ,FirePHP::INFO);
-        }
       }
       else
       {
@@ -183,10 +183,6 @@ if(!class_exists('FirePHP'))
     case 3:
       $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
       $firephp->setEnabled(true);
-        if($REX['ADDON'][$mypage]['settings']['status2console'] > 1)
-        {
-          fb('FirePHP Mode: PERMANENT!' ,FirePHP::WARN);
-        }
       break;
 
     default:
@@ -310,91 +306,94 @@ function send_to_firephp()
 
 }
 
-// JS LOG TO FIREPHP BRIDGE
-////////////////////////////////////////////////////////////////////////////////
-function firephp_header($params)
-{
-  global $REX;
-
-  $script = '
-<!-- FIREPHP ADDON -->
-  <script type="text/javascript">
-
-    // SEND VAR FORM JS CONTEXT TO FIREPHP VIA BACKEND CALLBACK
-    function fb(variable,label,logtype){
-        label = label || "";
-        logtype = logtype || "log";
-
-        var data        = {};
-        data.label      = label;
-        data.variable   = variable;
-        data.logtype    = logtype;
-
-        var request  = jQuery.ajax({
-          url: "index.php",
-          type: "POST",
-          data: {
-            firephp  : "jsbridge",
-            data       : JSON.stringify(data)
-          },
-          success: function(msg) {
-            //...
-          }
-        });
-    };
-
-  </script>
-<!-- /FIREPHP ADDON -->
-  ';
-  switch($REX['REDAXO'])
+  // JS LOG TO FIREPHP BRIDGE
+  ////////////////////////////////////////////////////////////////////////////////
+  if($REX['ADDON']['__firephp']['settings']['js_bridge']==1)
   {
-    case false: // frontend
-      return str_replace('</head>',$script.'</head>',$params['subject']);
-    break;
-
-    case true: // backend
-      return $params['subject'].$script;
-    break;
+    function firephp_header($params)
+    {
+      global $REX;
+    
+      $script = '
+    <!-- FIREPHP ADDON -->
+      <script type="text/javascript">
+    
+        // SEND VAR FORM JS CONTEXT TO FIREPHP VIA BACKEND CALLBACK
+        function fb(variable,label,logtype){
+            label = label || "";
+            logtype = logtype || "log";
+    
+            var data        = {};
+            data.label      = label;
+            data.variable   = variable;
+            data.logtype    = logtype;
+    
+            var request  = jQuery.ajax({
+              url: "index.php",
+              type: "POST",
+              data: {
+                firephp  : "jsbridge",
+                data       : JSON.stringify(data)
+              },
+              success: function(msg) {
+                //...
+              }
+            });
+        };
+    
+      </script>
+    <!-- /FIREPHP ADDON -->
+      ';
+      switch($REX['REDAXO'])
+      {
+        case false: // frontend
+          return str_replace('</head>',$script.'</head>',$params['subject']);
+        break;
+    
+        case true: // backend
+          return $params['subject'].$script;
+        break;
+      }
+    }
+    
+    switch($REX['REDAXO'])
+    {
+      case false: // frontend
+        rex_register_extension('OUTPUT_FILTER', 'firephp_header');
+        break;
+    
+      case true: // backend
+        rex_register_extension('PAGE_HEADER', 'firephp_header');
+        break;
+    }
+    
+    // JS LOG TO FIREPHP AJAX VOODOO
+    //////////////////////////////////////////////////////////////////////////////
+    $firephp    = rex_request('firephp','string',false);
+    $data       = rex_request('data', 'string',false);
+    if($data!=false && $firephp=='jsbridge')
+    {
+      $data = get_object_vars(json_decode(stripslashes($data)));
+      if(isset($data['variable']) && isset($data['label']) && isset($data['logtype']))
+      {
+        switch ($data['logtype'])
+        {
+          case 'log':
+            FB::log($data['variable'],$data['label']);
+            break;
+          case 'info':
+            FB::info($data['variable'],$data['label']);
+            break;
+          case 'warn':
+            FB::warn($data['variable'],$data['label']);
+            break;
+          case 'error':
+            FB::error($data['variable'],$data['label']);
+            break;
+        }
+      }
+    }
   }
-}
-
-//switch($REX['REDAXO'])
-//{
-//  case false: // frontend
-//    rex_register_extension('OUTPUT_FILTER', 'firephp_header');
-//    break;
-//
-//  case true: // backend
-//    rex_register_extension('PAGE_HEADER', 'firephp_header');
-//    break;
-//}
-
-// JS LOG TO FIREPHP AJAX VOODOO
-////////////////////////////////////////////////////////////////////////////////
-//$firephp    = rex_request('firephp','string',false);
-//$data       = rex_request('data', 'string',false);
-//if($data!=false && $firephp=='jsbridge')
-//{
-//  $data = get_object_vars(json_decode(stripslashes($data)));
-//  if(isset($data['variable']) && isset($data['label']) && isset($data['logtype']))
-//  {
-//    switch ($data['logtype'])
-//    {
-//      case 'log':
-//        FB::log($data['variable'],$data['label']);
-//        break;
-//      case 'info':
-//        FB::info($data['variable'],$data['label']);
-//        break;
-//      case 'warn':
-//        FB::warn($data['variable'],$data['label']);
-//        break;
-//      case 'error':
-//        FB::error($data['variable'],$data['label']);
-//        break;
-//    }
-//  }
-//}
 
 
 } # /!class_exists('FirePHP')
