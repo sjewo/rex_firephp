@@ -23,6 +23,7 @@ $minimum_PHP       = 5;
 $required_addons   = array();
 $disable_addons    = array();
 $error             = array();
+$autoinstall       = true;
 
 // CHECK REDAXO VERSION
 ////////////////////////////////////////////////////////////////////////////////
@@ -80,9 +81,9 @@ if(count($error)==0)
   if($autoinstall)
   {
     require_once $myroot.'/functions/function.firephp_helpers.inc.php';
-    $source = $REX['INCLUDE_PATH'].'/addons/'.$myself.'/install/files/sql_log_patch/'.$this_REX.'/';
+    $source = $REX['INCLUDE_PATH'].'/addons/'.$myself.'/install/sql_log_patch/'.$this_REX.'/';
     $target = $REX['HTDOCS_PATH'];
-    $result = rexseo_recursive_copy($source, $target);
+    $result = firephp_recursive_copy($source, $target);
   }
 
   $REX['ADDON']['install'][$myself] = 1;
