@@ -12,10 +12,12 @@
 * $Id$:
 */
 
-//  ERROR_REPORTING
+// SESSION
 ////////////////////////////////////////////////////////////////////////////////
-/*ini_set('error_reporting', 'E_ALL');
-ini_set('display_errors', 'On');*/
+if (session_id() == '')
+{
+  session_start();
+}
 
 // PARAMS
 ////////////////////////////////////////////////////////////////////////////////
@@ -399,4 +401,3 @@ function send_to_firephp()
 
 
 } # /!class_exists('FirePHP')
-?>
