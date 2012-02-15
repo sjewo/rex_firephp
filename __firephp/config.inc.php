@@ -202,10 +202,11 @@ function send_to_firephp()
 {
   global $REX, $firephp;
   ob_start();
+
   // SQL LOG
   ////////////////////////////////////////////////////////////////////////////
   $ctrl = $REX['ADDON']['__firephp']['settings']['sqllog'];
-  if($ctrl==2 || $ctrl==3)
+  if(($ctrl==2 || $ctrl==3) && isset(rex_sql::$log))
   {
     $sql_log = rex_sql::$log;
     if(count($sql_log)>0)
