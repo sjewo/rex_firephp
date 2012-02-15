@@ -22,7 +22,7 @@ $myroot  = $REX['INCLUDE_PATH'].'/addons/'.$mypage;
 
 // INCLUDE FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
-require_once $myroot.'/functions/function.rexdev_incparse.inc.php';
+require_once $myroot.'/functions/function.firephp_helpers.inc.php';
 
 // BACKEND CSS
 ////////////////////////////////////////////////////////////////////////////////
@@ -31,8 +31,7 @@ $header = array(
 );
 
 if ($REX['REDAXO']) {
-  include_once $myroot.'/functions/function.rexdev_header_add.inc.php';
-  rex_register_extension('PAGE_HEADER', 'rexdev_header_add',$header);
+  rex_register_extension('PAGE_HEADER', 'firephp_header_add',$header);
 }
 
 // REX TOP
