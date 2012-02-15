@@ -12,15 +12,86 @@
 * $Id$: 
 */
 
-if (intval(PHP_VERSION) < 4)
+// INSTALL SETTINGS
+////////////////////////////////////////////////////////////////////////////////
+$myself            = '__firephp';
+$myroot            = $REX['INCLUDE_PATH'].'/addons/'.$myself;
+
+$minimum_REX       = '4.2.0';
+$this_REX          = $REX['VERSION'].'.'.$REX['SUBVERSION'].'.'.$REX['MINORVERSION'];
+$minimum_PHP       = 5;
+$required_addons   = array();
+$disable_addons    = array();
+$error             = array();
+
+// CHECK REDAXO VERSION
+////////////////////////////////////////////////////////////////////////////////
+if(version_compare($this_REX, $minimum_REX, '<'))
 {
-	$REX['ADDON']['installmsg']['__firephp'] = 'Dieses Addon ben&ouml;tigt mind. PHP4, und f&uuml;r volle Funktionalit&auml;t PHP 5!';
-	$REX['ADDON']['install']['__firephp'] = 0;	
-}
-else
-{ 
-	$REX['ADDON']['install']['__firephp'] = 1;
+  $error[] = 'Dieses Addon ben&ouml;tigt Redaxo Version '.$minimum_REX.' oder h&ouml;her.';
 }
 
+
+// CHECK PHP VERSION
+////////////////////////////////////////////////////////////////////////////////
+if(version_compare(PHP_VERSION, $minimum_PHP, '<'))
+{
+  $error[] = 'Dieses Addon ben&ouml;tigt mind. PHP '.$minimum_PHP.'!';
+}
+
+
+// CHECK REQUIRED ADDONS
+////////////////////////////////////////////////////////////////////////////////
+foreach($required_addons as $a)
+{
+  if (!OOAddon::isInstalled($a))
+  {
+    $error[] = 'Addon "'.$a.'" ist nicht installiert.  <span style="float:right;">[ <a href="index.php?page=addon&addonname='.$a.'&install=1">'.$a.' installieren</a> ]</span>';
+  }
+  else
+  {
+    if (!OOAddon::isAvailable($a))
+    {
+      $error[] = 'Addon "'.$a.'" ist nicht aktiviert.  <span style="float:right;">[ <a href="index.php?page=addon&addonname='.$a.'&activate=1">'.$a.' aktivieren</a> ]</span>';
+    }
+  }
+}
+
+
+// CHECK ADDONS TO DISABLE
+////////////////////////////////////////////////////////////////////////////////
+foreach($disable_addons as $a)
+{
+  if (OOAddon::isInstalled($a) || OOAddon::isAvailable($a))
+  {
+    $error[] = 'Addon "'.$a.'" muß erst deinstalliert werden.  <span style="float:right;">[ <a href="index.php?page=addon&addonname='.$a.'&uninstall=1">'.$a.' de-installieren</a> ]</span>';
+  }
+}
+
+
+
+// DO INSTALL
+////////////////////////////////////////////////////////////////////////////////
+if(count($error)==0)
+{
+
+  // INSTALL/COPY FILES
+  //////////////////////////////////////////////////////////////////////////////
+  if($autoinstall)
+  {
+    require_once $myroot.'/functions/function.firephp_helpers.inc.php';
+    $source = $REX['INCLUDE_PATH'].'/addons/'.$myself.'/install/files/sql_log_patch/'.$this_REX.'/';
+    $target = $REX['HTDOCS_PATH'];
+    $result = rexseo_recursive_copy($source, $target);
+  }
+
+  $REX['ADDON']['install'][$myself] = 1;
+}
+else
+
+{
+  $REX['ADDON']['installmsg'][$myself] = '<br />'.implode($error,'<br />');
+  $REX['ADDON']['install'][$myself] = 0;
+}
 
 ?>
