@@ -61,7 +61,7 @@ $REX['ADDON'][$mypage]['libs'] = array (
   'FirePHPCore-0.4.0rc3'=>'FirePHPCore-0.4.0rc3',
   'FirePHPCore-0.3.2'=>'FirePHPCore-0.3.2',
 //  '0.0.0master1106021548-firephp'=>'0.0.0master1106021548-firephp',
-//  'firephp-1.0b1rc1'=>'firephp-1.0b1rc1'
+  'firephp-1.0b1rc1'=>'firephp-1.0b1rc1'
 );
 $REX['ADDON'][$mypage]['menustring'] = array (
   0=>'FirePHP',
@@ -178,14 +178,14 @@ rex_register_extension('OUTPUT_FILTER_CACHE', 'send_to_firephp');
 function send_to_firephp()
 {
   global $REX, $firephp;
-  
+
   if($REX['ADDON']['__firephp']['settings']['mode']==0)
   {
     return false;
   }
 
   ob_start();
-  
+
   if(!$firephp)
   {
     $firephp = FirePHP::getInstance(true);
@@ -317,21 +317,21 @@ function send_to_firephp()
     function firephp_header($params)
     {
       global $REX;
-    
+
       $script = '
     <!-- FIREPHP ADDON -->
       <script type="text/javascript">
-    
+
         // SEND VAR FORM JS CONTEXT TO FIREPHP VIA BACKEND CALLBACK
         function fb(variable,label,logtype){
             label = label || "";
             logtype = logtype || "log";
-    
+
             var data        = {};
             data.label      = label;
             data.variable   = variable;
             data.logtype    = logtype;
-    
+
             var request  = jQuery.ajax({
               url: "index.php",
               type: "POST",
@@ -344,7 +344,7 @@ function send_to_firephp()
               }
             });
         };
-    
+
       </script>
     <!-- /FIREPHP ADDON -->
       ';
@@ -353,24 +353,24 @@ function send_to_firephp()
         case false: // frontend
           return str_replace('</head>',$script.'</head>',$params['subject']);
         break;
-    
+
         case true: // backend
           return $params['subject'].$script;
         break;
       }
     }
-    
+
     switch($REX['REDAXO'])
     {
       case false: // frontend
         rex_register_extension('OUTPUT_FILTER', 'firephp_header');
         break;
-    
+
       case true: // backend
         rex_register_extension('PAGE_HEADER', 'firephp_header');
         break;
     }
-    
+
     // JS LOG TO FIREPHP AJAX VOODOO
     //////////////////////////////////////////////////////////////////////////////
     $firephp    = rex_request('firephp','string',false);
