@@ -65,11 +65,13 @@ $REX['ADDON'][$mypage]['libs'] = array (
 );
 $REX['ADDON'][$mypage]['menustring'] = array (
   0=>'FirePHP',
-  1=>'<em style="color:#EA1144;">FirePHP</em>'
+  1=>'<em style="color:#02b902;">FirePHP</em>',
+  2=>'<em style="color:#EA1144;">FirePHP</em>'
 );
 $REX['ADDON'][$mypage]['modestring'] = array (
   0=>'inaktiv',
-  1=>'aktiv'
+  1=>'Session',
+  2=>'permanent'
 );
 $REX['ADDON'][$mypage]['status2console'] = array (
   1=>'keine Statusmeldungen',
@@ -105,11 +107,11 @@ $REX['ADDON'][$mypage]['js_bridge'] = array (
 // DYNAMIC ADDON SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
-$REX["ADDON"]["__firephp"]["settings"]["mode"] = 1;
+$REX["ADDON"]["__firephp"]["settings"]["mode"] = 0;
 $REX["ADDON"]["__firephp"]["settings"]["uselib"] = 'FirePHPCore-0.4.0rc3';
 $REX["ADDON"]["__firephp"]["settings"]["maxdepth"] = 7;
-$REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 0;
-$REX["ADDON"]["__firephp"]["settings"]["ep_log"] = 0;
+$REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 1;
+$REX["ADDON"]["__firephp"]["settings"]["ep_log"] = 1;
 $REX["ADDON"]["__firephp"]["settings"]["js_bridge"] = 0;
 // --- /DYN
 
@@ -130,46 +132,11 @@ if(!class_exists('FirePHP'))
     $firephp->setOption('maxDepth',$REX['ADDON'][$mypage]['settings']['maxdepth']);
   }
 
-  // FIREPHP ON/OFF
-  ////////////////////////////////////////////////////////////////////////////////
-
-  // Configure FirePHP
-  //define('INSIGHT_DEBUG', true);
-  //define('INSIGHT_SERVER_PATH', '/index.php'); // assumes /index.php exists on your hostname
-  //define('INSIGHT_IPS', '*');
-  //define('INSIGHT_AUTHKEYS', '');
-  //define('INSIGHT_PATHS', '__DIR__');
-  // NOTE: Based on this configuration /index.php MUST include FirePHP
-
   if(!intval($mode))
   {
     $mode = $REX['ADDON'][$mypage]['settings']['mode'];
   }
 
-  switch ($mode)
-  {
-    case 0:
-      $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
-      $firephp->setEnabled(false);
-      break;
-
-    case 1:
-      if (isset($_SESSION[$REX['INSTNAME']]['UID']) && $_SESSION[$REX['INSTNAME']]['UID']>0)
-      {
-        $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
-        $firephp->setEnabled(true);
-      }
-      else
-      {
-        $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
-        $firephp->setEnabled(false);
-      }
-      break;
-
-    default:
-      $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][0];
-      $firephp->setEnabled(false);
-  }
 
 // FIREPHP OUTPUT OF LOGS
 ////////////////////////////////////////////////////////////////////////////////
@@ -189,15 +156,39 @@ function send_to_firephp()
   if(!$firephp)
   {
     $firephp = FirePHP::getInstance(true);
-    $firephp->setEnabled(false);
+    $firephp->setEnabled(true);
+
     if($REX['ADDON']['__firephp']['settings']['maxdepth']>0)
     {
       $firephp->setOption('maxDepth',$REX['ADDON']['__firephp']['settings']['maxdepth']);
     }
-    if (isset($_SESSION[$REX['INSTNAME']]['UID']) && $_SESSION[$REX['INSTNAME']]['UID']>0)
+
+
+    switch ($REX['ADDON']['__firephp']['settings']['mode'])
     {
-      $firephp->setEnabled(true);
+      case 1:
+        if (isset($_SESSION[$REX['INSTNAME']]['UID']) && $_SESSION[$REX['INSTNAME']]['UID']>0)
+        {
+          $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
+          $firephp->setEnabled(true);
+        }
+        else
+        {
+          $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
+          $firephp->setEnabled(false);
+        }
+        break;
+
+      case 2:
+        $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][$mode];
+        $firephp->setEnabled(true);
+        break;
+
+      default:
+        $REX['ADDON']['name'][$mypage] = $REX['ADDON'][$mypage]['menustring'][0];
+        $firephp->setEnabled(false);
     }
+
   }
 
   // SQL LOG
