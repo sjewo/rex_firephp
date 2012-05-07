@@ -107,7 +107,7 @@ $REX['ADDON'][$mypage]['js_bridge'] = array (
 // DYNAMIC ADDON SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
-$REX["ADDON"]["__firephp"]["settings"]["mode"] = 0;
+$REX["ADDON"]["__firephp"]["settings"]["mode"] = 1;
 $REX["ADDON"]["__firephp"]["settings"]["uselib"] = 'FirePHPCore-0.4.0rc3';
 $REX["ADDON"]["__firephp"]["settings"]["maxdepth"] = 7;
 $REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 1;
@@ -126,7 +126,7 @@ if(!class_exists('FirePHP'))
   require_once($active_lib.'/lib/FirePHPCore/FirePHP.class.php');
   require_once($active_lib.'/lib/FirePHPCore/fb.php');
   $firephp = FirePHP::getInstance(true);
-  $firephp->setEnabled(false);
+  $firephp->setEnabled(true);
   if($REX['ADDON'][$mypage]['settings']['maxdepth']>0)
   {
     $firephp->setOption('maxDepth',$REX['ADDON'][$mypage]['settings']['maxdepth']);
@@ -191,6 +191,7 @@ function send_to_firephp()
 
   }
 
+
   // SQL LOG
   ////////////////////////////////////////////////////////////////////////////
   if($REX['ADDON']['__firephp']['settings']['sqllog']==1 && isset(rex_sql::$log) && is_object($firephp))
@@ -203,8 +204,6 @@ function send_to_firephp()
       $group_opts = rex_sql::$err_count>0
         ? array('Expanded' => true,'Color' => 'red')
         : array('Collapsed' => true,'Color' => 'green');
-      #$firephp->group('REX_SQL LOG ('.rex_sql::$count.' queries, '.rex_sql::$err_count.' errors)',$group_opts);
-      #$firephp->group('  #,ROWS, QUERY',array('Collapsed' => true,'Color'=>'gray'));$firephp->groupEnd();
       foreach($sql_log as $k => $v)
       {
         $n    = str_pad('#'.$k,         4, ' ', STR_PAD_LEFT);
@@ -214,14 +213,11 @@ function send_to_firephp()
         $line = '';
         $errno = '';
         $error = '';
-        #$v['query'] = str_replace(array("\n","\r"),'',$v['query']);
         $query = preg_replace('#[\n|\r]#','',$v['query']);
         $query = preg_replace('#\s+#',' ',$v['query']);
 
         if(isset($v['error']) && $v['error']!=null)
         {
-          #$firephp->group($n.'| ERROR @ QUERY: '.$query);
-          #$firephp->error('error #'.$v['errno'].': '.$v['error']);
           foreach($v['backtrace'] as $t)
           {
             if(isset($t['object']) &&
@@ -234,16 +230,10 @@ function send_to_firephp()
               $line = $t['line'];
             }
           }
-          #$firephp->info($backtrace,'backtrace');
-          #$table[] = array('SQL ERROR >>>','–','–','–','–');
           $table[] = array($k,'ERROR',$v['query'],$v['errno'],$v['error'],$file,$line,);
-          #$table[] = array('<<< SQL ERROR','–','–','–','–');
-          #$firephp->groupEnd();
         }
         else
         {
-          #$firephp->log('#'.$k.': '.$rows.' ROWS @ QUERY: '.$v['query']);
-          #$firephp->group($n.$rows.$query,array('Collapsed' => true,'Color'=>'#44578A'));
           foreach($v['backtrace'] as $t)
           {
             if(isset($t['object']) &&
@@ -257,18 +247,14 @@ function send_to_firephp()
             }
           }
 
-          #$firephp->log($backtrace,'backtrace');
-          #$firephp->groupEnd();
-
-          #$firephp->log('#'.$k.': '.$rows.' ROWS @ QUERY: '.$v['query']);
           $table[] = array($k,$v['rows'],$v['query'],$errno,$error,$file,$line,);
         }
       }
-      #$firephp->groupEnd();
+
       $firephp->table('REX_SQL LOG ('.rex_sql::$count.' queries, '.rex_sql::$err_count.' errors)',$table,array('Expanded'=>true));
-      #$firephp->table('REX_SQL LOG ('.rex_sql::$count.' queries, '.rex_sql::$err_count.' errors)',$table,$group_opts);
     }
   }
+
 
   // EP LOG
   ////////////////////////////////////////////////////////////////////////////
@@ -276,22 +262,35 @@ function send_to_firephp()
   {
     if(isset($REX['EXTENSION_POINT_LOG']))
     {
-      $i = 1;
-      $firephp->group('EP LOG',array('Collapsed' => true,'Color' => 'green'));
-      foreach($REX['EXTENSION_POINT_LOG'] as $e)
+      $registered_eps = array();
+      $table = array();
+      $table[] = array('#','Type','Timing','ExtensionPoint','Callable','$subject','$params','$read_only','$REX[EXTENSIONS]','$result');
+
+      foreach($REX['EXTENSION_POINT_LOG'] as $k=>$v)
       {
-        $opts = array('Collapsed' => true);
-        $opts['Color'] = $e['type']=='point' ? 'black' : 'blue';
-        $firephp->group($e['group'],$opts);
-        unset($e['group'],$e['type']);
-        foreach($e as $k=>$v)
+        $i = $k+1;
+        switch($v['type'])
         {
-          $firephp->log($v,$k);
+          case'EP':
+            $registered_eps[] = $v['name'];
+            $table[] = array($i,$v['type'],'–',$v['name'],'–',$v['$subject'],$v['$params'],$v['$read_only'],$v['$REX[EXTENSIONS]'],$v['$result']);
+            break;
+
+          case'EXT':
+            $timing = in_array($v['name'],$registered_eps) ? 'late' : 'ok';
+            if(is_array($v['$callable']))
+            {
+              if(is_object($v['$callable'][0])){
+                $v['$callable'][0] = get_class($v['$callable'][0]);
+              }
+              $v['$callable'] = implode('::',$v['$callable']);
+            }
+            $table[] = array($i,$v['type'],$timing,$v['name'],$v['$callable'],'–',$v['$params'],'–','–','–');
+            break;
         }
-        $firephp->groupEnd();
       }
-      //$firephp->log($REX['EXTENSION_POINT_LOG'],'LOG');
-      $firephp->groupEnd();
+
+      $firephp->table('EP LOG ('.$i.' calls)',$table);
     }
     else
     {
