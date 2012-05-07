@@ -31,8 +31,8 @@ $REX['EXTENSION_POINT_LOG'] = array(); /* ep log patch */
 function rex_register_extension_point($extensionPoint, $subject = '', $params = array (), $read_only = false)
 {
   global $REX;
-  $ep_log_entry = array('type'=>'point',
-                        'group'=>$extensionPoint,
+  $ep_log_entry = array('type'=>'EP',
+                        'name'=>$extensionPoint,
                         '$subject'=>$subject,
                         '$params'=>$params,
                         '$read_only'=>$read_only
@@ -100,8 +100,8 @@ function rex_register_extension($extensionPoint, $callable, $params = array())
   if(!is_array($params)) $params = array();
   $REX['EXTENSIONS'][$extensionPoint][] = array($callable, $params);
 
-  $REX['EXTENSION_POINT_LOG'][] = array('type'=>'extension',
-                        'group'=>$extensionPoint.' <- '.$callable,
+  $REX['EXTENSION_POINT_LOG'][] = array('type'=>'EXT',
+                        'name'=>$extensionPoint,
                         '$callable'=>$callable,
                         '$params'=>$params
                         ); /* ep log patch */
@@ -156,10 +156,10 @@ function rex_call_func($function, $params, $parseParamsAsArray = true)
   $func = '';
 
   if (is_callable($function))
- 	{
- 	  $func = $function;
- 	}
- 	elseif (is_string($function) && strlen($function) > 0)
+  {
+    $func = $function;
+  }
+  elseif (is_string($function) && strlen($function) > 0)
   {
     // static class method
     if (strpos($function, '::') !== false)
@@ -193,14 +193,14 @@ function rex_call_func($function, $params, $parseParamsAsArray = true)
     trigger_error('rexCallFunc: Using of an unexpected function var "'.$function.'"!');
   }
 
-	if($parseParamsAsArray === true)
-	{
-		// Alle Parameter als ein Array übergeben
-		// funktion($params);
-	  return call_user_func($func, $params);
-	}
-	// Jeder index im Array ist ein Parameter
-	// funktion($params[0], $params[1], $params[2],...);
+  if($parseParamsAsArray === true)
+  {
+    // Alle Parameter als ein Array übergeben
+    // funktion($params);
+    return call_user_func($func, $params);
+  }
+  // Jeder index im Array ist ein Parameter
+  // funktion($params[0], $params[1], $params[2],...);
   return call_user_func_array($func, $params);
 }
 

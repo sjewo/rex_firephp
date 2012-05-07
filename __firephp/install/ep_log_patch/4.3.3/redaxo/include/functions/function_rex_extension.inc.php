@@ -31,8 +31,8 @@ $REX['EXTENSION_POINT_LOG'] = array(); /* ep log patch */
 function rex_register_extension_point($extensionPoint, $subject = '', $params = array (), $read_only = false)
 {
   global $REX;
-  $ep_log_entry = array('type'=>'point',
-                        'group'=>$extensionPoint,
+  $ep_log_entry = array('type'=>'EP',
+                        'name'=>$extensionPoint,
                         '$subject'=>$subject,
                         '$params'=>$params,
                         '$read_only'=>$read_only
@@ -100,8 +100,8 @@ function rex_register_extension($extensionPoint, $callable, $params = array())
   if(!is_array($params)) $params = array();
   $REX['EXTENSIONS'][$extensionPoint][] = array($callable, $params);
 
-  $REX['EXTENSION_POINT_LOG'][] = array('type'=>'extension',
-                        'group'=>$extensionPoint.' <- '.$callable,
+  $REX['EXTENSION_POINT_LOG'][] = array('type'=>'EXT',
+                        'name'=>$extensionPoint,
                         '$callable'=>$callable,
                         '$params'=>$params
                         ); /* ep log patch */
