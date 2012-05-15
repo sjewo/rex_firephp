@@ -7,15 +7,14 @@
 *
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
-* @package redaxo4
-* @version 0.4.2
-* $Id$:
+* @package redaxo 4.3.x
+* @version 0.4.3
 */
 
 /**
  * FirePHP Addon - SQL QUERIES LOG PATCH
  * extended version of:
- * @see http://rexdev.de/dev_log/redaxo-zahl-der-sql-queries-mitloggen.html 
+ * @see http://rexdev.de/dev_log/redaxo-zahl-der-sql-queries-mitloggen.html
  */
 
 /**
@@ -453,7 +452,7 @@ class rex_sql
   {
     return $this->setQuery('SELECT '. $fields .' FROM `' . $this->table . '` '. $this->wherevar);
   }
-  
+
   /**
    * Setzt eine Update-Anweisung auf die angegebene Tabelle
    * mit den angegebenen Werten und WHERE Parametern ab
@@ -591,7 +590,7 @@ class rex_sql
   {
     $this->counter++;
   }
-  
+
   /*
    * Prüft ob das Resultset weitere Datensätze enthält
    */
@@ -615,7 +614,7 @@ class rex_sql
   {
     $this->counter = ($this->rows - 1);
   }
-  
+
   /**
    * Gibt die letzte InsertId zurück
    */

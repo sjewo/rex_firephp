@@ -7,9 +7,8 @@
 *
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
-* @package redaxo4
-* @version 0.4.2
-* $Id$:
+* @package redaxo 4.3.x
+* @version 0.4.3
 */
 
 // SESSION
@@ -38,7 +37,7 @@ $REX['ADDON'][$mypage]['VERSION'] = array
 (
   'VERSION'      => 0,
   'MINORVERSION' => 4,
-  'SUBVERSION'   => preg_replace('/[^0-9]/','',"$Revision$")
+  'SUBVERSION'   => 3,
 );
 
 

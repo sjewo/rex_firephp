@@ -7,9 +7,8 @@
 *
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
-* @package redaxo4
-* @version 0.4.2
-* $Id$: 
+* @package redaxo 4.3.x
+* @version 0.4.3
 */
 
 // INSTALL SETTINGS

@@ -7,14 +7,13 @@
 *
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
-* @package redaxo4
-* @version 0.4.2
-* $Id$:
+* @package redaxo 4.3.x
+* @version 0.4.3
 */
 
 /**
  * Funktionen zur Registrierung von Schnittstellen (EXTENSION_POINTS)
- * @package redaxo4
+ * @package redaxo 4.3.x
  * @version svn:$Id$
  */
 

@@ -7,9 +7,8 @@
 *
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
-* @package redaxo4
-* @version 0.4.2
-* $Id$:
+* @package redaxo 4.3.x
+* @version 0.4.3
 */
 
 if (!function_exists('firephp_recursive_copy'))
@@ -133,7 +132,7 @@ if (!function_exists('firephp_recursive_copy'))
 /**
  * CONTENT PARSER FUNKTIONEN
  * @author rexdev.de
- * @package redaxo4.2
+ * @package redaxo 4.3.x
  * @version svn:$Id$
  */
 

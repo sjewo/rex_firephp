@@ -7,15 +7,14 @@
 *
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
-* @package redaxo4
-* @version 0.4.2
-* $Id$:
+* @package redaxo 4.3.x
+* @version 0.4.3
 */
 
 /**
  * FirePHP Addon - SQL QUERIES LOG PATCH
  * extended version of:
- * @see http://rexdev.de/dev_log/redaxo-zahl-der-sql-queries-mitloggen.html 
+ * @see http://rexdev.de/dev_log/redaxo-zahl-der-sql-queries-mitloggen.html
  */
 
 /**
