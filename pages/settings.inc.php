@@ -236,26 +236,50 @@ echo '
       </fieldset>
 
 
-        <legend>Switches</legend>
+      <fieldset class="rex-form-col-1">
+        <legend>SQL Log</legend>
         <div class="rex-form-wrapper">
 
           <div class="rex-form-row">
             <p class="rex-form-col-a rex-form-select">
-              <label for="status2console">REX_SQL Log:</label>
+              <label for="status2console">Activate:</label>
               '.$sqllog_select.'
             </p>
           </div><!-- .rex-form-row -->
 
+        </div><!-- .rex-form-wrapper -->
+      </fieldset>
+
+
+      <fieldset class="rex-form-col-1">
+        <legend>EP Log</legend>
+
+        <div class="rex-form-wrapper">
           <div class="rex-form-row">
             <p class="rex-form-col-a rex-form-select">
-              <label for="status2console">EP Log:</label>
+              <label for="status2console">Activate:</label>
               '.$ep_log_select.'
             </p>
           </div><!-- .rex-form-row -->
 
           <div class="rex-form-row">
+            <p class="rex-form-col-a rex-form-text">
+              <label for="ep_log_focus">Focus on EP:</label>
+              <input id="ep_log_focus" class="rex-form-text" type="text" name="ep_log_focus" value="'.stripslashes($myREX['settings']['ep_log_focus']).'" />
+            </p>
+          </div><!-- .rex-form-row -->
+
+        </div><!-- .rex-form-wrapper -->
+      </fieldset>
+
+
+      <fieldset class="rex-form-col-1">
+        <legend>JS Bridge (experimental)</legend>
+        <div class="rex-form-wrapper">
+
+          <div class="rex-form-row">
             <p class="rex-form-col-a rex-form-select">
-              <label for="js_bridge">JS Bridge:</label>
+              <label for="js_bridge">Activate:</label>
               '.$js_bridge.'
             </p>
           </div><!-- .rex-form-row -->
