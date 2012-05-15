@@ -78,18 +78,6 @@ $REX['ADDON'][$mypage]['status2console'] = array (
   2=>'FirePHP Konsole: Meldung nur für PERMANENT Mode',
   3=>'FirePHP Konsole: Meldung für SESSION & PERMANENT Mode'
 );
-$REX['ADDON'][$mypage]['maxdepth'] = array (
-  0=>'infinte',
-  1=>'1 level',
-  2=>'2 levels',
-  3=>'3 levels',
-  4=>'4 levels',
-  5=>'5 levels',
-  6=>'6 levels',
-  7=>'7 levels',
-  8=>'8 levels',
-  9=>'9 levels',
-);
 $REX['ADDON'][$mypage]['sqllog'] = array (
   0=>'off',
   1=>'on',
@@ -107,11 +95,13 @@ $REX['ADDON'][$mypage]['js_bridge'] = array (
 // DYNAMIC ADDON SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
-$REX["ADDON"]["__firephp"]["settings"]["mode"] = 1;
+$REX["ADDON"]["__firephp"]["settings"]["mode"] = 2;
 $REX["ADDON"]["__firephp"]["settings"]["uselib"] = 'FirePHPCore-0.4.0rc3';
-$REX["ADDON"]["__firephp"]["settings"]["maxdepth"] = 7;
-$REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 1;
-$REX["ADDON"]["__firephp"]["settings"]["ep_log"] = 1;
+$REX["ADDON"]["__firephp"]["settings"]["maxDepth"] = 10;
+$REX["ADDON"]["__firephp"]["settings"]["maxArrayDepth"] = 5;
+$REX["ADDON"]["__firephp"]["settings"]["maxObjectDepth"] = 5;
+$REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 0;
+$REX["ADDON"]["__firephp"]["settings"]["ep_log"] = 0;
 $REX["ADDON"]["__firephp"]["settings"]["js_bridge"] = 0;
 // --- /DYN
 
@@ -130,6 +120,16 @@ function firephp_init()
   require_once($active_lib.'/lib/FirePHPCore/FirePHP.class.php');
   require_once($active_lib.'/lib/FirePHPCore/fb.php');
   $firephp = FirePHP::getInstance(true);
+
+  // FIREPHP SETTINGS
+  $options = array(
+    'maxObjectDepth'      => $REX['ADDON']['__firephp']['settings']['maxObjectDepth'],// default: 5
+    'maxArrayDepth'       => $REX['ADDON']['__firephp']['settings']['maxArrayDepth'], // default: 5
+    'maxDepth'            => $REX['ADDON']['__firephp']['settings']['maxDepth'],      // default: 10
+    'useNativeJsonEncode' => true,                                                    // default: true
+    'includeLineNumbers'  => true,                                                    // default: true
+    );
+  $firephp->setOptions($options);
   $firephp->setEnabled(false);
 
   switch ($REX['ADDON']['__firephp']['settings']['mode'])
@@ -139,7 +139,6 @@ function firephp_init()
       {
         $REX['ADDON']['name']['__firephp'] = $REX['ADDON']['__firephp']['menustring'][$mode];
         $firephp->setEnabled(true);
-        $firephp->setOption('maxDepth',$REX['ADDON']['__firephp']['settings']['maxdepth']);
       }
       else
       {
@@ -151,7 +150,6 @@ function firephp_init()
     case 2:
       $REX['ADDON']['name']['__firephp'] = $REX['ADDON']['__firephp']['menustring'][$mode];
       $firephp->setEnabled(true);
-      $firephp->setOption('maxDepth',$REX['ADDON']['__firephp']['settings']['maxdepth']);
       break;
 
     default:

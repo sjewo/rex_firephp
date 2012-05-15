@@ -104,18 +104,44 @@ foreach($REX['ADDON'][$mypage]['libs'] as $key => $string)
 $tmp->setSelected($myREX['settings'][$id]);
 $lib_select = $tmp->get();
 
-// MAXDEPTH SELECT
+// maxDepth SELECT
 ////////////////////////////////////////////////////////////////////////////////
-$id = 'maxdepth';
+$id = 'maxDepth';
 $tmp = new rex_select();
 $tmp->setSize(1);
 $tmp->setName($id);
-foreach($REX['ADDON'][$mypage]['maxdepth'] as $key => $string)
+for ($i=2; $i<15; $i++) // minimum level = 2, else logs won't show
 {
-  $tmp->addOption($string,$key);
+  $tmp->addOption($i .' Level',$i);
 }
 $tmp->setSelected($myREX['settings'][$id]);
-$maxdepth_select = $tmp->get();
+$maxDepth_select = $tmp->get();
+
+// maxArrayDepth SELECT
+////////////////////////////////////////////////////////////////////////////////
+$id = 'maxArrayDepth';
+$tmp = new rex_select();
+$tmp->setSize(1);
+$tmp->setName($id);
+for ($i=2; $i<15; $i++) // minimum level = 2, else logs won't show
+{
+  $tmp->addOption($i .' Level',$i);
+}
+$tmp->setSelected($myREX['settings'][$id]);
+$maxArrayDepth_select = $tmp->get();
+
+// maxObjectDepth SELECT
+////////////////////////////////////////////////////////////////////////////////
+$id = 'maxObjectDepth';
+$tmp = new rex_select();
+$tmp->setSize(1);
+$tmp->setName($id);
+for ($i=2; $i<15; $i++) // minimum level = 2, else logs won't show
+{
+  $tmp->addOption($i .' Level',$i);
+}
+$tmp->setSelected($myREX['settings'][$id]);
+$maxObjectDepth_select = $tmp->get();
 
 // SQL_LOG SELECT
 ////////////////////////////////////////////////////////////////////////////////
@@ -177,18 +203,32 @@ echo '
               '.$mode_select.'
             </p>
           </div><!-- .rex-form-row -->
-  
+
           <div class="rex-form-row">
             <p class="rex-form-col-a rex-form-select">
               <label for="uselib">Core Version:</label>
               '.$lib_select.'
             </p>
           </div><!-- .rex-form-row -->
-  
+
           <div class="rex-form-row">
             <p class="rex-form-col-a rex-form-select">
-              <label for="status2console">MaxDepth:</label>
-              '.$maxdepth_select.'
+              <label for="maxDepth">maxDepth:</label>
+              '.$maxDepth_select.'
+            </p>
+          </div><!-- .rex-form-row -->
+
+          <div class="rex-form-row">
+            <p class="rex-form-col-a rex-form-select">
+              <label for="maxArrayDepth">maxArrayDepth:</label>
+              '.$maxArrayDepth_select.'
+            </p>
+          </div><!-- .rex-form-row -->
+
+          <div class="rex-form-row">
+            <p class="rex-form-col-a rex-form-select">
+              <label for="maxObjectDepth">maxObjectDepth:</label>
+              '.$maxObjectDepth_select.'
             </p>
           </div><!-- .rex-form-row -->
 
@@ -219,7 +259,7 @@ echo '
               '.$js_bridge.'
             </p>
           </div><!-- .rex-form-row -->
-  
+
           <div class="rex-form-row rex-form-element-v2">
             <p class="rex-form-submit">
               <input class="rex-form-submit" type="submit" id="submit" name="submit" value="Einstellungen speichern" />
