@@ -102,6 +102,7 @@ $REX["ADDON"]["__firephp"]["settings"]["maxArrayDepth"] = 5;
 $REX["ADDON"]["__firephp"]["settings"]["maxObjectDepth"] = 5;
 $REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 0;
 $REX["ADDON"]["__firephp"]["settings"]["ep_log"] = 0;
+$REX["ADDON"]["__firephp"]["settings"]["ep_log_focus"] = '';
 $REX["ADDON"]["__firephp"]["settings"]["js_bridge"] = 0;
 // --- /DYN
 
@@ -258,6 +259,12 @@ function send_to_firephp()
   {
     if(isset($REX['EXTENSION_POINT_LOG']))
     {
+      $focus = explode(',',$REX["ADDON"]["__firephp"]["settings"]["ep_log_focus"]);
+      if(count($focus)===1 && $focus[0]=='')
+      {
+        $focus = null;
+      }
+
       $registered_eps = array();
       $table = array();
       $table[] = array('#','Type','Timing','ExtensionPoint','Callable','$subject','$params','$read_only','$REX[EXTENSIONS]','$result');
@@ -268,11 +275,17 @@ function send_to_firephp()
         switch($v['type'])
         {
           case'EP':
+            if($focus!==null && !in_array($v['name'],$focus)) {
+              break;
+            }
             $registered_eps[] = $v['name'];
             $table[] = array($i,$v['type'],'–',$v['name'],'–',$v['$subject'],$v['$params'],$v['$read_only'],$v['$REX[EXTENSIONS]'],$v['$result']);
             break;
 
           case'EXT':
+            if($focus!==null && !in_array($v['name'],$focus)) {
+              break;
+            }
             $timing = in_array($v['name'],$registered_eps) ? 'late' : 'ok';
             if(is_array($v['$callable']))
             {
