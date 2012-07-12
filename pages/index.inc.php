@@ -7,8 +7,8 @@
 *
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
-* @package redaxo 4.3.x
-* @version 0.4.3
+* @package redaxo 4.3.x/4.4.x
+* @version 0.4.4
 */
 
 // GET PARAMS

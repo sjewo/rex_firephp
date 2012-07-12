@@ -7,8 +7,8 @@
 *
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
-* @package redaxo 4.3.x
-* @version 0.4.3
+* @package redaxo 4.3.x/4.4.x
+* @version 0.4.4
 */
 
 /**
@@ -104,8 +104,8 @@ class rex_sql
   }
 
   /**
-   * Gibt die DatenbankId der Abfrage (SQL) zurück,
-   * oder false wenn die Abfrage keine DBID enthält
+   * Gibt die DatenbankId der Abfrage (SQL) zur?ck,
+   * oder false wenn die Abfrage keine DBID enth?lt
    *
    * @param $query Abfrage
    */
@@ -128,7 +128,7 @@ class rex_sql
   }
 
   /**
-   * Entfernt die DBID aus einer Abfrage (SQL) und gibt die DBID zurück falls
+   * Entfernt die DBID aus einer Abfrage (SQL) und gibt die DBID zur?ck falls
    * vorhanden, sonst false
    *
    * @param $query Abfrage
@@ -144,10 +144,10 @@ class rex_sql
   }
 
   /**
-   * Gibt den Typ der Abfrage (SQL) zurück,
-   * oder false wenn die Abfrage keinen Typ enthält
+   * Gibt den Typ der Abfrage (SQL) zur?ck,
+   * oder false wenn die Abfrage keinen Typ enth?lt
    *
-   * Mögliche Typen:
+   * M?gliche Typen:
    * - SELECT
    * - SHOW
    * - UPDATE
@@ -211,7 +211,7 @@ class rex_sql
    */
   /*public*/ function setQuery($qry)
   {
-    // Alle Werte zurücksetzen
+    // Alle Werte zur?cksetzen
     $this->flush();
     self::$count++; /* log patch */
 
@@ -316,8 +316,8 @@ class rex_sql
   }
 
   /**
-   * Prüft den Wert einer Spalte der aktuellen Zeile ob ein Wert enthalten ist
-   * @param $feld Spaltenname des zu prüfenden Feldes
+   * Pr?ft den Wert einer Spalte der aktuellen Zeile ob ein Wert enthalten ist
+   * @param $feld Spaltenname des zu pr?fenden Feldes
    * @param $prop Wert, der enthalten sein soll
    */
   /*protected*/ function isValueOf($feld, $prop)
@@ -341,7 +341,7 @@ class rex_sql
   }
 
   /**
-   * Gibt den Wert einer Spalte im ResultSet zurück
+   * Gibt den Wert einer Spalte im ResultSet zur?ck
    * @param $value Name der Spalte
    * @param [$row] Zeile aus dem ResultSet
    */
@@ -381,7 +381,7 @@ class rex_sql
   }
 
   /**
-   * Prüft, ob eine Spalte im Resultset vorhanden ist
+   * Pr?ft, ob eine Spalte im Resultset vorhanden ist
    * @param $value Name der Spalte
    */
   /*public*/ function hasValue($feldname)
@@ -390,10 +390,10 @@ class rex_sql
   }
 
   /**
-   * Prüft, ob das Feld mit dem Namen $feldname Null ist.
+   * Pr?ft, ob das Feld mit dem Namen $feldname Null ist.
    *
    * Falls das Feld nicht vorhanden ist,
-   * wird Null zurückgegeben, sonst True/False
+   * wird Null zur?ckgegeben, sonst True/False
    */
   /*public*/ function isNull($feldname)
   {
@@ -404,7 +404,7 @@ class rex_sql
   }
 
   /**
-   * Gibt die Anzahl der Zeilen zurück
+   * Gibt die Anzahl der Zeilen zur?ck
    */
   /*public*/ function getRows()
   {
@@ -412,8 +412,8 @@ class rex_sql
   }
 
   /**
-   * Gibt die Zeilennummer zurück, auf der sich gerade der
-   * interne Zähler befindet
+   * Gibt die Zeilennummer zur?ck, auf der sich gerade der
+   * interne Z?hler befindet
    *
    * @deprecated since version 4.3.0
    */
@@ -423,7 +423,7 @@ class rex_sql
   }
 
   /**
-   * Gibt die Anzahl der Felder/Spalten zurück
+   * Gibt die Anzahl der Felder/Spalten zur?ck
    */
   /*public*/ function getFields()
   {
@@ -432,7 +432,7 @@ class rex_sql
 
   /**
    * Baut den SET bestandteil mit der
-   * verfügbaren values zusammen und gibt diesen zurück
+   * verf?gbaren values zusammen und gibt diesen zur?ck
    *
    * @see setValue
    */
@@ -531,11 +531,11 @@ class rex_sql
   /**
    * Setzt den Query $query ab.
    *
-   * Wenn die Variable $successMessage gefüllt ist, dann wird diese bei
-   * erfolgreichem absetzen von $query zurückgegeben, sonst die MySQL
+   * Wenn die Variable $successMessage gef?llt ist, dann wird diese bei
+   * erfolgreichem absetzen von $query zur?ckgegeben, sonst die MySQL
    * Fehlermeldung
    *
-   * Wenn die Variable $successMessage nicht gefüllt ist, verhält sich diese
+   * Wenn die Variable $successMessage nicht gef?llt ist, verh?lt sich diese
    * Methode genauso wie setQuery()
    *
    * Beispiel:
@@ -544,7 +544,7 @@ class rex_sql
    * $sql = rex_sql::factory();
    * $message = $sql->statusQuery(
    *    'INSERT  INTO abc SET a="ab"',
-   *    'Datensatz  erfolgreich eingefügt');
+   *    'Datensatz  erfolgreich eingef?gt');
    * </code>
    *
    *  anstatt von
@@ -552,7 +552,7 @@ class rex_sql
    * <code>
    * $sql = rex_sql::factory();
    * if($sql->setQuery('INSERT INTO abc SET a="ab"'))
-   *   $message  = 'Datensatz erfolgreich eingefügt');
+   *   $message  = 'Datensatz erfolgreich eingef?gt');
    * else
    *   $message  = $sql- >getError();
    * </code>
@@ -571,7 +571,7 @@ class rex_sql
   }
 
   /**
-   * Stellt alle Werte auf den Ursprungszustand zurück
+   * Stellt alle Werte auf den Ursprungszustand zur?ck
    */
   /*public*/ function flush()
   {
@@ -590,7 +590,7 @@ class rex_sql
   }
 
   /**
-   * Stellt alle Values, die mit setValue() gesetzt wurden, zurück
+   * Stellt alle Values, die mit setValue() gesetzt wurden, zur?ck
    *
    * @see #setValue(), #getValue()
    */
@@ -601,7 +601,7 @@ class rex_sql
 
 
   /**
-   * Setzt den Cursor des Resultsets auf die nächst niedrigere Stelle
+   * Setzt den Cursor des Resultsets auf die n?chst niedrigere Stelle
    */
   /*public*/ function previous()
   {
@@ -609,7 +609,7 @@ class rex_sql
   }
 
   /**
-   * Setzt den Cursor des Resultsets auf die nächst höhere Stelle
+   * Setzt den Cursor des Resultsets auf die n?chst h?here Stelle
    */
   /*public*/ function next()
   {
@@ -617,7 +617,7 @@ class rex_sql
   }
 
   /*
-   * Prüft ob das Resultset weitere Datensätze enthält
+   * Pr?ft ob das Resultset weitere Datens?tze enth?lt
    */
   /*public*/ function hasNext()
   {
@@ -625,7 +625,7 @@ class rex_sql
   }
 
   /**
-   * Setzt den Cursor des Resultsets zurück zum Anfang
+   * Setzt den Cursor des Resultsets zur?ck zum Anfang
    */
   /*public*/ function reset()
   {
@@ -641,7 +641,7 @@ class rex_sql
   }
 
   /**
-   * Gibt die letzte InsertId zurück
+   * Gibt die letzte InsertId zur?ck
    */
   /*public*/ function getLastId()
   {
@@ -649,7 +649,7 @@ class rex_sql
   }
 
   /**
-   * Lädt das komplette Resultset in ein Array und gibt dieses zurück und
+   * L?dt das komplette Resultset in ein Array und gibt dieses zur?ck und
    * wechselt die DBID falls vorhanden
    *
    * @param string $sql Abfrage
@@ -662,7 +662,7 @@ class rex_sql
   }
 
   /**
-   * Lädt das komplette Resultset in ein Array und gibt dieses zurück
+   * L?dt das komplette Resultset in ein Array und gibt dieses zur?ck
    *
    * @param string $sql Abfrage
    * @param string $fetch_type Default: MYSQL_ASSOC; weitere: MYSQL_NUM, MYSQL_BOTH
@@ -704,7 +704,7 @@ class rex_sql
   }
 
   /**
-   * Gibt die zuletzt aufgetretene Fehlernummer zurück
+   * Gibt die zuletzt aufgetretene Fehlernummer zur?ck
    */
   /*public*/ function getErrno()
   {
@@ -712,7 +712,7 @@ class rex_sql
   }
 
   /**
-   * Gibt den zuletzt aufgetretene Fehlernummer zurück
+   * Gibt den zuletzt aufgetretene Fehlernummer zur?ck
    */
   /*public*/ function getError()
   {
@@ -720,7 +720,7 @@ class rex_sql
   }
 
   /**
-   * Prüft, ob ein Fehler aufgetreten ist
+   * Pr?ft, ob ein Fehler aufgetreten ist
    */
   /*public*/ function hasError()
   {
@@ -750,12 +750,12 @@ class rex_sql
   }
 
   /**
-   * Setzt eine Spalte auf den nächst möglich auto_increment Wert
+   * Setzt eine Spalte auf den n?chst m?glich auto_increment Wert
    * @param $field Name der Spalte
    */
   /*public*/ function setNewId($field)
   {
-    // setNewId muss neues sql Objekt verwenden, da sonst bestehende informationen im Objekt überschrieben werden
+    // setNewId muss neues sql Objekt verwenden, da sonst bestehende informationen im Objekt ?berschrieben werden
     $sql = rex_sql::factory();
     if($sql->setQuery('SELECT `' . $field . '` FROM `' . $this->table . '` ORDER BY `' . $field . '` DESC LIMIT 1'))
     {
@@ -774,7 +774,7 @@ class rex_sql
   }
 
   /**
-   * Gibt die Spaltennamen des ResultSets zurück
+   * Gibt die Spaltennamen des ResultSets zur?ck
    */
   /*public*/ function getFieldnames()
   {
@@ -789,7 +789,7 @@ class rex_sql
   }
 
   /**
-   * Escaped den übergeben Wert für den DB Query
+   * Escaped den ?bergeben Wert f?r den DB Query
    *
    * @param $value den zu escapenden Wert
    * @param [$delimiter] Delimiter der verwendet wird, wenn es sich bei $value
@@ -850,7 +850,7 @@ class rex_sql
    *
    * @param $table string Name der Tabelle
    * @param $DBID int Id der Datenbankverbindung
-   * @return array Ein Array das die Metadaten enthält
+   * @return array Ein Array das die Metadaten enth?lt
    */
   /*public*/ function showColumns($table, $DBID=1)
   {
@@ -875,7 +875,7 @@ class rex_sql
   }
 
   /**
-   * Gibt die Serverversion zurück.
+   * Gibt die Serverversion zur?ck.
    *
    * Die Versionsinformation ist erst bekannt,
    * nachdem der rex_sql Konstruktor einmalig erfolgreich durchlaufen wurde.
@@ -903,7 +903,7 @@ class rex_sql
   }
 
   /**
-   * Gibt ein SQL Singelton Objekt zurück
+   * Gibt ein SQL Singelton Objekt zur?ck
    *
    * @deprecated since 4.3.0
    */
@@ -959,13 +959,13 @@ class rex_sql
   }
 
   /**
-   * Schließt die Verbindung zum DB Server
+   * Schlie?t die Verbindung zum DB Server
    */
   /*public static*/ function disconnect($DBID=1)
   {
     global $REX;
 
-    // Alle Connections schließen
+    // Alle Connections schlie?en
     if($DBID === null)
     {
       foreach($REX['DB'] as $DBID => $DBSettings)
