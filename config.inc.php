@@ -259,9 +259,18 @@ function send_to_firephp()
     if(isset($REX['EXTENSION_POINT_LOG']))
     {
       $focus = explode(',',$REX["ADDON"]["__firephp"]["settings"]["ep_log_focus"]);
-      if(count($focus)===1 && $focus[0]=='')
-      {
+      if(count($focus)===1 && $focus[0]==''){
         $focus = null;
+      }
+
+      function focus_match($name,$focus){
+        foreach($focus as $pattern){
+          $pattern = str_replace('*','(.)*',$pattern);
+          if(preg_match('/'.$pattern.'/',$name)){
+            return true;
+          }
+        }
+        return false;
       }
 
       $registered_eps = array();
@@ -274,7 +283,7 @@ function send_to_firephp()
         switch($v['type'])
         {
           case'EP':
-            if($focus!==null && !in_array($v['name'],$focus)) {
+            if($focus!==null && (!in_array($v['name'],$focus) && focus_match($v['name'],$focus)===false) ) {
               break;
             }
             $registered_eps[] = $v['name'];
@@ -282,7 +291,7 @@ function send_to_firephp()
             break;
 
           case'EXT':
-            if($focus!==null && !in_array($v['name'],$focus)) {
+            if($focus!==null && (!in_array($v['name'],$focus) && focus_match($v['name'],$focus)===false) ) {
               break;
             }
             $timing = in_array($v['name'],$registered_eps) ? 'late' : 'ok';
