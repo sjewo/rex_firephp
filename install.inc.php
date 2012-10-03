@@ -83,11 +83,19 @@ if(count($error)==0)
     // SQL LOG PATCH
     $source = $REX['INCLUDE_PATH'].'/addons/'.$myself.'/install/sql_log_patch/'.$this_REX.'/';
     $target = $REX['HTDOCS_PATH'];
-    $result = firephp_recursive_copy($source, $target);
+    if(file_exists($source)){
+      $result = firephp_recursive_copy($source, $target);
+    }else{
+      echo rex_warning('Für diese Redaxo Version steht keine passende Version der SQL Klasse zur Verfügung - das SQL-Log ist daher ohne Funktion');
+    }
     // EP LOG PATCH
     $source = $REX['INCLUDE_PATH'].'/addons/'.$myself.'/install/ep_log_patch/'.$this_REX.'/';
     $target = $REX['HTDOCS_PATH'];
-    $result = firephp_recursive_copy($source, $target);
+    if(file_exists($source)){
+      $result = firephp_recursive_copy($source, $target);
+    }else{
+      echo rex_warning('Für diese Redaxo Version steht keine passende Version der Extension Klasse zur Verfügung - das EP-Log ist daher ohne Funktion');
+    }
   }
 
   $REX['ADDON']['install'][$myself] = 1;
