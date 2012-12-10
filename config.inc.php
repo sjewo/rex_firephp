@@ -161,6 +161,19 @@ function firephp_init()
 }
 
 
+// ADD OWN XFORM CLASSES
+////////////////////////////////////////////////////////////////////////////////
+rex_register_extension('ADDONS_INCLUDED', 'firephp_xform_classes');
+function firephp_xform_classes($params){
+  global $REX;
+  if(OOAddon::isAvailable('xform')){
+    $REX['ADDON']['xform']['classpaths']['value'][]    = $REX['INCLUDE_PATH'].'/addons/__firephp/xform/classes/value/';
+    $REX['ADDON']['xform']['classpaths']['validate'][] = $REX['INCLUDE_PATH'].'/addons/__firephp/xform/classes/validate/';
+    $REX['ADDON']['xform']['classpaths']['action'][]   = $REX['INCLUDE_PATH'].'/addons/__firephp/xform/classes/action/';
+  }
+}
+
+
 // MAIN
 ////////////////////////////////////////////////////////////////////////////////
 if(!class_exists('FirePHP'))
