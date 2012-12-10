@@ -44,7 +44,7 @@ $subpages = array (
   array ('help','Hilfe')
 );
 
-rex_title('FirePHP <span class="addonversion">'.implode('.',$REX['ADDON'][$mypage]['VERSION']).'</span>', $subpages);
+rex_title('FirePHP <span class="addonversion">'.$REX['ADDON']['version'][$mypage].'</span>', $subpages);
 
 
 // SET DEFAULT PAGE / INCLUDE PAGE
