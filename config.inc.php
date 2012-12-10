@@ -13,8 +13,7 @@
 
 // SESSION
 ////////////////////////////////////////////////////////////////////////////////
-if (session_id() == '')
-{
+if (session_id() == ''){
   session_start();
 }
 
@@ -27,18 +26,6 @@ $mode = rex_request('mode', 'int');
 ////////////////////////////////////////////////////////////////////////////////
 $mypage = '__firephp';
 $myroot = $REX['INCLUDE_PATH'].'/addons/'.$mypage;
-$Revision = '';
-
-
-// ADDON VERSION
-////////////////////////////////////////////////////////////////////////////////
-$Revision = '';
-$REX['ADDON'][$mypage]['VERSION'] = array
-(
-  'VERSION'      => 0,
-  'MINORVERSION' => 4,
-  'SUBVERSION'   => 6,
-);
 
 
 // ADDON REX COMMONS
@@ -46,7 +33,7 @@ $REX['ADDON'][$mypage]['VERSION'] = array
 $REX['ADDON']['rxid'][$mypage]        = '374';
 $REX['ADDON']['page'][$mypage]        = $mypage;
 $REX['ADDON']['name'][$mypage]        = 'FirePHP';
-$REX['ADDON']['version'][$mypage]     = implode('.', $REX['ADDON'][$mypage]['VERSION']);
+$REX['ADDON']['version'][$mypage]     = '0.4.6';
 $REX['ADDON']['author'][$mypage]      = 'rexdev.de';
 $REX['ADDON']['supportpage'][$mypage] = 'forum.redaxo.de';
 $REX['ADDON']['perm'][$mypage]        = $mypage.'[]';
@@ -109,7 +96,7 @@ $REX["ADDON"]["__firephp"]["settings"]["js_bridge"] = 0;
 /**
  * Include FirePHP and init
  *
- * @return onject FirePHP instance
+ * @return object FirePHP instance
  **/
 function firephp_init()
 {
