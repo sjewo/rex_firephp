@@ -1,10 +1,14 @@
 <?php
 /**
-* @name    REXDEV XForm Plugins
-* @link    http://rexdev.de/addons/xform-plugins.html
-* @link    https://github.com/jdlx/xform_plugins
-* @author  rexdev.de
-* @package redaxo4
+* FirePHP Addon
+*
+* FirePHP Lib Copyright (c) 2006-2010, Christoph Dorn, http://firephp.org
+* FirePHP Lib v 0.3.1 & 0.3.2rc1
+*
+* @author <a href="http://rexdev.de">rexdev.de</a>
+*
+* @package redaxo 4.3.x/4.4.x
+* @version 0.4.7
 */
 
 class rex_xform_action_methods2firephp extends rex_xform_action_abstract
