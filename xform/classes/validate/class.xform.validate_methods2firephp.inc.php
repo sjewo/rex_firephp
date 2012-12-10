@@ -14,6 +14,12 @@
 class rex_xform_validate_methods2firephp extends rex_xform_validate_abstract
 {
   private static $opts = array('Collapsed'=>true,'Color'=>'#B83C31');
+  private static $shortname;
+
+  function __construct()
+  {
+    self::$shortname = str_replace('rex_xform_validate_','',__CLASS__);
+  }
 
   function loadParams(&$params, $elements)
   {
@@ -38,9 +44,16 @@ class rex_xform_validate_methods2firephp extends rex_xform_validate_abstract
 
   function getDescription()
   {
-    FB::group(__CLASS__.'::'.__FUNCTION__,self::$opts);
-
-    FB::groupEnd();
+    FB::group(__CLASS__.'::'.__FUNCTION__,self::$opts);FB::groupEnd();
+    return '<strong>
+              '.self::$shortname.'
+            </strong> :
+            <em>
+              Gibt alle abstract Methoden dieses Klassen-Typs als Group in Firephp aus.
+            </em><br />
+            <code class="xform-form-code">
+              validate|'.self::$shortname.'
+            </code>';
   }
 
   function getLongDescription()

@@ -14,6 +14,12 @@
 class rex_xform_methods2firephp extends rex_xform_abstract
 {
   private static $opts = array('Collapsed'=>true,'Color'=>'#2E6E89');
+  private static $shortname;
+
+  function __construct()
+  {
+    self::$shortname = str_replace('rex_xform_','',__CLASS__);
+  }
 
   function setId($id)
   {
@@ -205,9 +211,16 @@ class rex_xform_methods2firephp extends rex_xform_abstract
 
   function getDescription()
   {
-    FB::group(__CLASS__.'::'.__FUNCTION__,self::$opts);
-
-    FB::groupEnd();
+    FB::group(__CLASS__.'::'.__FUNCTION__,self::$opts);FB::groupEnd();
+    return '<strong>
+              '.self::$shortname.'
+            </strong> :
+            <em>
+              Gibt alle abstract Methoden dieses Klassen-Typs als Group in Firephp aus.
+            </em><br />
+            <code class="xform-form-code">
+              '.self::$shortname.'
+            </code>';
   }
 
   function getDefinitions() {
