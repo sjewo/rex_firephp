@@ -161,6 +161,24 @@ function firephp_xform_classes($params){
 }
 
 
+// SQL AUTO DUMP
+////////////////////////////////////////////////////////////////////////////////
+rex_register_extension('REX_SQL_DB_EDITED','firephp_auto_db_dump');
+function firephp_auto_db_dump($params){
+  global $REX;
+
+  // SETTINGS -> TODO: VIA GUI..
+  $mysqldump_path = '/Applications/MAMP/Library/bin/mysqldump';
+  $u              = $REX['DB']['1']['LOGIN'];
+  $p              = $REX['DB']['1']['PSW'];
+  $tbl            = $REX['DB']['1']['NAME'];
+  $dumpfile_path  = $REX['INCLUDE_PATH'].'/addons/import_export/backup/autodump.sql';
+
+  $cmd            = $mysqldump_path.' -u '.$u.' -p'.$p.' --skip-extended-insert --ignore-table='.$tbl.'.rex_user '.$tbl.' > '.$dumpfile_path.';';
+  system($cmd);
+}
+
+
 // MAIN
 ////////////////////////////////////////////////////////////////////////////////
 if(!class_exists('FirePHP'))
