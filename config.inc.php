@@ -248,6 +248,10 @@ function send_to_firephp()
       }
 
       $firephp->table('REX_SQL LOG ('.rex_sql::$count.' queries, '.rex_sql::$writes.' writes, '.rex_sql::$err_count.' errors)',$table,array('Expanded'=>true));
+
+      if(rex_sql::$writes>0){
+        rex_register_extension_point('REX_SQL_DB_EDITED',array());
+      }
     }
   }
 
