@@ -44,6 +44,7 @@ class rex_sql
   static $count = 0; /* log patch */
   static $err_count = 0; /* log patch */
   static $log = array(); /* log patch */
+  static $writes    = 0; /* log patch */
 
   /*private*/ function rex_sql($DBID = 1)
   {
@@ -238,11 +239,13 @@ class rex_sql
           case 'DELETE' :
           case 'UPDATE' :
           {
+            self::$writes++; /* log patch */
             $this->rows = mysql_affected_rows($this->identifier);
             break;
           }
           case 'INSERT' :
           {
+            self::$writes++; /* log patch */
             $this->rows = mysql_affected_rows($this->identifier);
             $this->last_insert_id = mysql_insert_id($this->identifier);
             break;
