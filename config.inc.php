@@ -247,7 +247,7 @@ function send_to_firephp()
         }
       }
 
-      $firephp->table('REX_SQL LOG ('.rex_sql::$count.' queries, '.rex_sql::$err_count.' errors)',$table,array('Expanded'=>true));
+      $firephp->table('REX_SQL LOG ('.rex_sql::$count.' queries, '.rex_sql::$writes.' writes, '.rex_sql::$err_count.' errors)',$table,array('Expanded'=>true));
     }
   }
 
