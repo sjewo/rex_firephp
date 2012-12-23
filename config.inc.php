@@ -82,15 +82,17 @@ $REX['ADDON'][$mypage]['js_bridge'] = array (
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
 $REX["ADDON"]["__firephp"]["settings"]["mode"] = 2;
-$REX["ADDON"]["__firephp"]["settings"]["uselib"] = 'FirePHPCore-0.4.0rc3';
 $REX["ADDON"]["__firephp"]["settings"]["maxDepth"] = 10;
 $REX["ADDON"]["__firephp"]["settings"]["maxArrayDepth"] = 5;
 $REX["ADDON"]["__firephp"]["settings"]["maxObjectDepth"] = 5;
 $REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 0;
 $REX["ADDON"]["__firephp"]["settings"]["ep_log"] = 0;
 $REX["ADDON"]["__firephp"]["settings"]["ep_log_focus"] = '';
-$REX["ADDON"]["__firephp"]["settings"]["js_bridge"] = 0;
 // --- /DYN
+
+// CURRENTLY HIDDEN IN SETTINGS FORM
+$REX["ADDON"]["__firephp"]["settings"]["js_bridge"] = 0;
+$REX["ADDON"]["__firephp"]["settings"]["uselib"] = 'FirePHPCore-0.4.0rc3';
 
 
 // INCLUDE ADDON CORE FUNCTIONS

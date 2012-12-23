@@ -203,12 +203,12 @@ echo '
             </p>
           </div><!-- .rex-form-row -->
 
-          <div class="rex-form-row">
+      <!--<div class="rex-form-row">
             <p class="rex-form-col-a rex-form-select">
               <label for="uselib">Core Version:</label>
               '.$lib_select.'
             </p>
-          </div><!-- .rex-form-row -->
+          </div>--><!-- .rex-form-row -->
 
           <div class="rex-form-row">
             <p class="rex-form-col-a rex-form-select">
@@ -273,15 +273,15 @@ echo '
 
 
       <fieldset class="rex-form-col-1">
-        <legend>JS Bridge (experimental)</legend>
+    <!--<legend>JS Bridge (experimental)</legend>-->
         <div class="rex-form-wrapper">
 
-          <div class="rex-form-row">
+      <!--<div class="rex-form-row">
             <p class="rex-form-col-a rex-form-select">
               <label for="js_bridge">Activate:</label>
               '.$js_bridge.'
             </p>
-          </div><!-- .rex-form-row -->
+          </div>--><!-- .rex-form-row -->
 
           <div class="rex-form-row rex-form-element-v2">
             <p class="rex-form-submit">
@@ -295,6 +295,13 @@ echo '
 
     </form>
   </div><!-- rex-form -->
+
+</div><!-- rex-addon-output -->
+
+
+
+
+<div class="rex-addon-output">
 
   <div class="rex-form">
     <form action="index.php" method="get">
@@ -316,6 +323,14 @@ echo '
       </fieldset>
     </form>
   </div><!-- rex-form -->
+
+</div><!-- rex-addon-output -->
+';
+
+if($REX["ADDON"]["__firephp"]["settings"]["sqllog"] == 1)
+{
+  echo '
+<div class="rex-addon-output">
 
   <div class="rex-form">
     <form action="index.php" method="get">
@@ -339,5 +354,6 @@ echo '
     </form>
   </div><!-- rex-form -->
 
-  </div><!-- rex-addon-output -->
-';
+</div><!-- rex-addon-output -->
+  ';
+}
