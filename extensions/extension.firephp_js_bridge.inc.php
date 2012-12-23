@@ -27,9 +27,9 @@ switch($REX['REDAXO'])
 
 // JS LOG TO FIREPHP AJAX VOODOO
 ////////////////////////////////////////////////////////////////////////////////
-$firephp    = rex_request('firephp','string',false);
-$data       = rex_request('data', 'string',false);
-if($data!=false && $firephp=='jsbridge')
+$data  = rex_request('firephp_callback','string',false);
+
+if($data!=false)
 {
   $data = get_object_vars(json_decode(stripslashes($data)));
   if(isset($data['variable']) && isset($data['label']) && isset($data['logtype']))
@@ -38,15 +38,19 @@ if($data!=false && $firephp=='jsbridge')
     {
       case 'log':
         FB::log($data['variable'],$data['label']);
+        die;
         break;
       case 'info':
         FB::info($data['variable'],$data['label']);
+        die;
         break;
       case 'warn':
         FB::warn($data['variable'],$data['label']);
+        die;
         break;
       case 'error':
         FB::error($data['variable'],$data['label']);
+        die;
         break;
     }
   }

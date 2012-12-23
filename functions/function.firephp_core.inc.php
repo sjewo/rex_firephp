@@ -240,30 +240,31 @@ function firephp_js_bridge_header($params)
   $script = '
 <!-- FIREPHP ADDON -->
   <script type="text/javascript">
-
-    // SEND VAR FORM JS CONTEXT TO FIREPHP VIA BACKEND CALLBACK
-    function fb(variable,label,logtype){
-        label = label || "";
-        logtype = logtype || "log";
-
-        var data        = {};
-        data.label      = label;
-        data.variable   = variable;
-        data.logtype    = logtype;
-
-        var request  = jQuery.ajax({
-          url: "index.php",
-          type: "POST",
-          data: {
-            firephp  : "jsbridge",
-            data       : JSON.stringify(data)
-          },
-          success: function(msg) {
-            //...
-          }
-        });
-    };
-
+    // jQuery(function($){
+      // SEND VAR FORM JS CONTEXT TO FIREPHP VIA BACKEND CALLBACK
+      function fb(variable,label,logtype){
+          label         = label || "";
+          logtype       = logtype || "log";
+          var data      = {};
+          data.label    = label;
+          data.variable = variable;
+          data.logtype  = logtype;
+          data.action   = "jsbridge";
+          var request   = jQuery.ajax({
+            url: "index.php",
+            type: "POST",
+            data: {
+              firephp_callback: JSON.stringify(data)
+            },
+            success: function(msg) {
+               // console.log(msg);
+            },
+            error: function(e) {
+               // console.log(e);
+            }
+          });
+      };
+    // });
   </script>
 <!-- /FIREPHP ADDON -->
   ';
