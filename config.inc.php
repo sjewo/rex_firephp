@@ -79,7 +79,7 @@ $REX['ADDON'][$mypage]['js_bridge'] = array (
 // DYNAMIC ADDON SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 // --- DYN
-$REX["ADDON"]["__firephp"]["settings"]["mode"] = 2;
+$REX["ADDON"]["__firephp"]["settings"]["mode"] = 1;
 $REX["ADDON"]["__firephp"]["settings"]["maxDepth"] = 10;
 $REX["ADDON"]["__firephp"]["settings"]["maxArrayDepth"] = 5;
 $REX["ADDON"]["__firephp"]["settings"]["maxObjectDepth"] = 5;
