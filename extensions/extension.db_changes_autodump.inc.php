@@ -8,7 +8,7 @@
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
 * @package redaxo 4.3.x/4.4.x
-* @version 0.4.7
+* @version 0.5.0
 */
 
 rex_register_extension('REX_SQL_DB_EDITED','firephp_auto_db_dump');

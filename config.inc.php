@@ -8,7 +8,7 @@
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
 * @package redaxo 4.3.x/4.4.x
-* @version 0.4.7
+* @version 0.5.0
 */
 
 // SESSION
@@ -33,7 +33,7 @@ $myroot = $REX['INCLUDE_PATH'].'/addons/'.$mypage;
 $REX['ADDON']['rxid'][$mypage]        = '374';
 $REX['ADDON']['page'][$mypage]        = $mypage;
 $REX['ADDON']['name'][$mypage]        = 'FirePHP';
-$REX['ADDON']['version'][$mypage]     = '0.4.7';
+$REX['ADDON']['version'][$mypage]     = '0.5.0';
 $REX['ADDON']['author'][$mypage]      = 'rexdev.de';
 $REX['ADDON']['supportpage'][$mypage] = 'forum.redaxo.de';
 $REX['ADDON']['perm'][$mypage]        = $mypage.'[]';
@@ -46,8 +46,6 @@ $REX['PERM'][]                        = $mypage.'[]';
 $REX['ADDON'][$mypage]['libs'] = array (
   'FirePHPCore-0.4.0rc3'=>'FirePHPCore-0.4.0rc3',
   'FirePHPCore-0.3.2'=>'FirePHPCore-0.3.2',
-//  '0.0.0master1106021548-firephp'=>'0.0.0master1106021548-firephp',
-  'firephp-1.0b1rc1'=>'firephp-1.0b1rc1'
 );
 $REX['ADDON'][$mypage]['menustring'] = array (
   0=>'FirePHP',
