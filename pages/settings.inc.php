@@ -1,359 +1,222 @@
 <?php
-/**
-* FirePHP Addon
-*
-* FirePHP Lib Copyright (c) 2006-2010, Christoph Dorn, http://firephp.org
-* FirePHP Lib v 0.3.1 & 0.3.2rc1
-*
-* @author <a href="http://rexdev.de">rexdev.de</a>
-*
-* @package redaxo 4.3.x/4.4.x
-* @version 0.5.0
-*/
 
-////////////////////////////////////////////////////////////////////////////////
-$mypage    = rex_request('page'   , 'string');
-$subpage   = rex_request('subpage', 'string');
-$func      = rex_request('func'   , 'string');
+$content = '';
 
-// ADDON RELEVANTES AUS $REX HOLEN
+// CAST FORM PARAMS
 ////////////////////////////////////////////////////////////////////////////////
-$myREX = $REX['ADDON'][$mypage];
+$settings = rex_post('settings', array(
+    array('sql_log'           ,'int'   ,0),
+    array('sql_slow_threshold','int'   ,5),
+    array('ep_log'            ,'int'   ,0),
+    array('ep_log_filter'     ,'string',''),
+    array('api_log'           ,'int'   ,0),
+    array('firephp_settings'  ,'string','default'),
+    array('maxDepth'          ,'int'   ,10),
+    array('maxArrayDepth'     ,'int'   ,5),
+    array('maxObjectDepth'    ,'int'   ,5),
+), null);
 
-// FORMULAR PARAMETER SPEICHERN
-////////////////////////////////////////////////////////////////////////////////
-if ($func == 'savesettings')
+if (is_array($settings))
 {
-  $content = '';
-  foreach($_GET as $key => $val)
+  foreach($settings as $key => $value)
   {
-    if(!in_array($key,array('page','subpage','func','submit','PHPSESSID')))
-    {
-      $myREX['settings'][$key] = $val;
-      if(is_array($val))
-      {
-        $content .= '$REX["ADDON"]["'.$mypage.'"]["settings"]["'.$key.'"] = '.var_export($val,true).';'."\n";
-      }
-      else
-      {
-        if(is_numeric($val))
-        {
-          $content .= '$REX["ADDON"]["'.$mypage.'"]["settings"]["'.$key.'"] = '.$val.';'."\n";
-        }
-        else
-        {
-          $content .= '$REX["ADDON"]["'.$mypage.'"]["settings"]["'.$key.'"] = \''.$val.'\';'."\n";
-        }
-      }
-    }
+    $this->setConfig($key, $value);
   }
-
-  $file = $REX['INCLUDE_PATH'].'/addons/'.$mypage.'/config.inc.php';
-  rex_replace_dynamic_contents($file, $content);
-  echo rex_info('Einstellungen wurden gespeichert.');
-}
-elseif($func == 'firephp-demo')
-{
-  FB::group('Test Group');
-  FB::log('Log message');
-  FB::info('Info message');
-  FB::warn('Warn message');
-  FB::error('Error message');
-  FB::groupEnd();
-  $table   = array();
-  $table[] = array('#','Rows','Query');
-  $table[] = array('Row 1 Col 1','Row 1 Col 2','Query');
-  $table[] = array('Row 2 Col 1','Row 2 Col 2','Query');
-  $table[] = array('Row 3 Col 1','Row 3 Col 2','Query');
-  FB::table('Table (click to expand)',$table);
-}
-elseif($func == 'sql-error')
-{
-  $err = new rex_sql;
-  $err->setQuery('“Observation: Couldn’t see a thing. Conclusion: Dinosaurs.”');
+  $content .= rex_view::info($this->i18n('settings_saved'));
 }
 
-// MODE SELECT
+
+// FIREPHP SETTINGS MODE SELECT
 ////////////////////////////////////////////////////////////////////////////////
-FB::info('FirePHP ist installiert und aktiv für die Dauer der Admin Session.. diese Mittelung ist für sie kostenlos! ;)');
+$key = 'firephp_settings';
+$sel = new rex_select();
+$sel->setSize(1);
+$sel->setAttribute('id',$key);
+$sel->setName('settings['.$key.']');
+$sel->addOption('Default','default');
+$sel->addOption('Custom','custom');
+$sel->setSelected($this->getConfig($key,'default'));
+$settings_select = $sel->get();
 
-// MODE SELECT
-////////////////////////////////////////////////////////////////////////////////
-$id = 'mode';
-$tmp = new rex_select();
-$tmp->setSize(1);
-$tmp->setName($id);
-foreach($REX['ADDON'][$mypage]['modestring'] as $key => $string)
-{
-  $tmp->addOption($string,$key);
-}
-$tmp->setSelected($myREX['settings'][$id]);
-$mode_select = $tmp->get();
-
-// LIB SELECT
-////////////////////////////////////////////////////////////////////////////////
-$id = 'uselib';
-$tmp = new rex_select();
-$tmp->setSize(1);
-$tmp->setName($id);
-foreach($REX['ADDON'][$mypage]['libs'] as $key => $string)
-{
-  $tmp->addOption($string,$key);
-}
-$tmp->setSelected($myREX['settings'][$id]);
-$lib_select = $tmp->get();
 
 // maxDepth SELECT
 ////////////////////////////////////////////////////////////////////////////////
-$id = 'maxDepth';
-$tmp = new rex_select();
-$tmp->setSize(1);
-$tmp->setName($id);
+$key = 'maxDepth';
+$sel = new rex_select();
+$sel->setSize(1);
+$sel->setName('settings['.$key.']');
 for ($i=2; $i<15; $i++) // minimum level = 2, else logs won't show
 {
-  $tmp->addOption($i .' Level',$i);
+  $default = $i==10 ? ' (default)' : '';
+  $sel->addOption($i .' Level'. $default,$i);
 }
-$tmp->setSelected($myREX['settings'][$id]);
-$maxDepth_select = $tmp->get();
+$sel->setSelected($this->getConfig($key,10));
+$maxDepth_select = $sel->get();
+
 
 // maxArrayDepth SELECT
 ////////////////////////////////////////////////////////////////////////////////
-$id = 'maxArrayDepth';
-$tmp = new rex_select();
-$tmp->setSize(1);
-$tmp->setName($id);
+$key = 'maxArrayDepth';
+$sel = new rex_select();
+$sel->setSize(1);
+$sel->setName('settings['.$key.']');
 for ($i=2; $i<15; $i++) // minimum level = 2, else logs won't show
 {
-  $tmp->addOption($i .' Level',$i);
+  $default = $i==5 ? ' (default)' : '';
+  $sel->addOption($i .' Level'. $default,$i);
 }
-$tmp->setSelected($myREX['settings'][$id]);
-$maxArrayDepth_select = $tmp->get();
+$sel->setSelected($this->getConfig($key,5));
+$maxArrayDepth_select = $sel->get();
+
 
 // maxObjectDepth SELECT
 ////////////////////////////////////////////////////////////////////////////////
-$id = 'maxObjectDepth';
-$tmp = new rex_select();
-$tmp->setSize(1);
-$tmp->setName($id);
+$key = 'maxObjectDepth';
+$sel = new rex_select();
+$sel->setSize(1);
+$sel->setName('settings['.$key.']');
 for ($i=2; $i<15; $i++) // minimum level = 2, else logs won't show
 {
-  $tmp->addOption($i .' Level',$i);
+  $default = $i==5 ? ' (default)' : '';
+  $sel->addOption($i .' Level'. $default,$i);
 }
-$tmp->setSelected($myREX['settings'][$id]);
-$maxObjectDepth_select = $tmp->get();
+$sel->setSelected($this->getConfig($key,5));
+$maxObjectDepth_select = $sel->get();
 
-// SQL_LOG SELECT
+
+$custom_css = $this->getConfig('firephp_settings')!='custom' ? 'display:none' : '';
+
+// PAGE OUTPUT
 ////////////////////////////////////////////////////////////////////////////////
-$id = 'sqllog';
-$tmp = new rex_select();
-$tmp->setSize(1);
-$tmp->setName($id);
-foreach($REX['ADDON'][$mypage]['sqllog'] as $key => $string)
-{
-  $tmp->addOption($string,$key);
-}
-$tmp->setSelected($myREX['settings'][$id]);
-$sqllog_select = $tmp->get();
-
-// SQL_LOG SELECT
-////////////////////////////////////////////////////////////////////////////////
-$id = 'ep_log';
-$tmp = new rex_select();
-$tmp->setSize(1);
-$tmp->setName($id);
-foreach($REX['ADDON'][$mypage]['ep_log'] as $key => $string)
-{
-  $tmp->addOption($string,$key);
-}
-$tmp->setSelected($myREX['settings'][$id]);
-$ep_log_select = $tmp->get();
-
-// JS_BRIDGE SELECT
-////////////////////////////////////////////////////////////////////////////////
-$id = 'js_bridge';
-$tmp = new rex_select();
-$tmp->setSize(1);
-$tmp->setName($id);
-foreach($REX['ADDON'][$mypage]['js_bridge'] as $key => $string)
-{
-  $tmp->addOption($string,$key);
-}
-$tmp->setSelected($myREX['settings'][$id]);
-$js_bridge = $tmp->get();
-
-// MAIN
-////////////////////////////////////////////////////////////////////////////////
-echo '
-<div class="rex-addon-output">
-
+$content .= '
   <div class="rex-form">
-    <form action="index.php" method="get">
-      <input type="hidden" name="page" value="'.$mypage.'" />
-      <input type="hidden" name="subpage" value="'.$subpage.'" />
-      <input type="hidden" name="func" value="savesettings" />
+    <form action="index.php?page=firephp&amp;subpage=settings" method="post">
 
       <fieldset class="rex-form-col-1">
-        <legend>FirePHP Settings</legend>
+        <h2 class="rex-hl2">'. $this->i18n('sql_log') .'</h2>
+        <legend class="rex-hl2" style="display:none;">'. $this->i18n('sql_log') .'</legend>
         <div class="rex-form-wrapper">
 
           <div class="rex-form-row">
-            <p class="rex-form-col-a rex-form-select">
-              <label for="mode">FirePHP Output:</label>
-              '.$mode_select.'
+            <p class="rex-form-col-a rex-form-checkbox rex-form-label-right">
+              <input id="debug-sql-log" type="checkbox" class="rex-form-checkbox" name="settings[sql_log]" value="1" '. ($this->getConfig('sql_log') ? 'checked="checked" ' : '') .'/>
+              <label for="debug-sql-log">'. $this->i18n('activate') .'</label>
             </p>
-          </div><!-- .rex-form-row -->
-
-      <!--<div class="rex-form-row">
-            <p class="rex-form-col-a rex-form-select">
-              <label for="uselib">Core Version:</label>
-              '.$lib_select.'
-            </p>
-          </div>--><!-- .rex-form-row -->
-
-          <div class="rex-form-row">
-            <p class="rex-form-col-a rex-form-select">
-              <label for="maxDepth">maxDepth:</label>
-              '.$maxDepth_select.'
-            </p>
-          </div><!-- .rex-form-row -->
-
-          <div class="rex-form-row">
-            <p class="rex-form-col-a rex-form-select">
-              <label for="maxArrayDepth">maxArrayDepth:</label>
-              '.$maxArrayDepth_select.'
-            </p>
-          </div><!-- .rex-form-row -->
-
-          <div class="rex-form-row">
-            <p class="rex-form-col-a rex-form-select">
-              <label for="maxObjectDepth">maxObjectDepth:</label>
-              '.$maxObjectDepth_select.'
-            </p>
-          </div><!-- .rex-form-row -->
-
-        </div><!-- .rex-form-wrapper -->
-      </fieldset>
-
-
-      <fieldset class="rex-form-col-1">
-        <legend>SQL Log</legend>
-        <div class="rex-form-wrapper">
-
-          <div class="rex-form-row">
-            <p class="rex-form-col-a rex-form-select">
-              <label for="status2console">Activate:</label>
-              '.$sqllog_select.'
-            </p>
-          </div><!-- .rex-form-row -->
-
-        </div><!-- .rex-form-wrapper -->
-      </fieldset>
-
-
-      <fieldset class="rex-form-col-1">
-        <legend>EP Log</legend>
-
-        <div class="rex-form-wrapper">
-          <div class="rex-form-row">
-            <p class="rex-form-col-a rex-form-select">
-              <label for="status2console">Activate:</label>
-              '.$ep_log_select.'
-            </p>
-          </div><!-- .rex-form-row -->
+          </div><!-- /.rex-form-row -->
 
           <div class="rex-form-row">
             <p class="rex-form-col-a rex-form-text">
-              <label for="ep_log_focus">Focus on EP:</label>
-              <input id="ep_log_focus" class="rex-form-text" type="text" name="ep_log_focus" value="'.stripslashes($myREX['settings']['ep_log_focus']).'" />
+              <label for="sql_slow_threshold">'. $this->i18n('sql_slow_threshold') .'</label>
+              <input id="sql_slow_threshold" class="rex-form-text" type="text" name="settings[sql_slow_threshold]" value="'. ($this->getConfig('sql_slow_threshold')==0 ? 5 : $this->getConfig('sql_slow_threshold')) .'" />ms
             </p>
-          </div><!-- .rex-form-row -->
+          </div><!-- /.rex-form-row -->
 
-        </div><!-- .rex-form-wrapper -->
+        </div><!-- /.rex-form-wrapper -->
+      </fieldset>
+
+      <fieldset class="rex-form-col-1">
+        <h2 class="rex-hl2">'. $this->i18n('ep_log') .'</h2>
+        <legend class="rex-hl2" style="display:none;">'. $this->i18n('ep_log') .'</legend>
+        <div class="rex-form-wrapper">
+
+          <div class="rex-form-row">
+            <p class="rex-form-col-a rex-form-checkbox rex-form-label-right">
+              <input id="debug-ep-log" type="checkbox" class="rex-form-checkbox" name="settings[ep_log]" value="1" '. ($this->getConfig('ep_log') ? 'checked="checked" ' : '') .'/>
+              <label for="debug-ep-log">'. $this->i18n('activate') .'</label>
+            </p>
+          </div><!-- /.rex-form-row -->
+
+          <div class="rex-form-row">
+            <p class="rex-form-col-a rex-form-text">
+              <label for="ep_log_filter">'. $this->i18n('ep_log_filter') .'</label>
+              <input id="ep_log_filter" class="rex-form-text" type="text" name="settings[ep_log_filter]" value="'. $this->getConfig('ep_log_filter') .'" />
+            </p>
+          </div><!-- /.rex-form-row -->
+
+        </div><!-- /.rex-form-wrapper -->
+      </fieldset>
+
+      <fieldset class="rex-form-col-1">
+        <h2 class="rex-hl2">'. $this->i18n('api_log') .'</h2>
+        <legend class="rex-hl2" style="display:none;">'. $this->i18n('api_log') .'</legend>
+        <div class="rex-form-wrapper">
+
+          <div class="rex-form-row">
+            <p class="rex-form-col-a rex-form-checkbox rex-form-label-right">
+              <input id="api_log" type="checkbox" class="rex-form-checkbox" name="settings[api_log]" value="1" '. ($this->getConfig('api_log') ? 'checked="checked" ' : '') .'/>
+              <label for="api_log">'. $this->i18n('activate') .'</label>
+            </p>
+          </div><!-- /.rex-form-row -->
+
+        </div><!-- /.rex-form-wrapper -->
       </fieldset>
 
 
       <fieldset class="rex-form-col-1">
-    <!--<legend>JS Bridge (experimental)</legend>-->
+        <h2>'. $this->i18n('firephp_settings') .'</h2>
+        <legend style="display:none;">'. $this->i18n('firephp_settings') .'</legend>
         <div class="rex-form-wrapper">
 
-      <!--<div class="rex-form-row">
+          <div class="rex-form-row">
             <p class="rex-form-col-a rex-form-select">
-              <label for="js_bridge">Activate:</label>
-              '.$js_bridge.'
+              <label for="firephp_settings">'. $this->i18n('configuration') .'</label>
+              '. $settings_select .'
             </p>
-          </div>--><!-- .rex-form-row -->
+          </div><!-- /.rex-form-row -->
 
-          <div class="rex-form-row rex-form-element-v2">
-            <p class="rex-form-submit">
-              <input class="rex-form-submit" type="submit" id="submit" name="submit" value="Einstellungen speichern" />
+
+          <div id="firephp-custom" style="'.$custom_css.'">
+
+            <div class="rex-form-row">
+              <p class="rex-form-col-a rex-form-select">
+                <label for="maxDepth">maxDepth</label>
+                '. $maxDepth_select .'
+              </p>
+            </div><!-- /.rex-form-row -->
+
+            <div class="rex-form-row">
+              <p class="rex-form-col-a rex-form-select">
+                <label for="maxArrayDepth">maxArrayDepth</label>
+                '. $maxArrayDepth_select .'
+              </p>
+            </div><!-- /.rex-form-row -->
+
+            <div class="rex-form-row">
+              <p class="rex-form-col-a rex-form-select">
+                <label for="maxObjectDepth">maxObjectDepth</label>
+                '. $maxObjectDepth_select .'
+              </p>
+            </div><!-- /.rex-form-row -->
+
+          </div><!-- /#firephp-custom -->
+
+
+          <div class="rex-form-row">
+            <p class="rex-form-col-a rex-form-submit rex-form-submit-2">
+              <input id="install-settings-save" type="submit" name="settings[save]" class="rex-form-submit" value="'. rex_i18n::msg('form_save') .'" />
             </p>
-          </div><!-- .rex-form-row -->
+          </div><!-- /.rex-form-row -->
 
-        </div><!-- .rex-form-wrapper -->
+
+        </div><!-- /.rex-form-wrapper -->
       </fieldset>
 
-
     </form>
-  </div><!-- rex-form -->
+  </div>
 
-</div><!-- rex-addon-output -->
+<script type="text/javascript">
+<!--
+jQuery(function($) {
 
+  // toggle firephp custom settings block
+  $("#firephp_settings").change(function() {
+    $("#firephp-custom").toggle("fast");
+  });
 
+});
+//-->
+</script>
 
-
-<div class="rex-addon-output">
-
-  <div class="rex-form">
-    <form action="index.php" method="get">
-      <input type="hidden" name="page" value="'.$mypage.'" />
-      <input type="hidden" name="subpage" value="'.$subpage.'" />
-      <input type="hidden" name="func" value="firephp-demo" />
-
-      <fieldset class="rex-form-col-1">
-        <legend>Test: FirePHP Konsole</legend>
-        <div class="rex-form-wrapper">
-
-        <div class="rex-form-row rex-form-element-v2">
-          <p class="rex-form-submit">
-            <input class="rex-form-submit" type="submit" id="firephp-demo" name="firephp-demo" value="Testausgabe in Konsole" />
-          </p>
-        </div><!-- .rex-form-row -->
-
-        </div>
-      </fieldset>
-    </form>
-  </div><!-- rex-form -->
-
-</div><!-- rex-addon-output -->
-';
-
-if($REX["ADDON"]["__firephp"]["settings"]["sqllog"] == 1)
-{
-  echo '
-<div class="rex-addon-output">
-
-  <div class="rex-form">
-    <form action="index.php" method="get">
-      <input type="hidden" name="page" value="'.$mypage.'" />
-      <input type="hidden" name="subpage" value="'.$subpage.'" />
-      <input type="hidden" name="func" value="sql-error" />
-
-      <fieldset class="rex-form-col-1">
-        <legend>Test: rex_ql log</legend>
-        <div class="rex-form-wrapper">
-
-
-        <div class="rex-form-row rex-form-element-v2">
-          <p class="rex-form-submit">
-            <input class="rex-form-submit" type="submit" id="sql-log-error" name="sql-log-error" value="Fehlerhafte Query aufrufen." />
-          </p>
-        </div><!-- .rex-form-row -->
-
-        </div>
-      </fieldset>
-    </form>
-  </div><!-- rex-form -->
-
-</div><!-- rex-addon-output -->
   ';
-}
+
+echo rex_view::contentBlock($content);

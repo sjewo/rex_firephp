@@ -1,16 +1,17 @@
 <?php
-/**
-* FirePHP Addon
-*
-* FirePHP Lib Copyright (c) 2006-2010, Christoph Dorn, http://firephp.org
-* FirePHP Lib v 0.3.1 & 0.3.2rc1
-*
-* @author <a href="http://rexdev.de">rexdev.de</a>
-*
-* @package redaxo 4.3.x/4.4.x
-* @version 0.5.0
-*/
 
-header("Location: index.php?page=__firephp&subpage=help");
+/**
+ * Debug Addon
+ *
+ * @author markus.staab[at]redaxo[dot]de Markus Staab
+ *
+ * @package redaxo5
+ */
 
 ?>
+<h3>Debug Addon</h3>
+
+<p>
+Dieses erleichtert die Entwicklung im Backend durch zusätzliche Informationen über <a onclick="window.open(this.href); return false;" href="http://www.firephp.org">FirePHP</a>.
+Dazu ist es nötig, dass die FireFox Erweiterung FirePHP installiert ist.
+</p>

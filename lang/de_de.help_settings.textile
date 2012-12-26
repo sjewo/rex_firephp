@@ -1,0 +1,22 @@
+h2. SQL Log
+
+* *aktivieren:* (De)Aktiviert die Anzeige des Logs
+* *Grenzwert für Ausführungszeit-Warnung:* Wert in ms ab dem eine extra Warnung ausgegeben wird
+
+h2. EP Log
+
+* *aktivieren:* (De)Aktiviert die Anzeige des Logs
+* *Filtern nach bestimmten EPs:* Kommaseparierte Eingabe von ExtensionPoints die im Log angezeigt werden sollen - ohne Eingabe werden alle EPs angezeigt.
+
+h2. API Log
+
+* *aktivieren:* (De)Aktiviert die Anzeige des Logs
+
+h2. FirePHP Einstellungen
+
+* *[translate:debug_firephp_settings]:*
+Schaltet zwischen dern FirePHP Standardeinstellungen und User-spezifischen Einstellungen um.
+* *maxDepth:*
+* *maxArrayDepth:*
+* *maxObjectDepth:*
+

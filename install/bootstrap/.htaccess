@@ -1,3 +1,0 @@
-### FIREPHP ADDON
-php_value auto_prepend_file "/Applications/MAMP/htdocs/rex43.loc/redaxo/include/addons/__firephp/bootstrap.inc.php"
-### /FIREPHP ADDON

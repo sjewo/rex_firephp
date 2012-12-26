@@ -1,0 +1,13 @@
+package: firephp
+version: '5.0.2'
+author: 'Markus Staab, jdlx'
+supportpage: www.redaxo.org/de/forum/
+
+navigation:
+  title: 'Firephp'
+  perm: admin[]
+  block: system
+  prio: 90
+  subpages:
+    settings: {title: 'Settings'}
+

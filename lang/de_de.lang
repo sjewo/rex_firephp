@@ -1,0 +1,19 @@
+# addon:firephp de_de
+
+firephp_name               = Debug
+firephp_settings           = Einstellungen
+firephp_general            = Allgemein
+firephp_configuration      = Konfiguration
+firephp_activate           = aktivieren
+firephp_settings_saved     = Einstellungen wurden gespeichert!
+
+firephp_sql_log            = SQL Log
+firephp_sql_slow_threshold = Grenzwert für Ausführungszeit-Warnung
+
+firephp_ep_log             = EP Log
+firephp_ep_log_filter      = Filtern nach bestimmten EPs
+
+firephp_api_log            = API Log
+
+firephp_firephp_settings   = FirePHP Einstellungen
+firephp_firephp_maxdepth   = Max. Logtiefe

@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 // CHECK ADMIN SESSION
 ////////////////////////////////////////////////////////////////////////////////
 $user = rex::getUser();
@@ -33,31 +34,29 @@ if(isset($user) && is_a($user,'rex_user'))
       );
 
     // INIT FIREPHP
-    require 'vendor/FirePHPCore/fb.php';
     $firephp = FirePHP::getInstance(true);
     $firephp->setEnabled(true);
     $firephp->setOptions($options);
 
     // ENABLE/DISABLE LOGS
     if($this->getConfig('sql_log')==1) {
-      rex_sql::setFactoryClass('rex_sql_log');
+      rex_sql::setFactoryClass('rex_sql_debug');
     }
 
     if($this->getConfig('ep_log')==1) {
-      rex_extension::setFactoryClass('rex_extension_log');
+      rex_extension::setFactoryClass('rex_extension_debug');
     }
 
     if($this->getConfig('api_log')==1) {
-      rex_api_function::setFactoryClass('rex_api_function_log');
+      rex_api_function::setFactoryClass('rex_api_function_debug');
     }
 
-    rex_logger::setFactoryClass('rex_logger_log');
+    rex_logger::setFactoryClass('rex_logger_debug');
   }
 }
 else
 {
   // CATCH FIREPHP CALLS, SUPPRES OUTPUT
-  require 'vendor/FirePHPCore/fb.php';
   $firephp = FirePHP::getInstance(true);
   $firephp->setEnabled(false);
 }
@@ -120,3 +119,11 @@ else
 // SLOW QUERY
 #$db = rex_sql::factory();
 #$db->setQuery('select benchmark(670000, \'foo\' = \'foo\');');
+=======
+require 'vendor/FirePHPCore/fb.php';
+
+rex_sql::setFactoryClass('rex_sql_debug');
+rex_extension::setFactoryClass('rex_extension_debug');
+rex_logger::setFactoryClass('rex_logger_debug');
+rex_api_function::setFactoryClass('rex_api_function_debug');
+>>>>>>> 5169c5d2c159132a8225667b04adc859e19d43a2
