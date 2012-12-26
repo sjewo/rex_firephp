@@ -33,7 +33,7 @@ if(isset($user) && is_a($user,'rex_user'))
       );
 
     // INIT FIREPHP
-    require 'vendor/FirePHPCore/fb.php';
+    require 'vendor/firephp_0.3/lib/FirePHPCore/fb.php';
     $firephp = FirePHP::getInstance(true);
     $firephp->setEnabled(true);
     $firephp->setOptions($options);
