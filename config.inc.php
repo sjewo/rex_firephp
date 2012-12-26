@@ -57,7 +57,7 @@ if(isset($user) && is_a($user,'rex_user'))
 else
 {
   // CATCH FIREPHP CALLS, SUPPRES OUTPUT
-  require 'vendor/FirePHPCore/fb.php';
+  require 'vendor/firephp_0.3/lib/FirePHPCore/fb.php';
   $firephp = FirePHP::getInstance(true);
   $firephp->setEnabled(false);
 }

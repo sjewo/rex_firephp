@@ -1,0 +1,6 @@
+[submodule "vendor/firephp_0.3"]
+	path = vendor/firephp_0.3
+	url = git://github.com/firephp/firephp-core.git
+[submodule "vendor/firephp_1.x"]
+	path = vendor/firephp_1.x
+	url = git://github.com/firephp/firephp.git
