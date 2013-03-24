@@ -12,7 +12,7 @@
 */
 
 
-function firephp_recursive_copy($source, $target, $makedir = true, &$result=array(), $counter=1, $folderPermission = '', $filePermission = '', $rename_prepend = false)
+function firephp_recursive_copy($source, $target, $rename_prepend = false, $makedir = true, $counter = 1, $folderPermission = '', $filePermission = '', $result = array())
 {
   global $REX;
   $folderPermission = (empty($folderPermission)) ? $REX['DIRPERM']      : $folderPermission;
@@ -34,10 +34,7 @@ function firephp_recursive_copy($source, $target, $makedir = true, &$result=arra
       {
         if(mkdir($target.$item)) /* CREATE DIR IN TARGET */
         {
-          if(chmod($source.$item,$folderPermission))
-          {
-          }
-          else
+          if(!chmod($source.$item,$folderPermission))
           {
             echo rex_warning('Rechte für "'.$target.$item.'" konnten nicht gesetzt werden!');
           }
@@ -49,7 +46,7 @@ function firephp_recursive_copy($source, $target, $makedir = true, &$result=arra
       }
 
       // RECURSION
-      firephp_recursive_copy($source.$item.'/', $target.$item.'/', $makedir, $result, $counter);
+      firephp_recursive_copy($source.$item.'/', $target.$item.'/', $rename_prepend, $makedir, $counter, $folderPermission, $filePermission, $result);
     }
 
     // DO FILE STUFF
