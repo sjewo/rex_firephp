@@ -8,7 +8,7 @@
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
 * @package redaxo 4.3.x/4.4.x
-* @version 0.5.0
+* @version 1.0.0
 */
 
 // SESSION
@@ -33,7 +33,7 @@ $myroot = $REX['INCLUDE_PATH'].'/addons/'.$mypage;
 $REX['ADDON']['rxid'][$mypage]        = '374';
 $REX['ADDON']['page'][$mypage]        = $mypage;
 $REX['ADDON']['name'][$mypage]        = 'FirePHP';
-$REX['ADDON']['version'][$mypage]     = '0.5.0';
+$REX['ADDON']['version'][$mypage]     = '1.0.0';
 $REX['ADDON']['author'][$mypage]      = 'rexdev.de';
 $REX['ADDON']['supportpage'][$mypage] = 'forum.redaxo.de';
 $REX['ADDON']['perm'][$mypage]        = $mypage.'[]';
