@@ -14,10 +14,12 @@
 if (!function_exists('firephp_recursive_copy'))
 {
   function firephp_recursive_copy($source, $target, $makedir=TRUE, &$result=array(), $counter=1, $folderPermission='', $filePermission='')
+function firephp_recursive_copy($source, $target, $makedir = true, &$result=array(), $counter=1, $folderPermission = '', $filePermission = '', $rename_prepend = false)
   {
     global $REX;
     $folderPermission = (empty($folderPermission)) ? $REX['DIRPERM'] : $folderPermission;
     $filePermission = (empty($filePermission)) ? $REX['FILEPERM'] : $filePermission;
+  $rename_prepend   = !$rename_prepend           ? date("d.m.y_H.i.s_") : $rename_prepend;
 
     // SCAN SOURCE DIR WHILE IGNORING  CERTAIN FILES
     $ignore = array('.DS_Store','.svn','.','..');
@@ -59,8 +61,7 @@ if (!function_exists('firephp_recursive_copy'))
         {
           if(is_file($target.$item)) /* FILE EXISTS IN TARGET */
           {
-            $slug = date("d.m.y_H.i.s_");
-            if(!rename($target.$item,$target.$slug.$item))
+          if(!rename($target.$item,$target.$rename_prepend.$item))
             {
               echo rex_warning('Datei "'.$target.$item.'" konnte nicht umbenannt werden!');
             }
