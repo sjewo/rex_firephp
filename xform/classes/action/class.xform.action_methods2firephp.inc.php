@@ -44,7 +44,7 @@ class rex_xform_action_methods2firephp extends rex_xform_action_abstract
 
   function getDescription()
   {
-    FB::group(__CLASS__.'::'.__FUNCTION__,self::$opts);FB::groupEnd();
+    #FB::group(__CLASS__.'::'.__FUNCTION__,self::$opts);FB::groupEnd();
     return '<strong>
               '.self::$shortname.'
             </strong> :
