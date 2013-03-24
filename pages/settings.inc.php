@@ -72,6 +72,31 @@ elseif($func == 'sql-error')
   $err = new rex_sql;
   $err->setQuery('“Observation: Couldn’t see a thing. Conclusion: Dinosaurs.”');
 }
+elseif($func == 'uninstall-patches')
+{
+  // SQL
+  if(file_exists($REX['INCLUDE_PATH'].'/classes/original_class.rex_sql.inc.php'))
+  {
+    if(rename($REX['INCLUDE_PATH'].'/classes/class.rex_sql.inc.php', $REX['INCLUDE_PATH'].'/classes/firephp_class.rex_sql.inc.php'))
+    {
+      if(rename($REX['INCLUDE_PATH'].'/classes/original_class.rex_sql.inc.php', $REX['INCLUDE_PATH'].'/classes/class.rex_sql.inc.php'))
+      {
+        echo rex_info('Originalversion der "class.rex_sql.inc.php" wiederhergestellt.');
+      }
+    }
+  }
+  // EXTENSION
+  if(file_exists($REX['INCLUDE_PATH'].'/functions/original_function_rex_extension.inc.php'))
+  {
+    if(rename($REX['INCLUDE_PATH'].'/functions/function_rex_extension.inc.php', $REX['INCLUDE_PATH'].'/functions/firephp_function_rex_extension.inc.php'))
+    {
+      if(rename($REX['INCLUDE_PATH'].'/functions/original_function_rex_extension.inc.php', $REX['INCLUDE_PATH'].'/functions/function_rex_extension.inc.php'))
+      {
+        echo rex_info('Originalversion der "function_rex_extension.inc.php" wiederhergestellt.');
+      }
+    }
+  }
+}
 
 // MODE SELECT
 ////////////////////////////////////////////////////////////////////////////////
@@ -233,7 +258,11 @@ echo '
 
         </div><!-- .rex-form-wrapper -->
       </fieldset>
+      ';
 
+if(isset(rex_sql::$log))
+{
+  echo '
 
       <fieldset class="rex-form-col-1">
         <legend>SQL Log</legend>
@@ -248,8 +277,12 @@ echo '
 
         </div><!-- .rex-form-wrapper -->
       </fieldset>
+      ';
+}
 
-
+if(isset($REX['EXTENSION_POINT_LOG']))
+{
+  echo '
       <fieldset class="rex-form-col-1">
         <legend>EP Log</legend>
 
@@ -270,7 +303,10 @@ echo '
 
         </div><!-- .rex-form-wrapper -->
       </fieldset>
+  ';
+}
 
+echo '
 
       <fieldset class="rex-form-col-1">
     <!--<legend>JS Bridge (experimental)</legend>-->
@@ -346,6 +382,36 @@ if($REX["ADDON"]["__firephp"]["settings"]["sqllog"] == 1)
         <div class="rex-form-row rex-form-element-v2">
           <p class="rex-form-submit">
             <input class="rex-form-submit" type="submit" id="sql-log-error" name="sql-log-error" value="Fehlerhafte Query aufrufen." />
+          </p>
+        </div><!-- .rex-form-row -->
+
+        </div>
+      </fieldset>
+    </form>
+  </div><!-- rex-form -->
+
+</div><!-- rex-addon-output -->
+  ';
+}
+
+if(isset(rex_sql::$log) || isset($REX['EXTENSION_POINT_LOG']))
+{
+  echo '
+<div class="rex-addon-output">
+
+  <div class="rex-form">
+    <form action="index.php" method="get">
+      <input type="hidden" name="page" value="'.$mypage.'" />
+      <input type="hidden" name="subpage" value="'.$subpage.'" />
+      <input type="hidden" name="func" value="uninstall-patches" />
+
+      <fieldset class="rex-form-col-1">
+        <legend>SQL & Extensions Patches</legend>
+        <div class="rex-form-wrapper">
+
+        <div class="rex-form-row rex-form-element-v2">
+          <p class="rex-form-submit">
+            <input class="rex-form-submit" type="submit" id="uninstall-patches" name="firephp-demo" value="Deinstallieren" />
           </p>
         </div><!-- .rex-form-row -->
 
