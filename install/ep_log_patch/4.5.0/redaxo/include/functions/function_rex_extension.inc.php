@@ -7,8 +7,8 @@
 *
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
-* @package redaxo 4.3.x/4.4.x
-* @version 1.0.0
+* @package redaxo 4.3.x/4.4.x/4.5.x
+* @version 1.1.0
 */
 
 /**
@@ -91,7 +91,7 @@ function rex_register_extension_point($extensionPoint, $subject = '', $params = 
   }
   $ep_log_entry['$result'] = $result; /* ep log patch */
   $REX['EXTENSION_POINT_LOG'][] = $ep_log_entry; /* ep log patch */
-  
+
   return $result;
 }
 

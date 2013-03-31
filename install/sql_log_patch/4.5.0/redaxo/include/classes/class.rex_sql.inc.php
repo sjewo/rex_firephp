@@ -7,8 +7,8 @@
 *
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
-* @package redaxo 4.3.x/4.4.x
-* @version 1.0.0
+* @package redaxo 4.3.x/4.4.x/4.5.x
+* @version 1.1.0
 */
 
 /**
@@ -804,12 +804,12 @@ class rex_sql
    */
   static /*public*/ function showCreateTable($table, $DBID=1)
   {
-  
+
     $sql = rex_sql::factory($DBID);
     $create = $sql->getArray("SHOW CREATE TABLE `$table`");
     $create = current($create);
     $create = $create['Create Table'];
-    
+
     return $create;
   }
 
