@@ -17,7 +17,7 @@ $myself            = '__firephp';
 $myroot            = $REX['INCLUDE_PATH'].'/addons/'.$myself;
 
 $minimum_REX       = '4.2.0';
-$this_REX          = $REX['VERSION'].'.'.$REX['SUBVERSION'].'.'.$REX['MINORVERSION'];
+$this_REX          = (int) $REX['VERSION'].'.'.(int) $REX['SUBVERSION'].'.'.(int) $REX['MINORVERSION'];
 $minimum_PHP       = 5;
 $required_addons   = array();
 $disable_addons    = array();
