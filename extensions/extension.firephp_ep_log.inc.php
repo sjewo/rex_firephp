@@ -78,7 +78,8 @@ function firephp_ep_log()
               }
               $v['$callable'] = implode('::',$v['$callable']);
             }
-            $table[] = array($i,$v['type'],$timing,$v['name'],$v['$callable'],'–',$v['$params'],'–','–','–');
+            $level = isset($v['level']) ? ' ['.$v['level'].']' : '' ;
+            $table[] = array($i,$v['type'],$timing,$v['name'].$level,$v['$callable'],'–',$v['$params'],'–','–','–');
             break;
         }
       }

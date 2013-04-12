@@ -110,12 +110,14 @@ function rex_register_extension($extensionPoint, $callable, $params = array(), $
   if(!is_array($params)) $params = array();
   $REX['EXTENSIONS'][$extensionPoint][(int) $level][] = array($callable, $params);
 
-  $REX['EXTENSION_POINT_LOG'][] = array('type'=>'EXT '.$level,
-                        'name'=>$extensionPoint,
-                        '$callable'=>$callable,
-                        '$params'=>$params
-                        ); /* ep log patch */
-}
+  $REX['EXTENSION_POINT_LOG'][] = array(
+    'type'      => 'EXT',
+    'name'      => $extensionPoint,
+    '$callable' => $callable,
+    '$params'   => $params,
+    'level'     => $level
+    ); /* ep log patch */
+  }
 
 /**
  * Prüft ob eine extension für den angegebenen Extension Point definiert ist
