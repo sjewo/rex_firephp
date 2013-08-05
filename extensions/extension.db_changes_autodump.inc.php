@@ -18,12 +18,18 @@ function firephp_auto_db_dump($params)
   global $REX;
 
   // SETTINGS -> TODO: VIA GUI..
-  $mysqldump_path = '/Applications/MAMP/Library/bin/mysqldump';
+  $mysqldump_path = $REX["ADDON"]["__firephp"]["settings"]["mysqldmp_path"];
+  $dumpfile_path  = $REX["ADDON"]["__firephp"]["settings"]["db_changes_autodump_path"];
+
   $u              = $REX['DB']['1']['LOGIN'];
   $p              = $REX['DB']['1']['PSW'];
-  $tbl            = $REX['DB']['1']['NAME'];
-  $dumpfile_path  = $REX['INCLUDE_PATH'].'/addons/import_export/backup/autodump.sql';
+  $h              = $REX['DB']['1']['HOST'];
+  $t              = $REX['DB']['1']['NAME'];
 
-  $cmd            = $mysqldump_path.' -u '.$u.' -p'.$p.' --skip-extended-insert --ignore-table='.$tbl.'.rex_user '.$tbl.' > '.$dumpfile_path.';';
-  system($cmd);
+  $cmd            = $mysqldump_path.' --user='.$u.' --password='.$p.' --host='.$h.' --skip-extended-insert --ignore-table='.$t.'.rex_user '.$t.' > '.$dumpfile_path.';';
+
+  exec($cmd, $out, $ret);
+  if($ret>0) {
+    FB::warning('__firephp: autodump creation failed!');
+  }
 }

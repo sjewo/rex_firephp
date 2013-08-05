@@ -88,9 +88,15 @@ $REX["ADDON"]["__firephp"]["settings"]["ep_log"] = 0;
 $REX["ADDON"]["__firephp"]["settings"]["ep_log_focus"] = '';
 // --- /DYN
 
-// CURRENTLY HIDDEN IN SETTINGS FORM
-$REX["ADDON"]["__firephp"]["settings"]["js_bridge"] = 0;
-$REX["ADDON"]["__firephp"]["settings"]["uselib"] = 'FirePHPCore-0.4.0rc3';
+// HIDDEN SETTINGS
+////////////////////////////////////////////////////////////////////////////////
+$REX["ADDON"]["__firephp"]["settings"]["js_bridge"]                = 0;
+$REX["ADDON"]["__firephp"]["settings"]["uselib"]                   = 'FirePHPCore-0.4.0rc3';
+
+// DB AUTODUMP
+$REX["ADDON"]["__firephp"]["settings"]["db_changes_autodump"]      = 0;
+$REX["ADDON"]["__firephp"]["settings"]["db_changes_autodump_path"] = $REX['INCLUDE_PATH'].'/addons/import_export/backup/autodump.sql';
+$REX["ADDON"]["__firephp"]["settings"]["mysqldmp_path"]            = '/usr/bin/mysqldump'; // DF default
 
 
 // INCLUDE ADDON CORE FUNCTIONS
@@ -115,12 +121,12 @@ if(!class_exists('FirePHP'))
 ////////////////////////////////////////////////////////////////////////////////
 if($REX['ADDON']['__firephp']['settings']['mode']!==0)
 {
-  # // DB CHANGES AUTODUMP
-  # ////////////////////////////////////////////////////////////////////////////////
-  # if($REX['ADDON']['__firephp']['settings']['db_changes_autodump']==1)
-  # {
-  #   require_once($myroot.'/extensions/extension.db_changes_autodump.inc.php');
-  # }
+  // DB CHANGES AUTODUMP
+  ////////////////////////////////////////////////////////////////////////////////
+  if($REX['ADDON']['__firephp']['settings']['db_changes_autodump']==1)
+  {
+    require_once($myroot.'/extensions/extension.db_changes_autodump.inc.php');
+  }
 
   // FIREPHP SQL LOG
   ////////////////////////////////////////////////////////////////////////////////
