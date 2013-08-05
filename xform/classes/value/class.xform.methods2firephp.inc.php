@@ -8,7 +8,7 @@
 * @author <a href="http://rexdev.de">rexdev.de</a>
 *
 * @package redaxo 4.3.x/4.4.x/4.5.x
-* @version 1.1.1
+* @version 1.1.2
 */
 
 class rex_xform_methods2firephp extends rex_xform_abstract
