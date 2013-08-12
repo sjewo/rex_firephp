@@ -76,17 +76,20 @@ $REX['ADDON'][$mypage]['js_bridge'] = array (
 );
 
 
-// DYNAMIC ADDON SETTINGS
+// INCLUDE SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
-// --- DYN
-$REX["ADDON"]["__firephp"]["settings"]["mode"] = 1;
-$REX["ADDON"]["__firephp"]["settings"]["maxDepth"] = 10;
-$REX["ADDON"]["__firephp"]["settings"]["maxArrayDepth"] = 5;
-$REX["ADDON"]["__firephp"]["settings"]["maxObjectDepth"] = 5;
-$REX["ADDON"]["__firephp"]["settings"]["sqllog"] = 0;
-$REX["ADDON"]["__firephp"]["settings"]["ep_log"] = 0;
-$REX["ADDON"]["__firephp"]["settings"]["ep_log_focus"] = '';
-// --- /DYN
+$user_prefs    = $REX['INCLUDE_PATH'].'/data/addons/'.$mypage.'/settings/'.$mypage.'.settings.php';
+$default_prefs = $myroot.'/pages/'.$mypage.'.settings.php';
+if(!file_exists($user_prefs)) {
+  if(!file_exists(dirname($user_prefs))) {
+    mkdir(dirname($user_prefs), $REX['DIRPERM'], true);
+  }
+  if(!rex_put_file_contents($user_prefs, rex_get_file_contents($default_prefs))) {
+    $user_prefs = $default_prefs;
+  }
+}
+require_once $user_prefs;
+
 
 // HIDDEN SETTINGS
 ////////////////////////////////////////////////////////////////////////////////

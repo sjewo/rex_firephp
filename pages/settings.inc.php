@@ -48,7 +48,7 @@ if ($func == 'savesettings')
     }
   }
 
-  $file = $REX['INCLUDE_PATH'].'/addons/'.$mypage.'/config.inc.php';
+  $file = $REX['INCLUDE_PATH'].'/data/addons/'.$mypage.'/settings/'.$mypage.'.settings.php';
   rex_replace_dynamic_contents($file, $content);
   echo rex_info('Einstellungen wurden gespeichert.');
 }
