@@ -76,30 +76,34 @@ $REX['ADDON'][$mypage]['js_bridge'] = array (
 );
 
 
-// INCLUDE SETTINGS
+// DEFAULT SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
-$user_prefs    = $REX['INCLUDE_PATH'].'/data/addons/'.$mypage.'/settings/'.$mypage.'.settings.php';
-$default_prefs = $myroot.'/pages/'.$mypage.'.settings.php';
-if(!file_exists($user_prefs)) {
-  if(!file_exists(dirname($user_prefs))) {
-    mkdir(dirname($user_prefs), $REX['DIRPERM'], true);
-  }
-  if(!rex_put_file_contents($user_prefs, rex_get_file_contents($default_prefs))) {
-    $user_prefs = $default_prefs;
-  }
+$REX['ADDON']['__firephp']['settings']['mode'] = 1;
+$REX['ADDON']['__firephp']['settings']['maxDepth'] = 10;
+$REX['ADDON']['__firephp']['settings']['maxArrayDepth'] = 5;
+$REX['ADDON']['__firephp']['settings']['maxObjectDepth'] = 5;
+$REX['ADDON']['__firephp']['settings']['sqllog'] = 0;
+$REX['ADDON']['__firephp']['settings']['ep_log'] = 0;
+$REX['ADDON']['__firephp']['settings']['ep_log_focus'] = '';
+
+
+// EXTERNAL USER SETTINGS
+////////////////////////////////////////////////////////////////////////////////
+$user_prefs = $REX['INCLUDE_PATH'].'/data/addons/'.$mypage.'/'.$mypage.'.settings.php';
+if(file_exists($user_prefs)) {
+  require_once $user_prefs;
 }
-require_once $user_prefs;
 
 
 // HIDDEN SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
-$REX["ADDON"]["__firephp"]["settings"]["js_bridge"]                = 0;
-$REX["ADDON"]["__firephp"]["settings"]["uselib"]                   = 'FirePHPCore-0.4.0rc3';
+$REX['ADDON']['__firephp']['settings']['js_bridge']                = 0;
+$REX['ADDON']['__firephp']['settings']['uselib']                   = 'FirePHPCore-0.4.0rc3';
 
 // DB AUTODUMP
-$REX["ADDON"]["__firephp"]["settings"]["db_changes_autodump"]      = 0;
-$REX["ADDON"]["__firephp"]["settings"]["db_changes_autodump_path"] = $REX['INCLUDE_PATH'].'/addons/import_export/backup/autodump.sql';
-$REX["ADDON"]["__firephp"]["settings"]["mysqldmp_path"]            = '/usr/bin/mysqldump'; // DF default
+$REX['ADDON']['__firephp']['settings']['db_changes_autodump']      = 0;
+$REX['ADDON']['__firephp']['settings']['db_changes_autodump_path'] = $REX['INCLUDE_PATH'].'/addons/import_export/backup/autodump.sql';
+$REX['ADDON']['__firephp']['settings']['mysqldmp_path']            = '/usr/bin/mysqldump'; // DF default
 
 
 // INCLUDE ADDON CORE FUNCTIONS
